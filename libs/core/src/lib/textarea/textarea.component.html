@@ -1,0 +1,29 @@
+<textarea
+    fd-form-control
+    [id]="id"
+    [state]="getUpdatedState()"
+    [compact]="compact"
+    [maxlength]="!showExceededText ? maxLength : -1"
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+    [readonly]="readonly"
+    [attr.title]="textareaElement.value"
+    [rows]="growingMaxLines"
+    [cols]="cols"
+    [wrap]="wrap"
+    [ngClass]="[growing ? 'customResize' : 'normalSize']"
+    [style.max-height]="height"
+    [(ngModel)]="textArea"
+    (keyup)="autoGrowTextArea()"
+    (paste)="handlePasteInteraction()"
+    #textareaElement
+></textarea>
+<div class="fd-textarea-counter" *ngIf="showExceededText">
+    <span *ngIf="maxLength - textareaElement.value.length >= 0; else exceeded"
+        >{{ maxLength - textareaElement.value.length }} character{{ plural }} remaining</span
+    >
+    <ng-template #exceeded>{{ textareaElement.value.length - maxLength }} character{{ plural }} exceeded</ng-template>
+</div>
+<fd-form-message *ngIf="showExceededText && hasTextExceeded" [type]="getUpdatedState()"
+    >{{ textExceededMessage }}
+</fd-form-message>

@@ -209,6 +209,7 @@ export const API_FILES = {
         'TabProcessIconDirective',
         'TabSeparator'
     ],
+    textarea: ['TextareaComponent'],
     tile: [
         'ProductTileComponent',
         'ProductTileContentDirective',

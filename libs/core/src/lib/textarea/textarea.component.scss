@@ -1,0 +1,13 @@
+.customResize {
+    width: auto;
+    height: auto;
+    min-width: 0rem;
+    min-height: 0rem;
+}
+.normalSize {
+    // height: fit-content;
+    max-height: inherit;
+    width: auto;
+    min-width: 0rem;
+    resize: none; //won't be present by default. unsupported in ie and edge. REMOVE
+}

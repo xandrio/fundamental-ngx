@@ -1,0 +1,21 @@
+<div fd-form-item>
+    <label fd-form-label for="textarea-1">Default textarea</label>
+    <!-- <fd-form-input-message-group> -->
+    <!-- <textarea fd-form-control id="textarea-1" placeholder="Field placeholder text"></textarea> -->
+    <fd-textarea
+        [id]="'textarea-1'"
+        [placeholder]="'something here'"
+        [showExceededText]="false"
+        [maxLength]="5"
+        [state]="'warning'"
+        [growingMaxLines]="8"
+        [cols]="10"
+        [(ngModel)]="textAreaValue"
+        [textExceededMessage]="'This is a warning'"
+    ></fd-textarea>
+    <!-- <fd-form-message [type]="'warning'">Getting out of hand! </fd-form-message> -->
+    <!-- </fd-form-input-message-group> -->
+</div>
+
+<!-- [growing]="true"
+[(ngModel)]="textAreaValue" -->

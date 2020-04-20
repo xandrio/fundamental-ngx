@@ -6,6 +6,7 @@ import * as formStateHtml from '!raw-loader!./examples/textarea-state-example.co
 import * as formGroupInputHtml from '!raw-loader!./examples/textarea-form-group-example.component.html';
 import * as formGroupInputScss from '!raw-loader!./examples/textarea-form-group-example.component.scss';
 import * as formGroupInputTs from '!raw-loader!./examples/textarea-form-group-example.component.ts';
+import * as formCounterHtml from '!raw-loader!./examples/textarea-counter-example.component.html';
 import { ExampleFile } from '../../../documentation/core-helpers/code-example/example-file';
 
 @Component({
@@ -49,6 +50,14 @@ export class TextareaDocsComponent {
             code: formGroupInputTs,
             fileName: 'textarea-form-group-example',
             component: 'TextareaFormGroupExampleComponent'
+        }
+    ];
+
+    textareaCounterHtml: ExampleFile[] = [
+        {
+            language: 'html',
+            code: formCounterHtml,
+            fileName: 'textarea-counter-example'
         }
     ];
 }

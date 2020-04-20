@@ -60,6 +60,7 @@ import { LinkModule } from './link/link.module';
 import { InfoLabelModule } from './info-label/info-label.module';
 import { ObjectStatusModule } from './object-status/object-status.module';
 import { MultiInputMobileModule } from './multi-input/multi-input-mobile/multi-input-mobile.module';
+import { TextareaModule } from './textarea/textarea.module';
 
 @NgModule({
     imports: [CommonModule, FormsModule],
@@ -120,7 +121,8 @@ import { MultiInputMobileModule } from './multi-input/multi-input-mobile/multi-i
         TimePickerModule,
         SwitchModule,
         TokenModule,
-        TreeModule
+        TreeModule,
+        TextareaModule
     ],
     providers: [AlertService, DialogService, NotificationService]
 })
