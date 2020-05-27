@@ -45,6 +45,7 @@ export * from './lib/split-button/public_api';
 export * from './lib/utils/public_api';
 export * from './lib/table/public_api';
 export * from './lib/tabs/public_api';
+export * from './lib/textarea/public_api';
 export * from './lib/tile/public_api';
 export * from './lib/time/public_api';
 export * from './lib/time-picker/public_api';

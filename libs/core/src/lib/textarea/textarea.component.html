@@ -1,29 +1,38 @@
-<textarea
-    fd-form-control
-    [id]="id"
-    [state]="getUpdatedState()"
-    [compact]="compact"
-    [maxlength]="!showExceededText ? maxLength : -1"
-    [placeholder]="placeholder"
-    [disabled]="disabled"
-    [readonly]="readonly"
-    [attr.title]="textareaElement.value"
-    [rows]="growingMaxLines"
-    [cols]="cols"
-    [wrap]="wrap"
-    [ngClass]="[growing ? 'customResize' : 'normalSize']"
-    [style.max-height]="height"
-    [(ngModel)]="textArea"
-    (keyup)="autoGrowTextArea()"
-    (paste)="handlePasteInteraction()"
-    #textareaElement
-></textarea>
+<fd-form-input-message-group>
+    <textarea
+        fd-form-control
+        [id]="id"
+        [state]="getUpdatedState()"
+        [compact]="compact"
+        [maxlength]="!showExceededText ? maxLength : -1"
+        [attr.placeholder]="placeholder"
+        [attr.disabled]="disabled"
+        [attr.readonly]="readonly"
+        [attr.title]="textareaElement.value"
+        [attr.aria-label]="textareaElement.value"
+        [rows]="growingMaxLines"
+        [cols]="cols"
+        [wrap]="wrap"
+        [ngClass]="[growing ? 'customResize' : 'normalSize']"
+        [style.max-height]="height"
+        [(ngModel)]="textArea"
+        (paste)="handlePasteInteraction()"
+        #textareaElement
+    ></textarea>
+    <fd-form-message
+        *ngIf="showExceededText && hasTextExceeded"
+        [type]="getUpdatedState()"
+        [ngStyle]="{ position: 'relative' }"
+        >{{ textExceededMessage }}
+    </fd-form-message>
+</fd-form-input-message-group>
 <div class="fd-textarea-counter" *ngIf="showExceededText">
-    <span *ngIf="maxLength - textareaElement.value.length >= 0; else exceeded"
-        >{{ maxLength - textareaElement.value.length }} character{{ plural }} remaining</span
+    <!-- ICU recommends full text in format -->
+    <span i18n="@@exceededMessage">
+        {maxLength - textAreaValue?.length, plural, =1{
+        {{ maxLength - textAreaValue?.length | number: '1.1-1' }} character {counterExcessOrRemaining, select, excess
+        {over the limit} remaining {remaining}} } other {
+        {{ maxLength - textAreaValue?.length | number: '1.1-1' }} characters {counterExcessOrRemaining, select, excess
+        {over the limit} remaining {remaining}} } }</span
     >
-    <ng-template #exceeded>{{ textareaElement.value.length - maxLength }} character{{ plural }} exceeded</ng-template>
 </div>
-<fd-form-message *ngIf="showExceededText && hasTextExceeded" [type]="getUpdatedState()"
-    >{{ textExceededMessage }}
-</fd-form-message>

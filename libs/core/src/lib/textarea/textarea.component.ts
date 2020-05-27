@@ -8,6 +8,7 @@ import {
     forwardRef,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
+    HostListener
 } from '@angular/core';
 import { CssClassBuilder, applyCssClass } from '../utils/public_api';
 import { FormStates } from '../form/form-control/form-states';
@@ -24,14 +25,17 @@ export type WrapType = 'hard' | 'soft';
         {
             provide: NG_VALUE_ACCESSOR,
             useExisting: forwardRef(() => TextareaComponent),
-            multi: true,
-        },
+            multi: true
+        }
     ],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TextareaComponent implements OnChanges, OnInit, ControlValueAccessor {
     count: number = 10;
-    plural: string;
+    // plural: string;
+    private readonly remainingText = 'remaining';
+    private readonly excessText = 'excess';
+    counterExcessOrRemaining = this.remainingText;
 
     // /** @hidden */
     // class: string;
@@ -114,32 +118,23 @@ export class TextareaComponent implements OnChanges, OnInit, ControlValueAccesso
     constructor(private changeDetectorRef: ChangeDetectorRef) {}
 
     ngOnInit(): void {
-        this.plural = 's';
-        // this.updateCounterInteractions();
-        // this.buildComponentCssClass();
+        // this.plural = 's';
     }
 
     /** @hidden */
-    ngOnChanges(): void {
-        // this.buildComponentCssClass();
-        // console.log(this.maxLength - this.textareaElement.nativeElement.value.length);
-        // if (this.maxLength - this.textareaElement.nativeElement.value.length === 1) {
-        //     this.plural = '';
-        // } else {
-        //     this.plural = 's';
-        // }
-    }
+    ngOnChanges(): void {}
 
     /** @hidden */
     onChange: any = () => {
         console.log('changed');
+        // this.setPlural();
     };
 
     /** @hidden */
     onTouched: any = () => {};
     /** Get the value of the text input. */
     get textArea() {
-        console.log('this.textAreaValue' + this.textAreaValue);
+        console.log('textArea():::this.textAreaValue' + this.textAreaValue);
         // this.updateCounterInteractions();
 
         return this.textAreaValue;
@@ -147,7 +142,7 @@ export class TextareaComponent implements OnChanges, OnInit, ControlValueAccesso
 
     /** Set the value of the text input. */
     set textArea(value) {
-        console.log('set' + value);
+        console.log('set textArea():::' + value);
 
         this.textAreaValue = value;
 
@@ -157,50 +152,54 @@ export class TextareaComponent implements OnChanges, OnInit, ControlValueAccesso
 
     writeValue(value: any): void {
         this.textAreaValue = value;
-        console.log('here' + this.textAreaValue);
+        console.log('writeValue():::' + this.textAreaValue);
 
         this.updateCounterInteractions();
         this.changeDetectorRef.markForCheck();
     }
 
-    private updateCounterInteractions(): void {
+    updateCounterInteractions(): void {
         if (this.textAreaValue) {
             this.textAreaCharCount = this.textAreaValue.length;
             this.validateLengthOnCustomSet();
-            this.setPlural();
+            // this.setPlural();
         }
     }
 
     handlePasteInteraction(): void {
-        console.log('pasted');
+        console.log('handlePasteInteraction():::');
         /// For IE
         if (window['clipboardData']) {
             let value = window['clipboardData'].getData('Text');
             console.log(value);
-            //todo: handle for IE
+            // todo: handle for IE
             // this.updateCounterInteractions();
         } else {
             // for other navigators
-            navigator['clipboard'].readText().then((clipText) => {
+            navigator['clipboard'].readText().then(clipText => {
                 console.log(clipText);
                 this.updateCounterInteractions();
             });
         }
     }
 
-    setPlural(): any {
-        if (this.textAreaCharCount - this.maxLength === 1 || this.maxLength - this.textAreaCharCount === 1) {
-            this.plural = '';
-        } else {
-            this.plural = 's';
-        }
-    }
+    // setPlural(): any {
+    //     this.textAreaCharCount = this.textAreaValue.length;
+    //     if (this.textAreaCharCount - this.maxLength === 1 || this.maxLength - this.textAreaCharCount === 1) {
+    //         this.plural = '';
+    //     } else {
+    //         this.plural = 's';
+    //     }
+    // }
     validateLengthOnCustomSet(): void {
         if (this.textAreaCharCount > this.maxLength) {
-            console.log('exceeded. do something here');
+            console.log('validateLengthOnCustomSet():::exceeded. do something here');
             this.textareaElement.nativeElement.focus();
             // this.textareaElement.nativeElement.setSelectionRange(10, 20);
             this.textareaElement.nativeElement.setSelectionRange(this.maxLength, this.textAreaCharCount);
+            this.counterExcessOrRemaining = this.excessText;
+        } else {
+            this.counterExcessOrRemaining = this.remainingText;
         }
     }
     registerOnChange(fn: any): void {
@@ -210,6 +209,8 @@ export class TextareaComponent implements OnChanges, OnInit, ControlValueAccesso
         this.onTouched = fn;
     }
     setDisabledState?(isDisabled: boolean): void {
+        console.log('setDisabledState()::: disabled');
+
         this.disabled = isDisabled;
         this.changeDetectorRef.markForCheck();
     }
@@ -220,9 +221,11 @@ export class TextareaComponent implements OnChanges, OnInit, ControlValueAccesso
                 (this.textAreaValue && this.textAreaValue.length)) > this.maxLength
         ) {
             this.hasTextExceeded = true; // set flag for error message to also change accordingly
+            this.counterExcessOrRemaining = this.excessText;
             return this.state;
         }
         this.hasTextExceeded = false;
+        this.counterExcessOrRemaining = this.remainingText;
         return 'none';
     }
     // @applyCssClass
@@ -240,15 +243,15 @@ export class TextareaComponent implements OnChanges, OnInit, ControlValueAccesso
     // }
 
     /** @hidden */
-    private _setFocusOnNativeElement(): void {
-        if (this.textareaElement) {
-            this.textareaElement.nativeElement.focus();
-        }
-    }
+    // private _setFocusOnNativeElement(): void {
+    //     if (this.textareaElement) {
+    //         this.textareaElement.nativeElement.focus();
+    //     }
+    // }
     // find a better way to do this, without manipulating nativeElement. Can we use calc?
     autoGrowTextArea() {
-        if (this.growing) {
-            this.textareaElement.nativeElement.style.height = '0px';
+        if (this.growing && this.textAreaCharCount > parseInt(this.cols as string, 10)) {
+            this.textareaElement.nativeElement.style.height = '0px'; // incorrect logic, 36px fiori3
             const maxHeightStr = parseInt(this.height as string, 10);
             // todo: handle padding and margin spaces also
             if (this.textareaElement.nativeElement.scrollHeight < maxHeightStr) {
@@ -258,6 +261,28 @@ export class TextareaComponent implements OnChanges, OnInit, ControlValueAccesso
                 this.textareaElement.nativeElement.style.height = this.height;
             }
             // e.target.style.height = e.target.scrollHeight + 'px';
+        }
+    }
+
+    @HostListener('keyup', ['$event'])
+    handleBackPress(event: KeyboardEvent) {
+        console.log(event.key);
+        // if not showing exceeded text message/interactions, and custom value set
+        if (!this.showExceededText && (event.key === 'Delete' || event.key === 'Backspace')) {
+            // for the custom value set and showExceededText=false case, on any key press, remove excess characters
+            if (this.textAreaValue) {
+                this.textAreaCharCount = this.textAreaValue.length;
+                if (this.textAreaCharCount > this.maxLength) {
+                    // remove excess characters
+                    this.textAreaValue = this.textAreaValue.substring(0, this.maxLength);
+                    this.counterExcessOrRemaining = this.remainingText;
+                    // this.setPlural();
+                }
+            }
+        } else {
+            console.log('calling autogrow');
+            this.autoGrowTextArea();
+            // this.setPlural();
         }
     }
 }

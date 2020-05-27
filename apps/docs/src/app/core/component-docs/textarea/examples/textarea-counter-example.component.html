@@ -4,14 +4,15 @@
     <!-- <textarea fd-form-control id="textarea-1" placeholder="Field placeholder text"></textarea> -->
     <fd-textarea
         [id]="'textarea-1'"
-        [placeholder]="'something here'"
-        [showExceededText]="false"
-        [maxLength]="5"
-        [state]="'warning'"
-        [growingMaxLines]="8"
-        [cols]="10"
-        [(ngModel)]="textAreaValue"
+        [placeholder]="'write something here'"
+        [showExceededText]="true"
         [textExceededMessage]="'This is a warning'"
+        [maxLength]="50"
+        [state]="'warning'"
+        [growing]="true"
+        [growingMaxLines]="2"
+        [cols]="180"
+        [height]="'100px'"
     ></fd-textarea>
     <!-- <fd-form-message [type]="'warning'">Getting out of hand! </fd-form-message> -->
     <!-- </fd-form-input-message-group> -->
