@@ -12,6 +12,7 @@ import { PlatformRadioGroupModule } from './components/form/radio-group/radio-gr
 import { PlatformMenuButtonModule } from './components/menu-button/menu-button.module';
 import { PlatformSplitMenuButtonModule } from './components/split-menu-button/split-menu-button.module';
 import { PlatformInfoLabelModule } from './components/info-label/info-label.module';
+import { PlatformObjectMarkerModule } from './components/object-marker/object-marker.module';
 
 @NgModule({
     imports: [CommonModule, FundamentalNgxCoreModule],
@@ -27,6 +28,7 @@ import { PlatformInfoLabelModule } from './components/info-label/info-label.modu
         PlatformMenuButtonModule,
         PlatformSplitMenuButtonModule,
         PlatformInfoLabelModule,
+        PlatformObjectMarkerModule
     ],
 })
 export class FundamentalNgxPlatformModule { }

@@ -75,6 +75,11 @@ export const ROUTES: Routes = [
                 loadChildren: () =>
                     import('./component-docs/platform-info-label/platform-info-label-docs-module').then((m) => m.PlatformInfoLabelDocsModule)
             },
+            {
+                path: 'object-marker',
+                loadChildren: () =>
+                    import('./component-docs/platform-object-marker/platform-object-marker.module').then((m) => m.PlatformObjectMarkerDocsModule)
+            },
         ]
     }
 ];

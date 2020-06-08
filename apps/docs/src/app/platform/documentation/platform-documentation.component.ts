@@ -27,6 +27,7 @@ export class PlatformDocumentationComponent {
         { url: 'platform/link', name: 'Link' },
         { url: 'platform/menu', name: 'Menu' },
         { url: 'platform/menu-button', name: 'Menu Button' },
+        { url: 'platform/object-marker', name: 'Object Marker' },
         { url: 'platform/radio-group', name: 'Radio Button Group' },
         { url: 'platform/select', name: 'Select' },
         { url: 'platform/search-field', name: 'Search Field' },
