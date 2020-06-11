@@ -1,0 +1,25 @@
+<fd-toolbar [cozy]="true">
+    <span>Title</span>
+    <button fd-button [compact]="true" [fdType]="'transparent'">Action1</button>
+    <fd-toolbar-spacer></fd-toolbar-spacer>
+    <button fd-button [compact]="true" [fdType]="'transparent'">Action2</button>
+    <button fd-button [compact]="true" [fdType]="'transparent'">Action3</button>
+    <fd-toolbar-separator></fd-toolbar-separator>
+    <fd-popover fd-toolbar-overflow [placement]="'bottom-end'">
+        <fd-popover-control>
+            <button fd-button [compact]="true" [fdType]="'transparent'" [glyph]="'overflow'"></button>
+        </fd-popover-control>
+        <fd-popover-body>
+            <fd-toolbar-overflow-body>
+                <label class="fd-label fd-toolbar__overflow__label">Label</label>
+                <button fd-button [compact]="true" [fdType]="'transparent'">Edit</button>
+                <fd-toolbar-separator></fd-toolbar-separator>
+                <label class="fd-form-label fd-toolbar__overflow__form-label">Form label</label>
+                <button fd-button [compact]="true" [fdType]="'negative'">Delete</button>
+                <fd-toolbar-separator></fd-toolbar-separator>
+                <button fd-button [compact]="true" [fdType]="'success'">Assign</button>
+                <button fd-button [compact]="true" [fdType]="'attention'">Exit</button>
+            </fd-toolbar-overflow-body>
+        </fd-popover-body>
+    </fd-popover>
+</fd-toolbar>
