@@ -35,6 +35,7 @@
         </fd-input-group>
     </fd-popover-control>
     <fd-popover-body [style.display]="'block'" [attr.aria-expanded]="isOpen" [attr.aria-hidden]="!isOpen">
+        <ng-content></ng-content>
         <fd-calendar
             (closeCalendar)="closeFromCalendar()"
             [activeView]="activeView"
