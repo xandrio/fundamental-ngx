@@ -1,7 +1,6 @@
 import { EventEmitter, InjectionToken } from '@angular/core';
 import { OptionComponent } from './option/option.component';
 import { OptionStatusChange } from './select.component';
-import { DialogConfig } from '../dialog/dialog-utils/dialog-config.class';
 import { MobileMode } from '../utils/interfaces/mobile-control.interface';
 
 export const SELECT_COMPONENT = new InjectionToken<string[]>('SelectInterface');
@@ -12,7 +11,6 @@ export const SELECT_COMPONENT = new InjectionToken<string[]>('SelectInterface');
  */
 export interface SelectInterface extends MobileMode {
     selected: OptionComponent;
-    dialogConfig: DialogConfig;
     isOpenChange: EventEmitter<boolean>;
 
     close(): void;

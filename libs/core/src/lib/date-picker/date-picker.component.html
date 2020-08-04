@@ -1,60 +1,78 @@
-<fd-popover
-    [(isOpen)]="isOpen"
-    [triggers]="[]"
-    [placement]="placement"
-    [closeOnEscapeKey]="true"
-    [disabled]="disabled"
-    [focusTrapped]="true"
->
-    <fd-popover-control>
-        <fd-input-group [compact]="compact" [state]="state" [disabled]="disabled">
-            <input
-                class="fd-input"
-                fd-input-group-input
-                type="text"
-                [attr.aria-label]="dateInputLabel"
-                [(ngModel)]="inputFieldDate"
-                [placeholder]="placeholder"
-                (ngModelChange)="handleInputChange($event)"
-                (click)="openCalendar()"
-                [compact]="compact"
-                [ngClass]="{ 'is-error': isInvalidDateInput && useValidation }"
-            />
-            <span fd-input-group-addon [button]="true" [compact]="compact">
+<ng-container *ngTemplateOutlet="mobile ? mobileTemplate : desktopTemplate"></ng-container>
+
+<ng-template #mobileTemplate>
+    <ng-container *ngTemplateOutlet="inputTemplate"></ng-container>
+</ng-template>
+
+<ng-template #desktopTemplate>
+    <fd-popover
+        [(isOpen)]="isOpen"
+        [triggers]="[]"
+        [placement]="placement"
+        [disabled]="disabled"
+        [focusTrapped]="true"
+        [closeOnEscapeKey]="true"
+    >
+        <fd-popover-control>
+            <ng-container *ngTemplateOutlet="inputTemplate"></ng-container>
+        </fd-popover-control>
+        <fd-popover-body style="display: block"
+                         [attr.aria-expanded]="isOpen"
+                         [attr.aria-hidden]="!isOpen">
+            <ng-container *ngTemplateOutlet="calendarTemplate"></ng-container>
+        </fd-popover-body>
+    </fd-popover>
+</ng-template>
+
+<ng-template #inputTemplate>
+    <fd-input-group [compact]="compact" [state]="state" [disabled]="disabled">
+        <input
+            class="fd-input"
+            fd-input-group-input
+            type="text"
+            [class.is-error]="isInvalidDateInput && useValidation"
+            [attr.aria-label]="dateInputLabel"
+            [compact]="compact"
+            [placeholder]="placeholder"
+            [(ngModel)]="inputFieldDate"
+            (ngModelChange)="handleInputChange($event)"
+            (click)="openCalendar()"
+        />
+        <span fd-input-group-addon [button]="true" [compact]="compact">
                 <button
                     fd-button
-                    [attr.tabindex]="buttonFocusable ? 0 : -1"
-                    [glyph]="'appointment-2'"
-                    [fdType]="'transparent'"
+                    fdType="transparent"
+                    glyph="appointment-2"
                     [compact]="compact"
-                    (click)="toggleCalendar()"
+                    [attr.tabindex]="buttonFocusable ? 0 : -1"
                     [attr.aria-label]="displayCalendarToggleLabel"
                     [attr.aria-expanded]="isOpen"
+                    (click)="toggleCalendar()"
                 ></button>
             </span>
-        </fd-input-group>
-    </fd-popover-control>
-    <fd-popover-body [style.display]="'block'" [attr.aria-expanded]="isOpen" [attr.aria-hidden]="!isOpen">
-        <fd-calendar
-            (closeCalendar)="closeFromCalendar()"
-            [activeView]="activeView"
-            [compact]="compact"
-            [markWeekends]="markWeekends"
-            [specialDaysRules]="specialDaysRules"
-            [showWeekNumbers]="showWeekNumbers"
-            [aggregatedYearGrid]="aggregatedYearGrid"
-            [yearGrid]="yearGrid"
-            (activeViewChange)="handleCalendarActiveViewChange($event)"
-            [calType]="type"
-            [rangeHoverEffect]="rangeHoverEffect"
-            [disableFunction]="disableFunction ? disableFunction : null"
-            [disableRangeStartFunction]="disableRangeStartFunction ? disableRangeStartFunction : null"
-            [disableRangeEndFunction]="disableRangeEndFunction ? disableRangeEndFunction : null"
-            [selectedDate]="selectedDate"
-            [selectedRangeDate]="selectedRangeDate"
-            (selectedRangeDateChange)="handleRangeDateChange($event)"
-            (selectedDateChange)="handleSingleDateChange($event)"
-            [startingDayOfWeek]="startingDayOfWeek"
-        ></fd-calendar>
-    </fd-popover-body>
-</fd-popover>
+    </fd-input-group>
+</ng-template>
+
+<ng-template #calendarTemplate>
+    <fd-calendar
+        [calType]="type"
+        [compact]="compact"
+        [yearGrid]="yearGrid"
+        [activeView]="activeView"
+        [selectedDate]="selectedDate"
+        [markWeekends]="markWeekends"
+        [showWeekNumbers]="showWeekNumbers"
+        [specialDaysRules]="specialDaysRules"
+        [rangeHoverEffect]="rangeHoverEffect"
+        [selectedRangeDate]="selectedRangeDate"
+        [startingDayOfWeek]="startingDayOfWeek"
+        [aggregatedYearGrid]="aggregatedYearGrid"
+        [disableFunction]="disableFunction ? disableFunction : null"
+        [disableRangeEndFunction]="disableRangeEndFunction ? disableRangeEndFunction : null"
+        [disableRangeStartFunction]="disableRangeStartFunction ? disableRangeStartFunction : null"
+        (closeCalendar)="closeFromCalendar()"
+        (selectedDateChange)="handleSingleDateChange($event)"
+        (selectedRangeDateChange)="handleRangeDateChange($event)"
+        (activeViewChange)="handleCalendarActiveViewChange($event)"
+    ></fd-calendar>
+</ng-template>

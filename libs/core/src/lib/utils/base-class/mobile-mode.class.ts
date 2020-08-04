@@ -18,7 +18,10 @@ export enum MobileModeControl {
     MENU = 'MENU',
     SELECT = 'SELECT',
     COMBOBOX = 'COMBOBOX',
-    MULTI_INPUT = 'MULTI_INPUT'
+    MULTI_INPUT = 'MULTI_INPUT',
+    DATE_PICKER = 'DATE_PICKER',
+    TIME_PICKER = 'TIME_PICKER',
+    DATE_TIME_PICKER = 'DATE_TIME_PICKER',
 }
 
 export abstract class MobileModeBase<T extends MobileMode> {

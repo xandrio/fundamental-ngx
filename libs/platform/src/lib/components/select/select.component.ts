@@ -80,7 +80,7 @@ export class SelectPlatformComponent extends fdSelect implements OnInit, AfterCo
 
     constructor(private cd: ChangeDetectorRef, elementRef: ElementRef, dynamicComponentService: DynamicComponentService
     ) {
-        super(elementRef, new SelectProxy(), cd, dynamicComponentService, null);
+        super(elementRef, new SelectProxy(), cd, dynamicComponentService);
     }
 
     onSelection(value: any): void {

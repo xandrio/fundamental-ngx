@@ -32,7 +32,6 @@ import { SelectProxy } from './select-proxy.service';
 import { buffer, debounceTime, filter, map } from 'rxjs/operators';
 import { DynamicComponentService } from '../utils/dynamic-component/dynamic-component.service';
 import { SelectMobileComponent } from './select-mobile/select-mobile.component';
-import { DIALOG_CONFIG, DialogConfig } from '../dialog/dialog-utils/dialog-config.class';
 import { MobileModeConfig } from '../utils/interfaces/mobile-mode-config';
 import { SELECT_COMPONENT, SelectInterface } from './select.interface';
 
@@ -259,8 +258,7 @@ export class SelectComponent implements ControlValueAccessor, SelectInterface, O
         private _elementRef: ElementRef,
         private _selectProxy: SelectProxy,
         private _changeDetectorRef: ChangeDetectorRef,
-        @Optional() private _dynamicComponentService: DynamicComponentService,
-        @Optional() @Inject(DIALOG_CONFIG) public dialogConfig: DialogConfig
+        @Optional() private _dynamicComponentService: DynamicComponentService
     ) { }
 
     /** @hidden */
@@ -555,6 +553,7 @@ export class SelectComponent implements ControlValueAccessor, SelectInterface, O
         this.selectViewValue = this.selected ? this.selected.viewValueText : this.placeholder;
     }
 
+    /** @hidden */
     private _setupMobileMode(): void {
         if (this.mobile) {
             this._dynamicComponentService.createDynamicComponent(
