@@ -3,3 +3,4 @@ export * from './format/date-parser';
 export * from '../calendar/models/fd-date';
 export * from '../calendar/models/fd-range-date';
 export * from './date-picker.component';
+export * from './date-picker-mobile/date-picker-mobile.module';

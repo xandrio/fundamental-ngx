@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, ElementRef, Inject, OnInit, Optional, TemplateRef, ViewChild } from '@angular/core';
+import { DialogService } from '../../dialog/dialog-service/dialog.service';
 import {
-    DialogService,
     MOBILE_MODE_CONFIG,
     MobileModeBase,
     MobileModeConfigToken,
     MobileModeControl
-} from '@fundamental-ngx/core';
+} from '../../utils/base-class/mobile-mode.class';
 import { DATE_PICKER_COMPONENT, DatePickerInterface } from '../date-picker.interface';
 
 @Component({
