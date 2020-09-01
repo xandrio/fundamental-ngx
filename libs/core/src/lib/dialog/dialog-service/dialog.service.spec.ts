@@ -5,7 +5,7 @@ import { TestBed } from '@angular/core/testing';
 import { DialogRef } from '../dialog-utils/dialog-ref.class';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { DialogModule } from '../dialog.module';
-import { DIALOG_DEFAULT_CONFIG, DialogConfig } from '../dialog-utils/dialog-config.class';
+import { DIALOG_DEFAULT_CONFIG, DialogConfig } from '../dialog-utils/dialog-default-config.class';
 
 @Component({
     template: `

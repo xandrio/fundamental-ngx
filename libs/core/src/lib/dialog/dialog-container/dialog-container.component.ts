@@ -14,7 +14,7 @@ import {
     ViewContainerRef
 } from '@angular/core';
 import { DIALOG_REF, DialogRef } from '../dialog-utils/dialog-ref.class';
-import { DIALOG_CONFIG, DialogConfig } from '../dialog-utils/dialog-config.class';
+import { DIALOG_CONFIG, DialogConfig } from '../dialog-utils/dialog-default-config.class';
 import { applyCssClass } from '../../utils/decorators/apply-css-class.decorator';
 import { CssClassBuilder } from '../../utils/interfaces/css-class-builder.interface';
 import { DefaultDialogObject } from '../default-dialog/default-dialog-object';

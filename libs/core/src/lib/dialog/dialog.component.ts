@@ -15,7 +15,7 @@ import {
 } from '@angular/core';
 import focusTrap, { FocusTrap } from 'focus-trap';
 import { dialogFadeNgIf } from './dialog-utils/dialog.animations';
-import { DIALOG_CONFIG, DialogConfig } from './dialog-utils/dialog-config.class';
+import { DIALOG_CONFIG, DialogConfig } from './dialog-utils/dialog-default-config.class';
 import { DialogHeaderComponent } from './dialog-header/dialog-header.component';
 import { DialogBodyComponent } from './dialog-body/dialog-body.component';
 import { DialogFooterComponent } from './dialog-footer/dialog-footer.component';

@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DialogBodyComponent } from './dialog-body.component';
-import { DIALOG_CONFIG, DialogConfig } from '../dialog-utils/dialog-config.class';
+import { DIALOG_CONFIG, DialogConfig } from '../dialog-utils/dialog-default-config.class';
 import { DIALOG_REF, DialogRef } from '../dialog-utils/dialog-ref.class';
 import { BusyIndicatorModule } from '@fundamental-ngx/core';
 

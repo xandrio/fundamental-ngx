@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DIALOG_REF, DialogRef } from './dialog-utils/dialog-ref.class';
-import { DIALOG_CONFIG, DialogConfig } from './dialog-utils/dialog-config.class';
+import { DIALOG_CONFIG, DialogConfig } from './dialog-utils/dialog-default-config.class';
 
 @Component({
     template: `

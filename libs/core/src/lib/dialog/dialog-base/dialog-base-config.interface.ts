@@ -1,14 +1,6 @@
-/**
- * Configuration for opening a dialog with the DialogService.
- */
-import { DialogPosition } from './dialog-position.class';
-import { DynamicComponentConfig } from '../../utils/dynamic-component/dynamic-component-config';
-import { InjectionToken } from '@angular/core';
+import { DialogPosition, DynamicComponentConfig } from '@fundamental-ngx/core';
 
-export const DIALOG_CONFIG = new InjectionToken<string[]>('DialogConfig');
-export const DIALOG_DEFAULT_CONFIG = new InjectionToken<string[]>('DialogConfig');
-
-export class DialogConfig implements DynamicComponentConfig {
+export interface DialogBaseConfig extends DynamicComponentConfig {
     /** Id for the dialog component. If omitted, a unique one is generated. */
     id?: string;
 
@@ -34,43 +26,40 @@ export class DialogConfig implements DynamicComponentConfig {
     position?: DialogPosition;
 
     /** Aria label for the dialog component element. */
-    ariaLabel?: string = null;
+    ariaLabel?: string;
 
     /** Id of the element that labels the dialog. */
-    ariaLabelledBy?: string = null;
+    ariaLabelledBy?: string;
 
     /** Id of the element that describes the dialog. */
-    ariaDescribedBy?: string = null;
+    ariaDescribedBy?: string;
 
     /** Whether the dialog should have a backdrop. */
-    hasBackdrop = true;
+    hasBackdrop?: boolean;
 
     /** Whether clicking on the backdrop should close the dialog. Only works if hasBackdrop is true. */
-    backdropClickCloseable = true;
+    backdropClickCloseable?: boolean;
 
     /** Global classes to apply to the backdrop. */
-    backdropClass = '';
+    backdropClass?: string;
 
     /** Classes to apply to the `fd-dialog-container`  */
-    containerClass = '';
+    containerClass?: string;
 
     /** Global classes to apply to the dialog panel. */
-    dialogPanelClass = '';
+    dialogPanelClass?: string;
 
     /** Whether the escape key should close the dialog. */
-    escKeyCloseable = true;
+    escKeyCloseable?: boolean;
 
     /** Whether the dialog should be focus trapped. */
-    focusTrapped = true;
+    focusTrapped?: boolean;
 
     /** The container that the dialog is appended to. By default, it is appended to the body. */
-    container?: HTMLElement | 'body' = 'body';
+    container?: HTMLElement | 'body';
 
     /** Data to pass along to the content through the DialogRef. */
     data?: any;
-
-    /** Whether the dialog should be displayed in full screen mode. */
-    fullScreen?: boolean;
 
     /** Whether the dialog should be displayed in mobile mode. */
     mobile?: boolean;
@@ -78,20 +67,11 @@ export class DialogConfig implements DynamicComponentConfig {
     /** Whether the dialog in mobile mode should have outer space. */
     mobileOuterSpacing?: boolean;
 
-    /** Whether the dialog should be draggable. */
-    draggable?: boolean;
-
-    /** Whether the dialog should be resizable. */
-    resizable?: boolean;
-
-    /** Whether the dialog should have vertical padding. */
-    verticalPadding = true;
-
     /** Whether the dialog should have responsive horizontal padding changing with Dialogs window width.
      * max-width: 599px                         - .fd-dialog__content--s
      * min-width: 600px and max-width: 1023px   - .fd-dialog__content--m
      * min-width: 1024px and max-width: 1439px  - .fd-dialog__content--l
      * min-width: 1440px                        - .fd-dialog__content--xl
      * */
-    responsivePadding = false;
+    responsivePadding?: boolean;
 }

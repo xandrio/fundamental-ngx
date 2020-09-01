@@ -1,19 +1,20 @@
-import { ComponentRef, Inject, Injectable, Injector, Optional, TemplateRef, Type } from '@angular/core';
+import { ComponentRef, Injectable, Injector, TemplateRef, Type } from '@angular/core';
 import { DialogContainerComponent } from '../dialog-container/dialog-container.component';
-import { DIALOG_CONFIG, DIALOG_DEFAULT_CONFIG, DialogConfig } from '../dialog-utils/dialog-default-config.class';
 import { DynamicComponentService } from '../../utils/dynamic-component/dynamic-component.service';
 import { DIALOG_REF, DialogRef } from '../dialog-utils/dialog-ref.class';
 import { DefaultDialogObject } from '../default-dialog/default-dialog-object';
+import { DIALOG_CONFIG, DialogConfig } from '../dialog-utils/dialog-config.interface';
+import { DialogDefaultConfig } from '../dialog-utils/dialog-default-config.class';
 
 /** Service used to dynamically generate a dialog. */
 @Injectable()
-export class DialogService {
+export class DialogBaseService {
     /** @hidden Collection of existing dialog references */
     private _dialogs: ComponentRef<DialogContainerComponent>[] = [];
 
     constructor(
-        @Inject(DynamicComponentService) private _dynamicComponentService: DynamicComponentService,
-        @Optional() @Inject(DIALOG_DEFAULT_CONFIG) private _defaultConfig: DialogConfig
+        private _dynamicComponentService: DynamicComponentService,
+        private _defaultConfig: DialogConfig
     ) {}
 
     /**
@@ -37,21 +38,23 @@ export class DialogService {
     public open(contentType: Type<any> | TemplateRef<any> | DefaultDialogObject, dialogConfig?: DialogConfig): DialogRef {
         const dialogRef: DialogRef = new DialogRef();
 
-        dialogConfig = this._applyDefaultConfig(dialogConfig, this._defaultConfig || new DialogConfig());
+        dialogConfig = this._applyDefaultConfig(dialogConfig, this._defaultConfig || new DialogDefaultConfig());
         dialogRef.data = dialogConfig.data;
 
         const dialogInjector = Injector.create({
             providers: [
-                { provide: DIALOG_CONFIG, useValue: dialogConfig },
-                { provide: DIALOG_REF, useValue: dialogRef }
+                {provide: DIALOG_CONFIG, useValue: dialogConfig},
+                {provide: DIALOG_REF, useValue: dialogRef}
             ]
         });
 
-        const component: ComponentRef<DialogContainerComponent> = this._dynamicComponentService.createDynamicComponent<
-            DialogContainerComponent
-        >(contentType, DialogContainerComponent, dialogConfig, {
-            injector: dialogInjector
-        });
+        const component: ComponentRef<DialogContainerComponent> = this._dynamicComponentService
+            .createDynamicComponent<DialogContainerComponent>(
+                contentType,
+                DialogContainerComponent,
+                dialogConfig,
+                { injector: dialogInjector }
+            );
 
         this._dialogs.push(component);
 
@@ -78,6 +81,6 @@ export class DialogService {
 
     /** @hidden Extends dialog config using default values*/
     private _applyDefaultConfig(config: DialogConfig, defaultConfig: DialogConfig): DialogConfig {
-        return { ...defaultConfig, ...config };
+        return {...defaultConfig, ...config};
     }
 }
