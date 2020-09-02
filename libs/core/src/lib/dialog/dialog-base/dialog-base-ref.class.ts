@@ -1,9 +1,9 @@
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
-export class DialogBaseRef {
+export class DialogBaseRef<D> {
     private readonly _afterClosed = new Subject<any>();
     private readonly _afterLoaded = new Subject<any>();
-    private readonly _onHide = new BehaviorSubject<boolean>(false);
+    private readonly _onHide = new Subject<boolean>();
 
     /**
      * Observable that is triggered when the dialog is closed.
@@ -18,7 +18,7 @@ export class DialogBaseRef {
     public afterLoaded: Observable<boolean> = this._afterLoaded.asObservable();
 
     /** Data passed from the calling component to the content.*/
-    public data: any;
+    public data: D;
 
     /**
      * Closes the dialog and passes the argument to the afterClosed observable.

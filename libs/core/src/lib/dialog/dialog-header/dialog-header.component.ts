@@ -1,6 +1,6 @@
 import { AfterContentInit, Component, ContentChildren, Inject, Optional, QueryList, TemplateRef } from '@angular/core';
 import { TemplateDirective } from '../../utils/directives/template/template.directive';
-import { DIALOG_CONFIG, DialogConfig } from '../dialog-utils/dialog-default-config.class';
+import { DIALOG_CONFIG, DialogConfig } from '../dialog-utils';
 
 /**
  * Applies fundamental layout and styling to the contents of a dialog header.

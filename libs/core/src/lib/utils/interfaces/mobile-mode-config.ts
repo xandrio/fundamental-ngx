@@ -1,4 +1,4 @@
-import { DialogConfig } from '../../dialog/dialog-utils/dialog-default-config.class';
+import { DialogConfig } from '../../dialog/dialog-utils';
 
 export interface MobileModeConfig {
 

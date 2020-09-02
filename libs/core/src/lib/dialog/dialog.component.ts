@@ -4,26 +4,23 @@ import {
     Component,
     ContentChild,
     ElementRef,
-    HostListener,
     Inject,
     Input,
+    OnChanges,
     OnDestroy,
     OnInit,
     Optional,
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import focusTrap, { FocusTrap } from 'focus-trap';
-import { dialogFadeNgIf } from './dialog-utils/dialog.animations';
-import { DIALOG_CONFIG, DialogConfig } from './dialog-utils/dialog-default-config.class';
+import { DIALOG_CONFIG, DIALOG_REF, DialogConfig, DialogRef } from './dialog-utils';
 import { DialogHeaderComponent } from './dialog-header/dialog-header.component';
 import { DialogBodyComponent } from './dialog-body/dialog-body.component';
 import { DialogFooterComponent } from './dialog-footer/dialog-footer.component';
-import { DIALOG_REF, DialogRef } from './dialog-utils/dialog-ref.class';
-import { fromEvent, Subscription } from 'rxjs';
 import { applyCssClass } from '../utils/decorators/apply-css-class.decorator';
 import { CssClassBuilder } from '../utils/interfaces/css-class-builder.interface';
-import { debounceTime } from 'rxjs/operators';
+import { fadeIn } from '../utils/animations';
+import { DialogBase } from './dialog-base';
 
 @Component({
     selector: 'fd-dialog',
@@ -31,12 +28,14 @@ import { debounceTime } from 'rxjs/operators';
     templateUrl: './dialog.component.html',
     host: {
         tabindex: '-1',
-        '[@dialog-fade]': ''
+        '[@fade-in]': ''
     },
-    animations: [dialogFadeNgIf],
+    animations: [fadeIn],
     encapsulation: ViewEncapsulation.None
 })
-export class DialogComponent implements OnInit, AfterViewInit, OnDestroy, CssClassBuilder {
+export class DialogComponent extends DialogBase<DialogConfig, DialogRef>
+    implements OnInit, OnChanges, AfterViewInit, OnDestroy, CssClassBuilder {
+
     /** Custom classes */
     @Input()
     set class(userClass: string) {
@@ -88,160 +87,56 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy, CssCla
         }
     }
 
-    /** @hidden Whenever dialog should be visible */
-    showDialogWindow: boolean;
-
     /** @hidden Whenever dialog is dragged */
     isDragged: boolean;
-
-    /** @hidden Dialog padding sizes */
-    dialogPaddingSize: 's' | 'm' | 'l' | 'xl';
-
-    /** @hidden */
-    private _focusTrap: FocusTrap;
 
     /** @hidden */
     private _class = '';
 
-    /** @hidden */
-    private _subscriptions = new Subscription();
-
     constructor(
-        @Optional() @Inject(DIALOG_CONFIG) public dialogConfig: DialogConfig,
-        @Optional() @Inject(DIALOG_REF) private _dialogRef: DialogRef,
-        private _elementRef: ElementRef,
-        private _changeDetectorRef: ChangeDetectorRef
-    ) {}
+        @Optional() @Inject(DIALOG_CONFIG) dialogConfig: DialogConfig,
+        @Optional() @Inject(DIALOG_REF) dialogRef: DialogRef,
+        changeDetectorRef: ChangeDetectorRef,
+        elementRef: ElementRef
+    ) {
+        super(dialogConfig, dialogRef, elementRef, changeDetectorRef);
+    }
 
     /** @hidden */
     ngOnInit(): void {
-        this._listenOnHidden();
+        super.ngOnInit();
+        this.buildComponentCssClass();
+    }
+
+    /** @hidden */
+    ngOnChanges(): void {
+        this.buildComponentCssClass();
     }
 
     /** @hidden */
     ngAfterViewInit(): void {
-        this._trapFocus();
-        this._setStyles();
-        this._listenOnWindowResize();
-        this.adjustResponsivePadding();
-        this._dialogRef.loaded();
+        super.ngAfterViewInit();
     }
 
     /** @hidden */
     ngOnDestroy(): void {
-        this._deactivateFocusTrap();
-        this._subscriptions.unsubscribe();
-    }
-
-    /** @hidden Listen and close dialog on Escape key */
-    @HostListener('keyup', ['$event'])
-    closeDialogEsc(event: KeyboardEvent): void {
-        if (this.dialogConfig.escKeyCloseable && (event.key === 'Escape' || event.key === 'Esc')) {
-            this._dialogRef.dismiss('escape');
-        }
-    }
-
-    /** @hidden Listen and close dialog on Backdrop click */
-    @HostListener('mousedown', ['$event.target'])
-    closeDialog(target: ElementRef): void {
-        if (this.dialogConfig.backdropClickCloseable && target === this._elementRef.nativeElement) {
-            this._dialogRef.dismiss('backdrop');
-        }
+        super.ngOnDestroy();
     }
 
     /** @hidden */
     @applyCssClass
     buildComponentCssClass(): string[] {
+
         return [
             this.dialogConfig.hasBackdrop ? 'fd-dialog' : '',
             this.showDialogWindow ? 'fd-dialog--active' : '',
             this._class,
-            this.dialogConfig.backdropClass
+            this.dialogConfig.backdropClass || ''
         ];
     }
 
     /** @hidden */
     elementRef(): ElementRef {
         return this._elementRef;
-    }
-
-    /** @hidden Determine Dialog padding size based on Dialogs window width */
-    adjustResponsivePadding(): void {
-        if (this.dialogConfig.responsivePadding) {
-            const dialogWidth = this.dialogWindow.nativeElement.getBoundingClientRect().width;
-            if (dialogWidth < 599) {
-                this.dialogPaddingSize = 's';
-            } else if (dialogWidth < 1023) {
-                this.dialogPaddingSize = 'm';
-            } else if (dialogWidth < 1439) {
-                this.dialogPaddingSize = 'l';
-            } else {
-                this.dialogPaddingSize = 'xl';
-            }
-            this._changeDetectorRef.detectChanges();
-        }
-    }
-
-    /** @hidden Trap focus inside Dialog window */
-    private _trapFocus(): void {
-        if (this.dialogConfig.focusTrapped) {
-            try {
-                this._focusTrap = focusTrap(this._elementRef.nativeElement, {
-                    clickOutsideDeactivates: this.dialogConfig.backdropClickCloseable && this.dialogConfig.hasBackdrop,
-                    escapeDeactivates: false,
-                    allowOutsideClick: (event: MouseEvent) => true
-                });
-                this._focusTrap.activate();
-            } catch (e) {
-                console.warn('Attempted to focus trap the dialog, but no tabbable elements were found.', e);
-            }
-        }
-    }
-
-    /** @hidden */
-    private _deactivateFocusTrap(): void {
-        if (this._focusTrap) {
-            this._focusTrap.deactivate();
-        }
-    }
-
-    /** @hidden Listen on Dialog visibility */
-    private _listenOnHidden(): void {
-        this._subscriptions.add(
-            this._dialogRef.onHide.subscribe((isHidden) => {
-                this.showDialogWindow = !isHidden;
-                this.buildComponentCssClass();
-            })
-        );
-    }
-
-    /** @hidden Set Dialog styles from DialogConfig */
-    private _setStyles(): void {
-        this.dialogWindow.nativeElement.style.width = this.dialogConfig.width;
-        this.dialogWindow.nativeElement.style.height = this.dialogConfig.height;
-        this.dialogWindow.nativeElement.style.minWidth = this.dialogConfig.minWidth;
-        this.dialogWindow.nativeElement.style.minHeight = this.dialogConfig.minHeight;
-        this.dialogWindow.nativeElement.style.maxWidth = this.dialogConfig.maxWidth;
-        this.dialogWindow.nativeElement.style.maxHeight = this.dialogConfig.maxHeight;
-
-        if (this.dialogConfig.position) {
-            this.dialogWindow.nativeElement.style.top = this.dialogConfig.position.top;
-            this.dialogWindow.nativeElement.style.bottom = this.dialogConfig.position.bottom;
-            this.dialogWindow.nativeElement.style.left = this.dialogConfig.position.left;
-            this.dialogWindow.nativeElement.style.right = this.dialogConfig.position.right;
-        } else {
-            this.dialogWindow.nativeElement.style.position = 'relative';
-        }
-    }
-
-    /** @hidden Listen on window resize and adjust padding */
-    private _listenOnWindowResize(): void {
-        if (this.dialogConfig.responsivePadding) {
-            this._subscriptions.add(
-                fromEvent(window, 'resize')
-                    .pipe(debounceTime(100))
-                    .subscribe(() => this.adjustResponsivePadding())
-            );
-        }
     }
 }

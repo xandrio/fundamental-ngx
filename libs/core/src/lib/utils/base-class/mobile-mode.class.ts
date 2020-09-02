@@ -1,6 +1,5 @@
-import { ElementRef, InjectionToken, TemplateRef, ViewChild } from '@angular/core';
-import { DialogConfig } from '../../dialog/dialog-utils/dialog-default-config.class';
-import { DialogRef } from '../../dialog/dialog-utils/dialog-ref.class';
+import { ElementRef, InjectionToken } from '@angular/core';
+import { DialogRef, DialogConfig } from '../../dialog/dialog-utils';
 import { DialogService } from '../../dialog/dialog-service/dialog.service';
 import { MobileModeConfig } from '../../utils/interfaces/mobile-mode-config';
 import { MobileMode } from '../interfaces/mobile-control.interface';

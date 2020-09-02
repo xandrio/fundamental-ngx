@@ -13,8 +13,7 @@ import {
     ViewChild,
     ViewContainerRef
 } from '@angular/core';
-import { DIALOG_REF, DialogRef } from '../dialog-utils/dialog-ref.class';
-import { DIALOG_CONFIG, DialogConfig } from '../dialog-utils/dialog-default-config.class';
+import { DIALOG_CONFIG, DIALOG_REF, DialogRef, DialogConfig } from '../dialog-utils';
 import { applyCssClass } from '../../utils/decorators/apply-css-class.decorator';
 import { CssClassBuilder } from '../../utils/interfaces/css-class-builder.interface';
 import { DefaultDialogObject } from '../default-dialog/default-dialog-object';
@@ -61,7 +60,10 @@ export class DialogContainerComponent implements AfterViewInit, CssClassBuilder 
     /** @hidden */
     @applyCssClass
     buildComponentCssClass(): string[] {
-        return [this.dialogConfig.containerClass, this._class];
+        return [
+            this.dialogConfig.containerClass || '',
+            this._class
+        ];
     }
 
     /** @hidden */

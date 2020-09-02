@@ -1,12 +1,12 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { InjectionToken } from '@angular/core';
-import { DialogBaseRef } from '../dialog-base/dialog-base-ref.class';
+import { DialogBaseRef } from '../dialog-base';
 
 /** DialogRef injection token */
 export const DIALOG_REF = new InjectionToken<DialogRef>('DialogRef');
 
 /** Reference to a dialog component */
-export class DialogRef extends DialogBaseRef {
+export class DialogRef<D = any> extends DialogBaseRef<D> {
     private readonly _onLoading = new BehaviorSubject<boolean>(false);
 
     /** Observable that is triggered whenever the dialog should be displayed in loading state.*/

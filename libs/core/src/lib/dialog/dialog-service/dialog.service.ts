@@ -1,8 +1,13 @@
 import { ComponentRef, Inject, Injectable, Injector, Optional, TemplateRef, Type } from '@angular/core';
 import { DialogContainerComponent } from '../dialog-container/dialog-container.component';
-import { DIALOG_CONFIG, DIALOG_DEFAULT_CONFIG, DialogConfig } from '../dialog-utils/dialog-default-config.class';
+import {
+    DIALOG_CONFIG,
+    DIALOG_DEFAULT_CONFIG,
+    DIALOG_REF,
+    DialogConfig,
+    DialogRef
+} from '../dialog-utils';
 import { DynamicComponentService } from '../../utils/dynamic-component/dynamic-component.service';
-import { DIALOG_REF, DialogRef } from '../dialog-utils/dialog-ref.class';
 import { DefaultDialogObject } from '../default-dialog/default-dialog-object';
 
 /** Service used to dynamically generate a dialog. */
@@ -42,16 +47,18 @@ export class DialogService {
 
         const dialogInjector = Injector.create({
             providers: [
-                { provide: DIALOG_CONFIG, useValue: dialogConfig },
-                { provide: DIALOG_REF, useValue: dialogRef }
+                {provide: DIALOG_CONFIG, useValue: dialogConfig},
+                {provide: DIALOG_REF, useValue: dialogRef}
             ]
         });
 
-        const component: ComponentRef<DialogContainerComponent> = this._dynamicComponentService.createDynamicComponent<
-            DialogContainerComponent
-        >(contentType, DialogContainerComponent, dialogConfig, {
-            injector: dialogInjector
-        });
+        const component: ComponentRef<DialogContainerComponent> =
+            this._dynamicComponentService.createDynamicComponent<DialogContainerComponent>(
+                contentType,
+                DialogContainerComponent,
+                dialogConfig,
+                { injector: dialogInjector }
+            );
 
         this._dialogs.push(component);
 
@@ -78,6 +85,6 @@ export class DialogService {
 
     /** @hidden Extends dialog config using default values*/
     private _applyDefaultConfig(config: DialogConfig, defaultConfig: DialogConfig): DialogConfig {
-        return { ...defaultConfig, ...config };
+        return {...defaultConfig, ...config};
     }
 }

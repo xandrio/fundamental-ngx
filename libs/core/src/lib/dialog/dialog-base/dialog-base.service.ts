@@ -1,10 +1,8 @@
 import { ComponentRef, Injectable, Injector, TemplateRef, Type } from '@angular/core';
 import { DialogContainerComponent } from '../dialog-container/dialog-container.component';
 import { DynamicComponentService } from '../../utils/dynamic-component/dynamic-component.service';
-import { DIALOG_REF, DialogRef } from '../dialog-utils/dialog-ref.class';
 import { DefaultDialogObject } from '../default-dialog/default-dialog-object';
-import { DIALOG_CONFIG, DialogConfig } from '../dialog-utils/dialog-config.interface';
-import { DialogDefaultConfig } from '../dialog-utils/dialog-default-config.class';
+import { DIALOG_CONFIG, DIALOG_REF, DialogRef, DialogConfig } from '../dialog-utils';
 
 /** Service used to dynamically generate a dialog. */
 @Injectable()
@@ -38,7 +36,7 @@ export class DialogBaseService {
     public open(contentType: Type<any> | TemplateRef<any> | DefaultDialogObject, dialogConfig?: DialogConfig): DialogRef {
         const dialogRef: DialogRef = new DialogRef();
 
-        dialogConfig = this._applyDefaultConfig(dialogConfig, this._defaultConfig || new DialogDefaultConfig());
+        dialogConfig = this._applyDefaultConfig(dialogConfig, this._defaultConfig || new DialogConfig());
         dialogRef.data = dialogConfig.data;
 
         const dialogInjector = Injector.create({

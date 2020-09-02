@@ -1,1 +1,27 @@
-<p>message-box works!</p>
+<div
+    #messageBoxWindow
+    role="dialog"
+    tabindex="-1"
+    attr.aria-modal="true"
+    [class]="dialogConfig.dialogPanelClass"
+    [ngClass]="{
+        'fd-dialog__content': true,
+        'fd-dialog__content--s': dialogPaddingSize === 's',
+        'fd-dialog__content--m': dialogPaddingSize === 'm',
+        'fd-dialog__content--l': dialogPaddingSize === 'l',
+        'fd-dialog__content--xl': dialogPaddingSize === 'xl',
+        'fd-dialog__content--mobile': dialogConfig.mobile,
+        'fd-dialog__content--full-screen': dialogConfig.fullScreen,
+        'fd-dialog__content--no-mobile-stretch': dialogConfig.mobileOuterSpacing,
+        'fd-dialog__content--with-header': headerWrapper.children.length
+    }"
+    [@fade-in]
+    [attr.id]="dialogConfig.id"
+    [attr.aria-label]="dialogConfig.ariaLabel"
+    [attr.aria-labelledby]="dialogConfig.ariaLabelledBy"
+    [attr.aria-describedby]="dialogConfig.ariaDescribedBy"
+>
+    <ng-content select="fd-dialog-header"></ng-content>
+    <ng-content select="fd-dialog-body"></ng-content>
+    <ng-content select="fd-dialog-footer"></ng-content>
+</div>

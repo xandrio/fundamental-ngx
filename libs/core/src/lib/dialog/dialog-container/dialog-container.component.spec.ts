@@ -1,8 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Component } from '@angular/core';
-import { DIALOG_CONFIG, DialogConfig } from '../dialog-utils/dialog-default-config.class';
-import { DIALOG_REF, DialogRef } from '../dialog-utils/dialog-ref.class';
+import { DIALOG_CONFIG, DIALOG_REF, DialogRef, DialogConfig } from '../dialog-utils';
 import { DialogContainerComponent } from '../dialog-container/dialog-container.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 
