@@ -126,7 +126,6 @@ export class DialogComponent extends DialogBase<DialogConfig, DialogRef>
     /** @hidden */
     @applyCssClass
     buildComponentCssClass(): string[] {
-
         return [
             this.dialogConfig.hasBackdrop ? 'fd-dialog' : '',
             this.showDialogWindow ? 'fd-dialog--active' : '',

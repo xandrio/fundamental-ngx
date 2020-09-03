@@ -8,6 +8,7 @@ import {
     forwardRef,
     Injector,
     Input,
+    isDevMode,
     OnChanges,
     OnDestroy,
     OnInit,
@@ -30,6 +31,7 @@ import { MULTI_INPUT_COMPONENT, MultiInputInterface } from './multi-input.interf
 import { Subscription } from 'rxjs';
 import { TokenizerComponent } from '../token/tokenizer.component';
 import { ListComponent } from '../list/list.component';
+import { FOCUS_TRAP_ERROR } from '../utils/consts';
 
 /**
  * Input field with multiple selection enabled. Should be used when a user can select between a
@@ -490,7 +492,9 @@ export class MultiInputComponent implements
                 escapeDeactivates: false
             });
         } catch (e) {
-            console.warn('Unsuccessful attempting to focus trap the Multi Input.');
+            if (isDevMode()) {
+                throw new Error(FOCUS_TRAP_ERROR('Multi Input'));
+            }
         }
     }
 

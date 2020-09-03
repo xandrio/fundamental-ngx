@@ -9,6 +9,7 @@ import {
     forwardRef,
     Injector,
     Input,
+    isDevMode,
     OnChanges,
     OnDestroy,
     OnInit,
@@ -17,16 +18,13 @@ import {
     SimpleChanges,
     TemplateRef,
     ViewChild,
-    ViewChildren,
     ViewEncapsulation
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ListItemComponent } from '../list/list-item/list-item.component';
 import { ListMessageDirective } from '../list/list-message.directive';
 import { ComboboxItem } from './combobox-item';
 import { MenuKeyboardService } from '../menu/menu-keyboard.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import focusTrap, { FocusTrap } from 'focus-trap';
 import { FormStates } from '../form/form-control/form-states';
 import { PopoverComponent } from '../popover/popover.component';
@@ -40,6 +38,7 @@ import { DynamicComponentService } from '../utils/dynamic-component/dynamic-comp
 import { ComboboxMobileComponent } from './combobox-mobile/combobox-mobile.component';
 import { ListComponent } from '../list/list.component';
 import { FocusEscapeDirection } from '../..';
+import { FOCUS_TRAP_ERROR } from '../utils/consts';
 
 /**
  * Allows users to filter through results and select a value.
@@ -563,7 +562,9 @@ export class ComboboxComponent implements ComboboxInterface, ControlValueAccesso
                 initialFocus: this._elementRef.nativeElement
             });
         } catch (e) {
-            console.warn('Unsuccessful attempting to focus trap the Combobox.');
+            if (isDevMode()) {
+                throw new Error(FOCUS_TRAP_ERROR('Combobox'));
+            }
         }
     }
 

@@ -7,6 +7,7 @@ import {
     HostListener,
     Inject,
     Input,
+    isDevMode,
     OnDestroy,
     OnInit,
     Optional,
@@ -25,6 +26,7 @@ import {
 import focusTrap, { FocusTrap } from 'focus-trap';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { FOCUS_TRAP_ERROR } from '../utils/consts';
 
 @Component({
     selector: 'fd-message-box',
@@ -186,7 +188,9 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                 });
                 this._focusTrap.activate();
             } catch (e) {
-                console.warn('Attempted to focus trap the dialog, but no tabbable elements were found.', e);
+                if (isDevMode()) {
+                    throw new Error(FOCUS_TRAP_ERROR('Message Box'));
+                }
             }
         }
     }

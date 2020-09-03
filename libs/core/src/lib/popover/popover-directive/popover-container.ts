@@ -8,6 +8,7 @@ import {
     EventEmitter,
     HostBinding,
     HostListener,
+    isDevMode,
     OnDestroy,
     Output,
     TemplateRef,
@@ -16,6 +17,7 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import focusTrap from 'focus-trap';
+import { FOCUS_TRAP_ERROR } from '../../utils/consts';
 
 /**
  * Not intended for external use.
@@ -98,7 +100,9 @@ export class PopoverContainer implements AfterViewInit, OnDestroy {
                 });
                 this.focusTrap.activate();
             } catch (e) {
-                console.warn('Attempted to focus trap the popover, but no tabbable elements were found.');
+                if (isDevMode()) {
+                    throw new Error(FOCUS_TRAP_ERROR('Popover'));
+                }
             }
         }
     }

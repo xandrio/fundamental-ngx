@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { DialogConfig, DialogService } from '@fundamental-ngx/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DialogService } from '@fundamental-ngx/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'fd-table-toolbar-example',
@@ -68,7 +68,7 @@ export class TableToolbarExampleComponent implements OnInit {
     }
 
     openDialog(dialog: TemplateRef<any>): void {
-        const dialogRef = this._dialogService.open(dialog, { responsivePadding: true } as DialogConfig);
+        const dialogRef = this._dialogService.open(dialog, { responsivePadding: true });
 
         dialogRef.afterClosed.subscribe(
             (result) => {

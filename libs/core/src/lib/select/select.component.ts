@@ -12,6 +12,7 @@ import {
     Inject,
     Injector,
     Input,
+    isDevMode,
     OnDestroy,
     OnInit,
     Optional,
@@ -35,6 +36,7 @@ import { SelectMobileComponent } from './select-mobile/select-mobile.component';
 import { DIALOG_CONFIG, DialogConfig } from '../dialog/dialog-utils';
 import { MobileModeConfig } from '../utils/interfaces/mobile-mode-config';
 import { SELECT_COMPONENT, SelectInterface } from './select.interface';
+import { FOCUS_TRAP_ERROR } from '../utils/consts';
 
 let selectUniqueId = 0;
 
@@ -418,7 +420,9 @@ export class SelectComponent implements ControlValueAccessor, SelectInterface, O
                 allowOutsideClick: (event: MouseEvent) => true
             });
         } catch (e) {
-            console.warn('Attempted to focus trap the select, but no tabbable elements were found.', e);
+            if (isDevMode()) {
+                throw new Error(FOCUS_TRAP_ERROR('Select'));
+            }
         }
     }
 

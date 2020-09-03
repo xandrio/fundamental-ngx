@@ -3,7 +3,8 @@ import {
     ChangeDetectorRef,
     Directive,
     ElementRef,
-    HostListener, isDevMode,
+    HostListener,
+    isDevMode,
     OnDestroy,
     OnInit
 } from '@angular/core';
@@ -12,8 +13,10 @@ import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { DialogBaseConfig } from './dialog-base-config.interface';
 import { DialogBaseRef } from './dialog-base-ref.class';
-import { KeyUtil } from '@fundamental-ngx/core';
+import { KeyUtil } from '../../utils/functions/key-util';
 import { FOCUS_TRAP_ERROR } from '../../utils/consts';
+
+export type DialogPaddingSize = 's' | 'm' | 'l' | 'xl';
 
 @Directive()
 export abstract class DialogBase<C, R> implements OnInit, AfterViewInit, OnDestroy {
@@ -24,7 +27,7 @@ export abstract class DialogBase<C, R> implements OnInit, AfterViewInit, OnDestr
     showDialogWindow = true;
 
     /** @hidden Dialog padding sizes */
-    dialogPaddingSize: 's' | 'm' | 'l' | 'xl';
+    dialogPaddingSize: DialogPaddingSize;
 
     /** @hidden */
     private _focusTrap: FocusTrap;
@@ -125,12 +128,12 @@ export abstract class DialogBase<C, R> implements OnInit, AfterViewInit, OnDestr
             this._dialogRef.onHide.subscribe((isHidden) => {
                 this.showDialogWindow = !isHidden;
                 isHidden ? this._deactivateFocusTrap() : this._trapFocus();
-                this._changeDetectorRef.markForCheck();
+                this._changeDetectorRef.detectChanges();
             })
         );
     }
 
-    /** @hidden Sets Dialog position based on DialogConfig */
+    /** @hidden Sets Dialog position based on DialogBaseConfig */
     private _setPositionStyles(): void {
         this.dialogWindow.nativeElement.style.width = this.dialogConfig.width;
         this.dialogWindow.nativeElement.style.height = this.dialogConfig.height;
