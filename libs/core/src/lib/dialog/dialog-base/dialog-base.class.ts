@@ -24,7 +24,7 @@ export abstract class DialogBase<C, R> implements OnInit, AfterViewInit, OnDestr
     abstract dialogWindow: ElementRef;
 
     /** @hidden Whenever dialog should be visible */
-    showDialogWindow = true;
+    showDialog = true;
 
     /** @hidden Dialog padding sizes */
     dialogPaddingSize: DialogPaddingSize;
@@ -97,7 +97,7 @@ export abstract class DialogBase<C, R> implements OnInit, AfterViewInit, OnDestr
 
     /** @hidden Trap focus inside Dialog window */
     private _trapFocus(): void {
-        if (!this.dialogConfig.focusTrapped || !this.showDialogWindow || this._focusTrap) {
+        if (!this.dialogConfig.focusTrapped || !this.showDialog || this._focusTrap) {
             return
         }
 
@@ -126,7 +126,7 @@ export abstract class DialogBase<C, R> implements OnInit, AfterViewInit, OnDestr
     private _listenOnHidden(): void {
         this._subscriptions.add(
             this._dialogRef.onHide.subscribe((isHidden) => {
-                this.showDialogWindow = !isHidden;
+                this.showDialog = !isHidden;
                 isHidden ? this._deactivateFocusTrap() : this._trapFocus();
                 this._changeDetectorRef.detectChanges();
             })
