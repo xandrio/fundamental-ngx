@@ -28,7 +28,7 @@ export class KeyboardSupportService<T> {
 
     /** @hidden */
     setKeyboardService(queryList: QueryList<KeyboardSupportItemInterface & T>, wrap?: boolean): void {
-        this._keyManager = new FocusKeyManager(queryList).withWrap(wrap).withHomeAndEnd();
+        this._keyManager = new FocusKeyManager(queryList).withWrap(wrap);
         queryList.changes.pipe(
             takeUntil(this._onDestroy$),
             startWith(0)
