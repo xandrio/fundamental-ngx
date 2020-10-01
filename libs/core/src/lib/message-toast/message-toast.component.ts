@@ -1,14 +1,14 @@
-import { Component, Inject, Optional, Directive } from '@angular/core';
+import { Component, Inject, Optional } from '@angular/core';
 
-@Directive({
-    // tslint:disable-next-line:directive-selector
-    selector: '[fd-message-toast]',
+@Component({
+    selector: 'fd-message-toast',
+    templateUrl: 'message-toast.component.html',
     host: {
         '[class.fd-message-toast]': 'true',
         '[style.min-width]': 'minWidth',
         '[attr.id]': 'id'
     }
 })
-export class MessageToastDirective {
+export class MessageToastComponent {
     constructor() {}
 }
