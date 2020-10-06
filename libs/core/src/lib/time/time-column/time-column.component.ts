@@ -15,12 +15,13 @@ import {
     ViewChildren,
     ViewEncapsulation
 } from '@angular/core';
-import { CarouselConfig, CarouselDirective, PanEndOutput } from '../../utils/directives/carousel/carousel.directive';
+import { CarouselDirective } from '../../utils/directives/carousel/carousel.directive';
 import { CarouselItemDirective } from '../../utils/directives/carousel/carousel-item.directive';
 import { KeyUtil } from '../../utils/functions/key-util';
 import { TimeColumnConfig } from './time-column-config';
 import { Subject, Subscription } from 'rxjs';
 import { buffer, debounceTime, map } from 'rxjs/operators';
+import { CarouselConfig, PanEndOutput } from '../../utils/services/carousel.service';
 
 
 let timeColumnUniqueId = 0;
