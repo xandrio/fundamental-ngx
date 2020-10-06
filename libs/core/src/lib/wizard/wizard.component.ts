@@ -30,6 +30,12 @@ export class WizardComponent implements AfterViewInit, OnDestroy {
     contentTemplate: TemplateRef<any>;
 
     /** @hidden */
+    stackedStepsLeft: WizardStepComponent[] = [];
+
+    /** @hidden */
+    stackedStepsRight: WizardStepComponent[] = [];
+
+    /** @hidden */
     private _subscriptions: Subscription = new Subscription();
 
     /** @hidden */
@@ -63,6 +69,11 @@ export class WizardComponent implements AfterViewInit, OnDestroy {
                 this._subscriptions.add(
                     step.stepClicked.subscribe(event => {
                         this._stepClicked(event);
+                    })
+                );
+                this._subscriptions.add(
+                    step.stepIndicatorItemClicked.subscribe(event => {
+                        this._stepClicked(event, true);
                     })
                 );
                 this._subscriptions.add(
@@ -130,6 +141,11 @@ export class WizardComponent implements AfterViewInit, OnDestroy {
                 : (stepToHide = stepsArray[stepsArray.length - 1]);
             stepToHide.elRef.nativeElement.classList.add('fd-wizard__step--no-label');
             stepToHide.elRef.nativeElement.classList.add('fd-wizard__step--stacked');
+            if (stepsArray.indexOf(stepToHide) < currentStepIndex) {
+                this.stackedStepsLeft.push(stepToHide);
+            } else if (stepsArray.indexOf(stepToHide) > currentStepIndex) {
+                this.stackedStepsRight.push(stepToHide);
+            }
             this._setStackedTop(currentStep);
         }
     }
@@ -140,6 +156,9 @@ export class WizardComponent implements AfterViewInit, OnDestroy {
             step.elRef.nativeElement.classList.remove('fd-wizard__step--stacked-top');
             if (this.steps.toArray()[index + 1] === currentStep) {
                 step.elRef.nativeElement.classList.add('fd-wizard__step--stacked-top');
+                step.stepIndicator.stackedItems = this.stackedStepsLeft;
+            } else {
+                step.stepIndicator.stackedItems = [];
             }
         });
     }
@@ -163,6 +182,8 @@ export class WizardComponent implements AfterViewInit, OnDestroy {
     /** @hidden */
     private _shrinkWhileAnyStepIsTooNarrow(): void {
         this._resetStepClasses();
+        this.stackedStepsLeft = [];
+        this.stackedStepsRight = [];
         let i = 0;
         while (this._anyStepIsTooNarrow() && i < this.steps.length - 1) {
             i++;
@@ -182,20 +203,22 @@ export class WizardComponent implements AfterViewInit, OnDestroy {
     }
 
     /** @hidden */
-    private _stepClicked(clickedStep: WizardStepComponent): void {
-        this.steps.forEach((step) => {
-            if (step === clickedStep) {
-                step.status = 'current';
-                step.statusChange.emit('current');
-            } else if (step !== clickedStep) {
-                if (this.steps.toArray().indexOf(step) < this.steps.toArray().indexOf(clickedStep)) {
-                    step.status = 'completed';
-                    step.statusChange.emit('completed');
-                } else if (this.steps.toArray().indexOf(step) > this.steps.toArray().indexOf(clickedStep)) {
-                    step.status = 'upcoming';
-                    step.statusChange.emit('upcoming');
+    private _stepClicked(clickedStep: WizardStepComponent, fromMenu?: boolean): void {
+        if (fromMenu || !clickedStep.elRef.nativeElement.classList.contains('fd-wizard__step--stacked-top')) {
+            this.steps.forEach((step) => {
+                if (step === clickedStep) {
+                    step.status = 'current';
+                    step.statusChange.emit('current');
+                } else if (step !== clickedStep) {
+                    if (this.steps.toArray().indexOf(step) < this.steps.toArray().indexOf(clickedStep)) {
+                        step.status = 'completed';
+                        step.statusChange.emit('completed');
+                    } else if (this.steps.toArray().indexOf(step) > this.steps.toArray().indexOf(clickedStep)) {
+                        step.status = 'upcoming';
+                        step.statusChange.emit('upcoming');
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 }
