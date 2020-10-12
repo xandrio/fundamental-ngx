@@ -11,6 +11,7 @@ import { SharedDocumentationPageModule } from '../../../documentation/shared-doc
 import { WizardCustomizableExampleComponent } from './examples/wizard-customizable-example.component';
 import { WizardMobileExampleComponent } from './examples/wizard-mobile-example.component';
 import { WizardBranchingExampleComponent } from './examples/wizard-branching-example.component';
+import { WizardSummaryExampleComponent } from './examples/wizard-summary-example.component';
 
 const routes: Routes = [
     {
@@ -41,7 +42,8 @@ const routes: Routes = [
         WizardExampleComponent,
         WizardCustomizableExampleComponent,
         WizardMobileExampleComponent,
-        WizardBranchingExampleComponent
+        WizardBranchingExampleComponent,
+        WizardSummaryExampleComponent
     ]
 })
 export class WizardDocsModule {}
