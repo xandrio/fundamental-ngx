@@ -1,9 +1,14 @@
+<<<<<<< HEAD
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { WizardStepComponent } from '../wizard-step/wizard-step.component';
+=======
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+>>>>>>> master
 
 @Component({
     selector: 'fd-wizard-step-indicator',
     templateUrl: './wizard-step-indicator.component.html',
+<<<<<<< HEAD
     // TODO: remove these when implementing action sheet here
     styles: [
         `
@@ -17,6 +22,9 @@ import { WizardStepComponent } from '../wizard-step/wizard-step.component';
         `
     ],
     encapsulation: ViewEncapsulation.None
+=======
+    changeDetection: ChangeDetectionStrategy.OnPush
+>>>>>>> master
 })
 export class WizardStepIndicatorComponent {
     /**
@@ -24,6 +32,7 @@ export class WizardStepIndicatorComponent {
      */
     @Input()
     glyph: string;
+<<<<<<< HEAD
 
     /** @hidden */
     stackedItems: WizardStepComponent[];
@@ -47,4 +56,6 @@ export class WizardStepIndicatorComponent {
         this.stepIndicatorItemClicked.emit(step);
     }
 
+=======
+>>>>>>> master
 }

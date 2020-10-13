@@ -16,8 +16,12 @@
                 fd-wizard-step
                 [status]="step2status"
                 (statusChange)="step2status = $event"
+<<<<<<< HEAD
                 branching="true"
                 label="Step 2: This step has a 'Branching' connector"
+=======
+                label="Step 2: Another Step"
+>>>>>>> master
             >
                 <fd-wizard-step-indicator>2</fd-wizard-step-indicator>
                 <fd-wizard-content size="md">
@@ -43,7 +47,11 @@
             </li>
         </ul>
     </fd-wizard-navigation>
+<<<<<<< HEAD
     <div fd-bar [barDesign]="'footer'">
+=======
+    <div fd-bar barDesign="footer">
+>>>>>>> master
         <div fd-bar-right>
             <fd-bar-element>
                 <button fd-button label="Save" fdType="transparent" [compact]="true"></button>

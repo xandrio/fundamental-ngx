@@ -4,8 +4,13 @@
             <ul fd-wizard-progress-bar>
                 <li
                     fd-wizard-step
+<<<<<<< HEAD
                     [status]="step1status"
                     (statusChange)="step1status = $event"
+=======
+                    [status]="example1step1status"
+                    (statusChange)="example1step1status = $event"
+>>>>>>> master
                     label="Step 1: One Line"
                 >
                     <fd-wizard-step-indicator glyph="accept"></fd-wizard-step-indicator>
@@ -16,7 +21,11 @@
                         elementum mi, sed eleifend ligula. Nulla tempor vulputate dolor, nec dignissim quam convallis
                         ut.
                         <fd-wizard-next-step>
+<<<<<<< HEAD
                             <button fd-button fdType="emphasized" (click)="goToStep(2)">
+=======
+                            <button fd-button fdType="emphasized" (click)="example1goToStep(2)">
+>>>>>>> master
                                 Go to Step 2
                             </button>
                         </fd-wizard-next-step>
@@ -24,18 +33,33 @@
                 </li>
                 <li
                     fd-wizard-step
+<<<<<<< HEAD
                     [status]="step2status"
                     (statusChange)="step2status = $event"
                     label="Step 2: Very long label that truncates on the second line"
                 >
                     <fd-wizard-step-indicator>2</fd-wizard-step-indicator>
+=======
+                    [status]="example1step2status"
+                    (statusChange)="example1step2status = $event"
+                    label="Step 2: Very long label that truncates on the second line"
+                >
+                    <fd-wizard-step-indicator>2</fd-wizard-step-indicator>
+                    <fd-wizard-content>
+                        Wizard Content for step 2
+                    </fd-wizard-content>
+>>>>>>> master
                 </li>
                 <li fd-wizard-step status="upcoming" label="Step 3">
                     <fd-wizard-step-indicator>3</fd-wizard-step-indicator>
                 </li>
             </ul>
         </fd-wizard-navigation>
+<<<<<<< HEAD
         <div fd-bar [barDesign]="'floating-footer'">
+=======
+        <div fd-bar barDesign="floating-footer">
+>>>>>>> master
             <div fd-bar-right>
                 <fd-bar-element>
                     <button fd-button label="Save" fdType="transparent"></button>
@@ -52,15 +76,24 @@
             <ul fd-wizard-progress-bar>
                 <li
                     fd-wizard-step
+<<<<<<< HEAD
                     [status]="step1status"
                     (statusChange)="step1status = $event"
+=======
+                    [status]="example2step1status"
+                    (statusChange)="example2step1status = $event"
+>>>>>>> master
                     label="Step 1: One Line"
                 >
                     <fd-wizard-step-indicator glyph="accept"></fd-wizard-step-indicator>
                     <fd-wizard-content>
                         <img src="http://lorempixel.com/220/220/nature/4/" role="presentation" />
                         <fd-wizard-next-step [floating]="true">
+<<<<<<< HEAD
                             <button fd-button fdType="emphasized" (click)="goToStep(2)">
+=======
+                            <button fd-button fdType="emphasized" (click)="example2goToStep(2)">
+>>>>>>> master
                                 Go to Step 2
                             </button>
                         </fd-wizard-next-step>
@@ -68,8 +101,13 @@
                 </li>
                 <li
                     fd-wizard-step
+<<<<<<< HEAD
                     [status]="step2status"
                     (statusChange)="step2status = $event"
+=======
+                    [status]="example2step2status"
+                    (statusChange)="example2step2status = $event"
+>>>>>>> master
                     label="Step 2: Very long label that truncates on the second line"
                 >
                     <fd-wizard-step-indicator>2</fd-wizard-step-indicator>
@@ -82,7 +120,11 @@
                 </li>
             </ul>
         </fd-wizard-navigation>
+<<<<<<< HEAD
         <div fd-bar [barDesign]="'floating-footer'">
+=======
+        <div fd-bar barDesign="floating-footer">
+>>>>>>> master
             <div fd-bar-right>
                 <fd-bar-element>
                     <button fd-button label="Save" fdType="transparent"></button>
