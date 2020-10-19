@@ -19,7 +19,7 @@
 <h2>Responsive columns</h2>
 <description>
     Responsiveness can be achieved by setting a column width for each size using the <code>fdLayoutGridCol fdLayoutGridColM
-    fdLayoutGridColL fdLayoutGridColXl</code> properties.
+    fdLayoutGridColL fdLayoutGridColXl</code> properties. Responsiveness works with or without offsets.
 </description>
 <component-example>
     <fd-layout-grid-responsive-example></fd-layout-grid-responsive-example>
@@ -43,3 +43,13 @@
     <fd-layout-grid-no-gap-example></fd-layout-grid-no-gap-example>
 </component-example>
 <code-example [exampleFiles]="noGapLayoutGrid"></code-example>
+
+<h2>Adjusting columns</h2>
+<description>
+    To make the column auto adjust and occupy the remaining space of the row use the <code>full</code> input.
+    There is a minimum width of 1/12 columns
+</description>
+<component-example>
+    <fd-layout-grid-adjusting-example></fd-layout-grid-adjusting-example>
+</component-example>
+<code-example [exampleFiles]="adjustingLayoutGrid"></code-example>

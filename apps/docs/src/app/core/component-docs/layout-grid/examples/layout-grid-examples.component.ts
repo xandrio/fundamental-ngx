@@ -29,3 +29,9 @@ export class LayoutGridResponsiveExampleComponent {}
     templateUrl: './layout-grid-row-example.component.html'
 })
 export class LayoutGridRowExampleComponent {}
+
+@Component({
+    selector: 'fd-layout-grid-adjusting-example',
+    templateUrl: './layout-grid-adjusting-example.component.html'
+})
+export class LayoutGridAdjustingExampleComponent {}
