@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    forwardRef,
+    Input,
+    TemplateRef,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
+import { FD_NEW_FORM_MESSAGE } from '../new-form-message/new-form-message.class';
 
 export type MessageStates = 'success' | 'error' | 'warning' | 'information';
 
@@ -9,6 +18,12 @@ export type MessageStates = 'success' | 'error' | 'warning' | 'information';
     selector: 'fd-form-message',
     templateUrl: './form-message.component.html',
     styleUrls: ['./form-message.component.scss'],
+    providers: [
+        {
+            provide: FD_NEW_FORM_MESSAGE,
+            useExisting: forwardRef(() => FormMessageComponent)
+        }
+    ],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -31,4 +46,8 @@ export class FormMessageComponent {
      */
     @Input()
     embedded = false;
+
+    /** @hidden */
+    @ViewChild(TemplateRef)
+    contentTemplateRef: TemplateRef<any>;
 }

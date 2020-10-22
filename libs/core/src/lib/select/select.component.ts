@@ -36,6 +36,7 @@ import { DIALOG_CONFIG, DialogConfig } from '../dialog/dialog-utils/dialog-confi
 import { MobileModeConfig } from '../utils/interfaces/mobile-mode-config';
 import { SELECT_COMPONENT, SelectInterface } from './select.interface';
 import { DOWN_ARROW, ENTER, ESCAPE, SPACE, UP_ARROW } from '@angular/cdk/keycodes';
+import { FD_NEW_FORM_CONTROL, NewFormControlClass } from '../form/new-form-control/new-form-control.class';
 
 let selectUniqueId = 0;
 
@@ -61,10 +62,20 @@ export interface OptionStatusChange {
             provide: NG_VALUE_ACCESSOR,
             useExisting: forwardRef(() => SelectComponent),
             multi: true
+        },
+        {
+            provide: FD_NEW_FORM_CONTROL,
+            useExisting: forwardRef(() => SelectComponent)
         }
     ]
 })
-export class SelectComponent implements ControlValueAccessor, SelectInterface, OnInit, AfterViewInit, AfterContentInit, OnDestroy {
+export class SelectComponent implements NewFormControlClass,
+    ControlValueAccessor,
+    SelectInterface,
+    OnInit,
+    AfterViewInit,
+    AfterContentInit,
+    OnDestroy {
 
     /** Id of the control. */
     @Input()

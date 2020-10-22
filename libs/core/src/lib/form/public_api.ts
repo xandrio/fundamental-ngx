@@ -15,3 +15,6 @@ export * from './fieldset/fieldset.component';
 export * from './fieldset/fieldset.module';
 export * from './form-input-message-group/form-input-message-group.component';
 export * from './form-input-message-group/form-input-message-group.module';
+
+export * from './new-form-control/new-form-control.class';
+export * from './new-form-item/new-form-item.component';

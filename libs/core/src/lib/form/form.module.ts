@@ -10,10 +10,12 @@ import { FormLegendModule } from './form-legend/form-legend.module';
 import { FormMessageModule } from './form-message/form-message.module';
 import { FormInputMessageGroupModule } from './form-input-message-group/form-input-message-group.module';
 import { FormGroupModule } from './form-group/form-group.module';
+import { NewFormItemComponent } from './new-form-item/new-form-item.component';
 
 @NgModule({
     imports: [CommonModule, PopoverModule],
     exports: [
+        NewFormItemComponent,
         FieldSetModule,
         FormControlModule,
         FormItemModule,
@@ -22,6 +24,7 @@ import { FormGroupModule } from './form-group/form-group.module';
         FormMessageModule,
         FormInputMessageGroupModule,
         FormGroupModule
-    ]
+    ],
+    declarations: [NewFormItemComponent]
 })
 export class FormModule {}
