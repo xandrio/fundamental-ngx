@@ -69,6 +69,9 @@ import { ToolbarModule } from './toolbar/toolbar.module';
 import { CardModule } from './card/card.module';
 import { ObjectIdentifierModule } from './object-identifier/object-identifier.module';
 import { ObjectMarkerModule } from './object-marker/object-marker.module';
+import { MessageToastModule } from './message-toast/message-toast.module';
+import { MessageToastService } from './message-toast/message-toast-service/message-toast.service';
+import { DynamicSideContentModule } from './dynamic-side-content/dynamic-side-content.module';
 
 @NgModule({
     imports: [CommonModule, FormsModule],
@@ -137,8 +140,10 @@ import { ObjectMarkerModule } from './object-marker/object-marker.module';
         SwitchModule,
         TokenModule,
         TreeModule,
-        CardModule
+        CardModule,
+        MessageToastModule,
+        DynamicSideContentModule
     ],
-    providers: [AlertService, DialogService, NotificationService]
+    providers: [AlertService, DialogService, NotificationService, MessageToastService]
 })
 export class FundamentalNgxCoreModule {}

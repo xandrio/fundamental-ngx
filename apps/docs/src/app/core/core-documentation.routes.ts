@@ -87,6 +87,13 @@ export const ROUTES: Routes = [
                 loadChildren: () => import('./component-docs/dialog/dialog-docs.module').then((m) => m.DialogDocsModule)
             },
             {
+                path: 'dynamic-side-content',
+                loadChildren: () =>
+                    import('./component-docs/dynamic-side-content/dynamic-side-content-docs.module').then(
+                        (m) => m.DynamicSideContentDocsModule
+                    )
+            },
+            {
                 path: 'file-input',
                 loadChildren: () =>
                     import('./component-docs/file-input/file-input-docs.module').then((m) => m.FileInputDocsModule)
@@ -177,6 +184,10 @@ export const ROUTES: Routes = [
                 loadChildren: () => import('./component-docs/list/list-docs.module').then((m) => m.ListDocsModule)
             },
             {
+                path: 'list-byline',
+                loadChildren: () => import('./component-docs/list-byline/list-byline-docs.module').then((m) => m.ListDocsModule)
+            },
+            {
                 path: 'localizationEditor',
                 loadChildren: () =>
                     import('./component-docs/localization-editor/localization-editor-docs.module').then(
@@ -197,6 +208,13 @@ export const ROUTES: Routes = [
                 loadChildren: () =>
                     import('./component-docs/message-strip/message-strip-docs.module').then(
                         (m) => m.MessageStripDocsModule
+                    )
+            },
+            {
+                path: 'message-toast',
+                loadChildren: () =>
+                    import('./component-docs/message-toast/message-toast-docs.module').then(
+                        (m) => m.MessageToastDocsModule
                     )
             },
             {
@@ -340,6 +358,10 @@ export const ROUTES: Routes = [
             {
                 path: 'tree',
                 loadChildren: () => import('./component-docs/tree/tree-docs.module').then((m) => m.TreeDocsModule)
+            },
+            {
+                path: 'object-number',
+                loadChildren: () => import('./component-docs/object-number/object-number-docs.module').then((m) => m.ObjectNumberDocsModule)
             },
             {
                 path: 'wizard',
