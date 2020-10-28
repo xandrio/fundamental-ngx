@@ -74,40 +74,23 @@
     </fd-layout-grid>
     <h4 class="fd-title fd-title--h4">2. Product Information</h4>
     <fd-layout-grid>
-        <div fdLayoutGridRow>
-            <div fdLayoutGridCol="12" colMd="2" colLg="2" colXl="2">
-                <label fd-form-label style="float: right;">Name:</label>
-            </div>
-            <div fdLayoutGridCol="12" colMd="5" colLg="5" colXl="5">
-                <label fd-form-label style="color: black;">Pineapple</label>
-            </div>
+        <div fdLayoutGridCol="12" colMd="2" colLg="2" colXl="2">
+            <label fd-form-label style="float: right;">Name:</label><br/>
+            <label fd-form-label style="float: right;">Weight:</label><br/>
+            <label fd-form-label style="float: right;">Delicious:</label><br/>
+            <label fd-form-label style="float: right;">Description:</label>
         </div>
-        <div fdLayoutGridRow>
-            <div fdLayoutGridCol="12" colMd="2" colLg="2" colXl="2">
-                <label fd-form-label style="float: right;">Weight:</label>
-            </div>
-            <div fdLayoutGridCol="12" colMd="5" colLg="5" colXl="5">
-                <label fd-form-label style="color: black;">1kg</label>
-            </div>
+        <div fdLayoutGridCol="12" colMd="5" colLg="5" colXl="5">
+            <label fd-form-label style="color: black;">Pineapple</label><br/>
+            <label fd-form-label style="color: black;">1kg</label><br/>
+            <label fd-form-label style="color: black;">Yes</label><br/>
+            <label fd-form-label style="color: black;">n/a</label>
         </div>
-        <div fdLayoutGridRow>
-            <div fdLayoutGridCol="12" colMd="2" colLg="2" colXl="2">
-                <label fd-form-label style="float: right;">Delicious:</label>
-            </div>
-            <div fdLayoutGridCol="12" colMd="5" colLg="5" colXl="5">
-                <label fd-form-label style="color: black;">Yes</label>
-            </div>
-        </div>
-        <div fdLayoutGridRow>
-            <div fdLayoutGridCol="12" colMd="2" colLg="2" colXl="2">
-                <label fd-form-label style="float: right;">Description:</label>
-            </div>
-            <div fdLayoutGridCol="12" colMd="5" colLg="5" colXl="5">
-                <label fd-form-label style="color: black;">N/A</label>
-            </div>
-            <div fdLayoutGridCol="12" colMd="5" colLg="5" colXl="5">
-                <a [routerLink]="['./']" fd-link (click)="goToStep($event, 2)">Edit</a>
-            </div>
+        <div fdLayoutGridCol="12" colMd="5" colLg="5" colXl="5">
+            <br/>
+            <br/>
+            <br/>
+            <a [routerLink]="['./']" fd-link (click)="goToStep($event, 2)">Edit</a>
         </div>
     </fd-layout-grid>
 </div>
