@@ -1,4 +1,4 @@
-<fd-wizard>
+<fd-wizard *ngIf="!showSummary">
     <fd-wizard-navigation>
         <ul fd-wizard-progress-bar>
             <li fd-wizard-step [status]="step1status" (statusChange)="step1status = $event" label="Step 1: One Line">
@@ -6,7 +6,7 @@
                 <fd-wizard-content contentBackground="solid">
                     Content for wizard step 1.
                     <fd-wizard-next-step>
-                        <button fd-button [compact]="true" fdType="emphasized" (click)="goToStep(2)">
+                        <button fd-button [compact]="true" fdType="emphasized" (click)="goToStep($event, 2)">
                             Go to Step 2
                         </button>
                     </fd-wizard-next-step>
@@ -22,7 +22,7 @@
                 <fd-wizard-content>
                     Wizard Content for step 2
                     <fd-wizard-next-step>
-                        <button fd-button [compact]="true" fdType="emphasized" (click)="goToStep(3)">
+                        <button fd-button [compact]="true" fdType="emphasized" (click)="goToStep($event, 3)">
                             Go to Step 3
                         </button>
                     </fd-wizard-next-step>
@@ -38,6 +38,11 @@
                 <fd-wizard-step-indicator>3</fd-wizard-step-indicator>
                 <fd-wizard-content>
                     Wizard Content for step 3
+                    <fd-wizard-next-step>
+                        <button fd-button [compact]="true" fdType="emphasized" (click)="goToStep($event, 4)">
+                            Go to Summary
+                        </button>
+                    </fd-wizard-next-step>
                 </fd-wizard-content>
             </li>
         </ul>
@@ -53,3 +58,56 @@
         </div>
     </div>
 </fd-wizard>
+
+<div *ngIf="showSummary">
+    <h4 class="fd-title fd-title--h4">1. Product Type</h4>
+    <fd-layout-grid style="margin-bottom: 2rem;">
+        <div fdLayoutGridCol="12" colMd="2" colLg="2" colXl="2">
+            <label fd-form-label style="float: right;">Type:</label>
+        </div>
+        <div fdLayoutGridCol="12" colMd="5" colLg="5" colXl="5">
+            <label fd-form-label style="color: black;">Mobile</label>
+        </div>
+        <div fdLayoutGridCol="12" colMd="5" colLg="5" colXl="5">
+            <a [routerLink]="['./']" fd-link (click)="goToStep($event, 1)">Edit</a>
+        </div>
+    </fd-layout-grid>
+    <h4 class="fd-title fd-title--h4">2. Product Information</h4>
+    <fd-layout-grid>
+        <div fdLayoutGridRow>
+            <div fdLayoutGridCol="12" colMd="2" colLg="2" colXl="2">
+                <label fd-form-label style="float: right;">Name:</label>
+            </div>
+            <div fdLayoutGridCol="12" colMd="5" colLg="5" colXl="5">
+                <label fd-form-label style="color: black;">Pineapple</label>
+            </div>
+        </div>
+        <div fdLayoutGridRow>
+            <div fdLayoutGridCol="12" colMd="2" colLg="2" colXl="2">
+                <label fd-form-label style="float: right;">Weight:</label>
+            </div>
+            <div fdLayoutGridCol="12" colMd="5" colLg="5" colXl="5">
+                <label fd-form-label style="color: black;">1kg</label>
+            </div>
+        </div>
+        <div fdLayoutGridRow>
+            <div fdLayoutGridCol="12" colMd="2" colLg="2" colXl="2">
+                <label fd-form-label style="float: right;">Delicious:</label>
+            </div>
+            <div fdLayoutGridCol="12" colMd="5" colLg="5" colXl="5">
+                <label fd-form-label style="color: black;">Yes</label>
+            </div>
+        </div>
+        <div fdLayoutGridRow>
+            <div fdLayoutGridCol="12" colMd="2" colLg="2" colXl="2">
+                <label fd-form-label style="float: right;">Description:</label>
+            </div>
+            <div fdLayoutGridCol="12" colMd="5" colLg="5" colXl="5">
+                <label fd-form-label style="color: black;">N/A</label>
+            </div>
+            <div fdLayoutGridCol="12" colMd="5" colLg="5" colXl="5">
+                <a [routerLink]="['./']" fd-link (click)="goToStep($event, 2)">Edit</a>
+            </div>
+        </div>
+    </fd-layout-grid>
+</div>

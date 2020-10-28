@@ -5,13 +5,7 @@ import { WizardStepStatus } from '@fundamental-ngx/core';
     selector: 'fd-wizard-summary-example',
     templateUrl: './wizard-summary-example.component.html',
     encapsulation: ViewEncapsulation.None,
-    styles: [
-        `
-            .fd-wizard-example .fd-wizard__content {
-                min-height: 300px;
-            }
-        `
-    ],
+    styleUrls: ['./wizard-summary-example.component.scss'],
     host: {
         class: 'fd-wizard-example'
     }
@@ -21,8 +15,18 @@ export class WizardSummaryExampleComponent {
     step2status: WizardStepStatus = 'upcoming';
     step3status: WizardStepStatus = 'upcoming';
 
-    goToStep(step: number): void {
+    showSummary = true;
+
+    goToStep(event: Event, step: number): void {
+        event.preventDefault();
+        this.showSummary = false;
         switch (step) {
+            case 1: {
+                this.step1status = 'current';
+                this.step2status = 'upcoming';
+                this.step3status = 'upcoming';
+                break;
+            }
             case 2: {
                 this.step1status = 'completed';
                 this.step2status = 'current';
@@ -36,10 +40,7 @@ export class WizardSummaryExampleComponent {
                 break;
             }
             case 4: {
-                this.step1status = 'completed';
-                this.step2status = 'completed';
-                this.step3status = 'completed';
-                break;
+                this.showSummary = true;
             }
         }
     }
