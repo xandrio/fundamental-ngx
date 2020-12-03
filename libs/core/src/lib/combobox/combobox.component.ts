@@ -24,7 +24,6 @@ import { ListMessageDirective } from '../list/list-message.directive';
 import { ComboboxItem } from './combobox-item';
 import { MenuKeyboardService } from '../menu/menu-keyboard.service';
 import { Subject } from 'rxjs';
-import { createFocusTrap, FocusTrap } from 'focus-trap';
 import { FormStates } from '../form/form-control/form-states';
 import { PopoverComponent } from '../popover/popover.component';
 import { GroupFunction } from '../utils/pipes/list-group.pipe';
@@ -36,7 +35,8 @@ import { COMBOBOX_COMPONENT, ComboboxInterface } from './combobox.interface';
 import { DynamicComponentService } from '../utils/dynamic-component/dynamic-component.service';
 import { ComboboxMobileComponent } from './combobox-mobile/combobox-mobile.component';
 import { ListComponent } from '../list/list.component';
-import { FocusEscapeDirection } from '../..';
+import { FocusEscapeDirection } from '../utils/services/keyboard-support/keyboard-support.service';
+import { PopoverFillMode } from '../popover/popover-position/popover-position';
 import {
     CONTROL,
     DOWN_ARROW,
@@ -76,7 +76,8 @@ import {
     ],
     host: {
         '[class.fd-combobox-custom-class]': 'true',
-        '[class.fd-combobox-input]': 'true'
+        '[class.fd-combobox-input]': 'true',
+        '[class.fd-combobox-custom-class--mobile]': 'mobile',
     },
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -171,6 +172,15 @@ export class ComboboxComponent implements ComboboxInterface, ControlValueAccesso
     /** Whether the autocomplete should be enabled; Enabled by default */
     @Input()
     autoComplete = true;
+
+    /**
+     * Preset options for the Select body width, whatever is chosen, the body has a 600px limit.
+     * * `at-least` will apply a minimum width to the body equivalent to the width of the control. - Default
+     * * `equal` will apply a width to the body equivalent to the width of the control.
+     * * 'fit-content' will apply width needed to properly display items inside, independent of control.
+     */
+    @Input()
+    fillControlMode: PopoverFillMode = 'at-least';
 
     /** Defines if combobox should behave same as dropdown. When it's enabled writing inside text input won't
      * trigger onChange function, until it matches one of displayed dropdown values. Also communicating with combobox
@@ -277,9 +287,6 @@ export class ComboboxComponent implements ComboboxInterface, ControlValueAccesso
     inputTextValue: string;
 
     /** @hidden */
-    public focusTrap: FocusTrap;
-
-    /** @hidden */
     private readonly _onDestroy$: Subject<void> = new Subject<void>();
 
     /** @hidden */
@@ -298,7 +305,6 @@ export class ComboboxComponent implements ComboboxInterface, ControlValueAccesso
     /** @hidden */
     ngOnInit(): void {
         this._refreshDisplayedValues();
-        this._setupFocusTrap();
     }
 
     /** @hidden */
@@ -426,7 +432,7 @@ export class ComboboxComponent implements ComboboxInterface, ControlValueAccesso
     handleSearchTermChange(): void {
         this.displayedValues = this.filterFn(this.dropdownValues, this.inputText);
         if (this.popoverComponent) {
-            this.popoverComponent.updatePopover();
+            this.popoverComponent.refreshPosition();
         }
     }
 
@@ -456,14 +462,12 @@ export class ComboboxComponent implements ComboboxInterface, ControlValueAccesso
         if (this.open !== isOpen) {
             this.open = isOpen;
             this.onTouched();
-            if (!this.mobile) {
-                this._popoverOpenHandle();
-            }
             this.openChange.emit(isOpen);
         }
 
         if (!this.open && !this.mobile) {
             this.handleBlur();
+            this.searchInputElement.nativeElement.focus();
         }
 
         this._cdRef.detectChanges();
@@ -544,15 +548,6 @@ export class ComboboxComponent implements ComboboxInterface, ControlValueAccesso
         }
     }
 
-    /** @hidden*/
-    private _popoverOpenHandle(): void {
-        if (this._hasDisplayedValues()) {
-            this.focusTrap.activate();
-        } else {
-            this.focusTrap.deactivate();
-        }
-    }
-
     /** @hidden */
     private _handleClickActions(term: any): void {
         if (this.closeOnSelect) {
@@ -573,19 +568,6 @@ export class ComboboxComponent implements ComboboxInterface, ControlValueAccesso
     /** @hidden */
     private _getOptionObjectByDisplayedValue(displayValue: string): any {
         return this.dropdownValues.find((value) => this.displayFn(value) === displayValue);
-    }
-
-    /** @hidden */
-    private _setupFocusTrap(): void {
-        try {
-            this.focusTrap = createFocusTrap(this._elementRef.nativeElement, {
-                clickOutsideDeactivates: true,
-                escapeDeactivates: false,
-                initialFocus: this._elementRef.nativeElement
-            });
-        } catch (e) {
-            console.warn('Unsuccessful attempting to focus trap the Combobox.');
-        }
     }
 
     /** @hidden */

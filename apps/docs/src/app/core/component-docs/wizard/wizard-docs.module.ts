@@ -12,6 +12,7 @@ import {
     FormModule,
     FundamentalNgxCoreModule,
     RadioModule,
+    TitleModule,
     WizardModule
 } from '@fundamental-ngx/core';
 import { SharedDocumentationPageModule } from '../../../documentation/shared-documentation-page.module';
@@ -41,7 +42,8 @@ const routes: Routes = [
         RadioModule,
         FormGroupModule,
         FormModule,
-        FundamentalNgxCoreModule
+        FundamentalNgxCoreModule,
+        TitleModule
     ],
     exports: [RouterModule],
     declarations: [

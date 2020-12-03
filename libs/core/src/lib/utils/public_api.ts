@@ -7,7 +7,9 @@ export * from './directives/resize/resize.module';
 export * from './directives/carousel/carousel.module';
 export * from './directives/carousel/carousel.directive';
 export * from './directives/carousel/carousel-item.directive';
-export * from './directives/initial-focus/initial-focus.directive';
+export * from '../carousel/carousel.component';
+export * from '../carousel/carousel-item/carousel-item.component';
+export * from './directives/initial-focus/initial-focus.module';
 
 export * from './pipes/pipe.module';
 export * from './pipes/displayFn.pipe';
@@ -35,6 +37,8 @@ export * from './dynamic-component/dynamic-component.service';
 
 export * from './datatypes/hash.datatype';
 export * from './services/rtl.service';
+export * from './services/themes.service';
+export * from './services/carousel.service';
 export * from './services/keyboard-support/keyboard-support.service';
 
 export * from './functions';

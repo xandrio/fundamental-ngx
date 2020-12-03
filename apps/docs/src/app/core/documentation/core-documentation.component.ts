@@ -17,6 +17,7 @@ export class CoreDocumentationComponent extends DocumentationBaseComponent {
 
         this.components = [
             { url: 'core/action-bar', name: 'Action Bar' },
+            { url: 'core/action-sheet', name: 'Action Sheet' },
             { url: 'core/alert', name: 'Alert' },
             { url: 'core/avatar', name: 'Avatar' },
             { url: 'core/bar', name: 'Bar' },
@@ -25,6 +26,7 @@ export class CoreDocumentationComponent extends DocumentationBaseComponent {
             { url: 'core/button', name: 'Button' },
             { url: 'core/card', name: 'Card' },
             { url: 'core/segmentedButton', name: 'Segmented Button' },
+            { url: 'core/carousel', name: 'Carousel' },
             { url: 'core/checkbox', name: 'Checkbox' },
             { url: 'core/splitButton', name: 'Split Button' },
             { url: 'core/calendar', name: 'Calendar' },
@@ -33,6 +35,7 @@ export class CoreDocumentationComponent extends DocumentationBaseComponent {
             { url: 'core/datetime-picker', name: 'Datetime Picker' },
             { url: 'core/dialog', name: 'Dialog' },
             { url: 'core/icon', name: 'Icon' },
+            { url: 'core/feed-input', name: 'Feed Input' },
             { url: 'core/file-uploader', name: 'File Uploader' },
             { url: 'core/form-message', name: 'Form Message' },
             { url: 'core/formatted-text', name: 'Formatted Text' },
@@ -48,9 +51,8 @@ export class CoreDocumentationComponent extends DocumentationBaseComponent {
                     { url: 'core/list-byline', name: 'List with Byline' }
                 ]
             },
-            { url: 'core/localizationEditor', name: 'Localization Editor' },
-            { url: 'core/mega-menu', name: 'Mega Menu' },
             { url: 'core/menu', name: 'Menu' },
+            { url: 'core/message-box', name: 'Message Box' },
             { url: 'core/message-strip', name: 'Message Strip' },
             { url: 'core/message-toast', name: 'Message Toast' },
             { url: 'core/multi-input', name: 'Multi Input' },
@@ -63,6 +65,7 @@ export class CoreDocumentationComponent extends DocumentationBaseComponent {
             { url: 'core/popover', name: 'Popover' },
             { url: 'core/product-switch', name: 'Product Switch' },
             { url: 'core/radio', name: 'Radio Button' },
+            { url: 'core/rating-indicator', name: 'Rating Indicator' },
             { url: 'core/select', name: 'Select' },
             { url: 'core/shellbar', name: 'Shellbar' },
             { url: 'core/sideNavigation', name: 'Side Navigation' },
@@ -73,6 +76,7 @@ export class CoreDocumentationComponent extends DocumentationBaseComponent {
             { url: 'core/tile', name: 'Tile' },
             { url: 'core/time', name: 'Time' },
             { url: 'core/timePicker', name: 'Time Picker' },
+            { url: 'core/title', name: 'Title' },
             { url: 'core/switch', name: 'Switch' },
             { url: 'core/token', name: 'Token' },
             { url: 'core/toolbar', name: 'Toolbar' },
@@ -83,6 +87,7 @@ export class CoreDocumentationComponent extends DocumentationBaseComponent {
         this.layouts = [
             { url: 'core/dynamic-side-content', name: 'Dynamic Side Content' },
             { url: 'core/fixed-card-layout', name: 'Fixed Card Layout' },
+            { url: 'core/flexible-column-layout', name: 'Flexible Column Layout' },
             { url: 'core/layoutPanel', name: 'Layout Panel' },
             { url: 'core/layoutGrid', name: 'Layout Grid' }
         ];
@@ -92,7 +97,8 @@ export class CoreDocumentationComponent extends DocumentationBaseComponent {
             { url: 'core/global-config', name: 'Global Configuration' },
             { url: 'core/infiniteScroll', name: 'Infinite Scroll' },
             { url: 'core/popover-directive', name: 'Popover Helper' },
-            { url: 'core/scroll-spy', name: 'Scroll Spy' }
+            { url: 'core/scroll-spy', name: 'Scroll Spy' },
+            { url: 'core/theme-switcher', name: 'Theme Switcher API' }
         ];
 
         this.sections = [

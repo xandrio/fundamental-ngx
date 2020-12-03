@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { ActionBarModule } from './action-bar/action-bar.module';
+import { ActionSheetModule } from './action-sheet/action-sheet.module';
 import { AlertModule } from './alert/alert.module';
 import { AlertService } from './alert/alert-service/alert.service';
 import { AvatarModule } from './avatar/avatar.module';
@@ -19,6 +20,7 @@ import { DatetimePickerModule } from './datetime-picker/datetime-picker.module';
 import { FileInputModule } from './file-input/file-input.module';
 import { FileUploaderModule } from './file-uploader/file-uploader.module';
 import { FixedCardLayoutModule } from './fixed-card-layout/fixed-card-layout.module';
+import { FlexibleColumnLayoutModule } from './flexible-column-layout/flexible-column-layout.module';
 import { FormattedTextModule } from './formatted-text/formatted-text.module';
 import { FormModule } from './form/form.module';
 import { IconModule } from './icon/icon.module';
@@ -35,6 +37,7 @@ import { MultiInputModule } from './multi-input/multi-input.module';
 import { PaginationModule } from './pagination/pagination.module';
 import { PanelModule } from './panel/panel.module';
 import { PopoverModule } from './popover/popover.module';
+import { RatingIndicatorModule } from './rating-indicator/rating-indicator.module';
 import { ScrollSpyModule } from './scroll-spy/scroll-spy.module';
 import { ShellbarModule } from './shellbar/shellbar.module';
 import { SideNavigationModule } from './side-navigation/side-navigation.module';
@@ -49,8 +52,6 @@ import { TimePickerModule } from './time-picker/time-picker.module';
 import { SegmentedButtonModule } from './segmented-button/public_api';
 import { SwitchModule } from './switch/switch.module';
 import { TokenModule } from './token/token.module';
-import { LocalizationEditorModule } from './localizator-editor/localization-editor.module';
-import { MegaMenuModule } from './mega-menu/mega-menu.module';
 import { LayoutGridModule } from './layout-grid/layout-grid.module';
 import { DragAndDropModule } from './utils/drag-and-drop/drag-and-drop.module';
 import { ProductSwitchModule } from './product-switch/product-switch.module';
@@ -64,6 +65,7 @@ import { ObjectStatusModule } from './object-status/object-status.module';
 import { MultiInputMobileModule } from './multi-input/multi-input-mobile/multi-input-mobile.module';
 import { StepInputModule } from './step-input/step-input.module';
 import { ComboboxMobileModule } from './combobox/combobox-mobile/combobox-mobile.module';
+import { ActionSheetMobileModule } from './action-sheet/action-sheet-mobile/action-sheet-mobile.module';
 import { CarouselModule } from './utils/directives/carousel/carousel.module';
 import { ToolbarModule } from './toolbar/toolbar.module';
 import { CardModule } from './card/card.module';
@@ -72,11 +74,15 @@ import { ObjectMarkerModule } from './object-marker/object-marker.module';
 import { MessageToastModule } from './message-toast/message-toast.module';
 import { MessageToastService } from './message-toast/message-toast-service/message-toast.service';
 import { DynamicSideContentModule } from './dynamic-side-content/dynamic-side-content.module';
+import { MessageBoxModule } from './message-box/message-box.module';
+import { ThemesService } from './utils/services/themes.service';
 
 @NgModule({
     imports: [CommonModule, FormsModule],
     exports: [
         ActionBarModule,
+        ActionSheetModule,
+        ActionSheetMobileModule,
         AlertModule,
         AvatarModule,
         BadgeModule,
@@ -96,6 +102,7 @@ import { DynamicSideContentModule } from './dynamic-side-content/dynamic-side-co
         FileInputModule,
         FileUploaderModule,
         FixedCardLayoutModule,
+        FlexibleColumnLayoutModule,
         FormModule,
         FormattedTextModule,
         IconModule,
@@ -107,9 +114,7 @@ import { DynamicSideContentModule } from './dynamic-side-content/dynamic-side-co
         LayoutPanelModule,
         LinkModule,
         ListModule,
-        LocalizationEditorModule,
         MenuModule,
-        MegaMenuModule,
         DialogModule,
         MessageStripModule,
         MultiInputModule,
@@ -123,6 +128,7 @@ import { DynamicSideContentModule } from './dynamic-side-content/dynamic-side-co
         PanelModule,
         ProductSwitchModule,
         PopoverModule,
+        RatingIndicatorModule,
         RadioModule,
         ScrollSpyModule,
         SegmentedButtonModule,
@@ -141,9 +147,10 @@ import { DynamicSideContentModule } from './dynamic-side-content/dynamic-side-co
         TokenModule,
         TreeModule,
         CardModule,
+        MessageBoxModule,
         MessageToastModule,
         DynamicSideContentModule
     ],
-    providers: [AlertService, DialogService, NotificationService, MessageToastService]
+    providers: [AlertService, DialogService, NotificationService, MessageToastService, ThemesService],
 })
-export class FundamentalNgxCoreModule {}
+export class FundamentalNgxCoreModule { }

@@ -17,6 +17,11 @@ export const ROUTES: Routes = [
                     import('./component-docs/action-bar/action-bar-docs.module').then((m) => m.ActionBarDocsModule)
             },
             {
+                path: 'action-sheet',
+                loadChildren: () =>
+                    import('./component-docs/action-sheet/action-sheet-docs.module').then((m) => m.ActionSheetDocsModule)
+            },
+            {
                 path: 'alert',
                 loadChildren: () => import('./component-docs/alert/alert-docs.module').then((m) => m.AlertDocsModule)
             },
@@ -61,6 +66,11 @@ export const ROUTES: Routes = [
                     import('./component-docs/calendar/calendar-docs.module').then((m) => m.CalendarDocsModule)
             },
             {
+                path: 'carousel',
+                loadChildren: () =>
+                    import('./component-docs/carousel/carousel-docs.module').then((m) => m.CarouselDocsModule)
+            },
+            {
                 path: 'checkbox',
                 loadChildren: () =>
                     import('./component-docs/checkbox/checkbox-docs.module').then((m) => m.CheckboxDocsModule)
@@ -94,6 +104,13 @@ export const ROUTES: Routes = [
                     )
             },
             {
+                path: 'feed-input',
+                loadChildren: () =>
+                    import('./component-docs/feed-input/feed-input-docs.module').then(
+                        (m) => m.FeedInputDocsModule
+                    )
+            },
+            {
                 path: 'file-input',
                 loadChildren: () =>
                     import('./component-docs/file-input/file-input-docs.module').then((m) => m.FileInputDocsModule)
@@ -110,6 +127,13 @@ export const ROUTES: Routes = [
                 loadChildren: () =>
                     import('./component-docs/fixed-card-layout/fixed-card-layout-docs.module').then(
                         (m) => m.FixedCardLayoutDocsModule
+                    )
+            },
+            {
+                path: 'flexible-column-layout',
+                loadChildren: () =>
+                    import('./component-docs/flexible-column-layout/flexible-column-layout-docs.module').then(
+                        (m) => m.FlexibleColumnLayoutDocsModule
                     )
             },
             {
@@ -188,18 +212,6 @@ export const ROUTES: Routes = [
                 loadChildren: () => import('./component-docs/list-byline/list-byline-docs.module').then((m) => m.ListDocsModule)
             },
             {
-                path: 'localizationEditor',
-                loadChildren: () =>
-                    import('./component-docs/localization-editor/localization-editor-docs.module').then(
-                        (m) => m.LocalizationEditorDocsModule
-                    )
-            },
-            {
-                path: 'mega-menu',
-                loadChildren: () =>
-                    import('./component-docs/mega-menu/mega-menu-docs.module').then((m) => m.MegaMenuDocsModule)
-            },
-            {
                 path: 'menu',
                 loadChildren: () => import('./component-docs/menu/menu-docs.module').then((m) => m.MenuDocsModule)
             },
@@ -208,6 +220,13 @@ export const ROUTES: Routes = [
                 loadChildren: () =>
                     import('./component-docs/message-strip/message-strip-docs.module').then(
                         (m) => m.MessageStripDocsModule
+                    )
+            },
+            {
+                path: 'message-box',
+                loadChildren: () =>
+                    import('./component-docs/message-box/message-box-docs.module').then(
+                        (m) => m.MessageBoxDocsModule
                     )
             },
             {
@@ -283,6 +302,13 @@ export const ROUTES: Routes = [
                 loadChildren: () => import('./component-docs/radio/radio-docs.module').then((m) => m.RadioDocsModule)
             },
             {
+                path: 'rating-indicator',
+                loadChildren: () =>
+                    import('./component-docs/rating-indicator/rating-indicator-docs.module').then(
+                        (m) => m.RatingIndicatorDocsModule
+                    )
+            },
+            {
                 path: 'scroll-spy',
                 loadChildren: () =>
                     import('./component-docs/scroll-spy/scroll-spy-docs.module').then((m) => m.ScrollSpyDocsModules)
@@ -334,6 +360,13 @@ export const ROUTES: Routes = [
                     import('./component-docs/textarea/textarea-docs.module').then((m) => m.TextareaDocsModule)
             },
             {
+                path: 'theme-switcher',
+                loadChildren: () =>
+                    import('./component-docs/theme-switcher/theme-switcher-docs.module').then(
+                        (m) => m.ThemeSwitcherDocsModule
+                    )
+            },
+            {
                 path: 'tile',
                 loadChildren: () => import('./component-docs/tile/tile-docs.module').then((m) => m.TileDocsModule)
             },
@@ -345,6 +378,10 @@ export const ROUTES: Routes = [
                 path: 'timePicker',
                 loadChildren: () =>
                     import('./component-docs/time-picker/time-picker-docs.module').then((m) => m.TimePickerDocsModule)
+            },
+            {
+                path: 'title',
+                loadChildren: () => import('./component-docs/title/title-docs.module').then((m) => m.TitleDocsModule)
             },
             {
                 path: 'token',
