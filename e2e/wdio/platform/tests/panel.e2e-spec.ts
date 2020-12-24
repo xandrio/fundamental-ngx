@@ -5,10 +5,8 @@ import {
     getCSSPropertyByName,
     getElementSize,
     getText,
-    pause,
+    refreshPage, scrollIntoView,
     waitForClickable,
-    waitForElDisplayed,
-    waitForNotDisplayed,
     waitForPresent
 } from '../../driver/wdio';
 
@@ -19,20 +17,20 @@ describe('Verify Panel', () => {
         panelPage.open();
     });
 
+    afterEach(() => {
+        refreshPage();
+    });
+
     it('should have fixed header', () => {
         // Checks that fixed panel has no expand button
         expect(waitForPresent(panelPage.fixedPanelDescription)).toBe(true);
     });
 
-    xit('should be expandable', () => {
-        const isVisibleContentBefore = waitForElDisplayed(panelPage.expandablePanelContent);
+    it('should be expandable', () => {
+        expect(getText(panelPage.expandablePanelTextContent)).toContain('true');
+        scrollIntoView(panelPage.expandablePanelBtn);
         click(panelPage.expandablePanelBtn);
-        pause(3000);
-        const isInvisibleVisibleContentAfter = waitForNotDisplayed(panelPage.expandablePanelContent);
-
-        expect(isVisibleContentBefore).toBe(true);
-        expect(isInvisibleVisibleContentAfter).toBe(true);
-        expect(getText(panelPage.expandablePanelTitle)).toBe(panelPageContent.expandable_panel_header);
+        expect(getText(panelPage.expandablePanelTextContent)).toContain('false');
     });
 
     it('should compact be smaller than basic', () => {

@@ -1,26 +1,22 @@
 import {
-    clearValue,
-    click,
-    getElementArrayLength,
-    getText,
-    getTextArr,
     pause,
     refreshPage,
     scrollIntoView,
-    sendKeys,
-    setValue,
-    waitForClickable,
     waitForElDisplayed,
+    waitForClickable,
+    waitForUnclickable,
+    sendKeys,
     waitForPresent,
-    waitForUnclickable
+    click,
+    clearValue,
+    setValue,
+    getElementArrayLength,
+    browserIsIEorSafari,
+    getText,
+    getTextArr
 } from '../../driver/wdio';
 import { ComboBoxPo } from '../pages/combobox.po';
-import {
-    activeTypeNames,
-    appleOption,
-    bananaOption,
-    notActiveTypeNames
-} from '../fixtures/appData/combobox.page-content';
+import {activeTypeNames, notActiveTypeNames, appleOption, bananaOption} from '../fixtures/appData/combobox.page-content';
 import { checkNotFocused, checkTextValueContain } from '../../helper/assertion-helper';
 
 describe('Combobox test suite', function() {
@@ -28,6 +24,10 @@ describe('Combobox test suite', function() {
 
     beforeAll(() => {
         comboBoxPage.open();
+    });
+
+    beforeEach(() => {
+        pause(16000);
     });
 
     afterEach(() => {
@@ -51,7 +51,7 @@ describe('Combobox test suite', function() {
 
     it('Verify dropdown expands after clicking on the button', () => {
         for (let i = 0; i < activeTypeNames.length; i++) {
-            sendKeys(['Escape']);
+            sendKeys(['Escape'])
             scrollIntoView(comboBoxPage.comboBoxButtons(activeTypeNames[i]));
             pause(200);
             click(comboBoxPage.comboBoxButtons(activeTypeNames[i]));
@@ -94,11 +94,15 @@ describe('Combobox test suite', function() {
     });
 
     // Need to debug on different browsers
-    xit('Verify option hint when entering first characters', () => {
-        for (let i = 0; i < activeTypeNames.length; i++) {
-            scrollIntoView(comboBoxPage.comboBoxInputs(activeTypeNames[i]));
-            setValue(comboBoxPage.comboBoxInputs(activeTypeNames[i]), appleOption.substring(0, 2));
-            waitForElDisplayed(comboBoxPage.comboBoxOptionHint(appleOption.substring(0, 2), appleOption.substring(2)));
+    it('Verify option hint when entering first characters', () => {
+        for (let i = 0; i < activeTypeNames.length - 1; i++) {
+            if (activeTypeNames[i] !== 'optionItemTemplate' && !browserIsIEorSafari()) {  // Skipped for IE and Safari
+                sendKeys(['Escape']);
+                scrollIntoView(comboBoxPage.comboBoxInputs(activeTypeNames[i]));
+                setValue(comboBoxPage.comboBoxInputs(activeTypeNames[i]), appleOption.substring(0, 2));
+                pause(300);
+                waitForElDisplayed(comboBoxPage.comboBoxOptionHint(appleOption.substring(0, 2), appleOption.substring(2)));
+            }
         }
     });
 
@@ -140,11 +144,11 @@ describe('Combobox test suite', function() {
     });
 
     it('Verify options sorting', () => {
-        for (let i = 0; i < activeTypeNames.length; i++) {
-            comboBoxPage.expandDropdown(activeTypeNames[i]);
-            waitForElDisplayed(comboBoxPage.optionsArray);
-            const textArr = getTextArr(comboBoxPage.optionsArray, 0, -1);
-            expect(textArr.sort()).toEqual(textArr);
-        }
+       for (let i = 0; i < activeTypeNames.length; i++) {
+           comboBoxPage.expandDropdown(activeTypeNames[i]);
+           waitForElDisplayed(comboBoxPage.optionsArray);
+           const textArr = getTextArr(comboBoxPage.optionsArray, 0, -1);
+           expect(textArr.sort()).toEqual(textArr);
+       }
     });
 });

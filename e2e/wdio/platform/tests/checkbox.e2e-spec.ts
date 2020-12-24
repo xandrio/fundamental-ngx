@@ -297,17 +297,7 @@ describe('Checkbox test suite', () => {
 
     describe('check example orientation', () => {
         it('should check orientation', () => {
-            if (!browserIsIE()) {
-                checkboxPage.checkRtlSwitch(checkboxPage.rtlSwitcherArr, checkboxPage.exampleAreaContainersArr);
-                return;
-            }
-            console.log('skip for IE');
-            // const areaContainersArrayLength = getElementArrayLength(exampleAreaContainersArr);
-            //
-            // for (let i = 0; areaContainersArrayLength > i; i++) {
-            //     expect(getCSSPropertyByName(exampleAreaContainersArr, 'direction', i).value)
-            //         .toBe('ltr', 'css prop direction ');
-            // }
+            checkboxPage.checkRtlSwitch();
         });
 
         // it('should check RTL orientation', () => {

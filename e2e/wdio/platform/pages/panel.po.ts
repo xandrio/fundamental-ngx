@@ -10,12 +10,11 @@ export class PanelPo extends BaseComponentPo {
     rtlSwitcherArr = 'rtl-switch .fd-switch__handle';
 
     expandablePanelRoot = '#panel-id';
-    expandablePanelBtn = this.expandablePanelRoot + ' button';
-    expandablePanelTitle = this.expandablePanelRoot + ' h5';
-    expandablePanelContent = this.expandablePanelRoot + ' .fd-panel__content';
+    expandablePanelBtn = '[label="Toggle Expand"]';
+    expandablePanelTextContent = 'fdp-panel-expandable-example';
 
     fixedPanelSection = '[ng-reflect-id="panelFixed"]';
-    fixedPanelDescription = this.fixedPanelSection + ' + description';
+    fixedPanelDescriptionё = this.fixedPanelSection + ' + description';
 
     compactPanelRoot = '#compact-panel-id';
     compactPanelBtn = this.compactPanelRoot + ' button';
