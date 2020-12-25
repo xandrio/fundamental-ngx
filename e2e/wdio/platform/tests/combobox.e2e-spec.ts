@@ -51,7 +51,7 @@ describe('Combobox test suite', function() {
 
     it('Verify dropdown expands after clicking on the button', () => {
         for (let i = 0; i < activeTypeNames.length; i++) {
-            sendKeys(['Escape'])
+            sendKeys(['Escape']);
             scrollIntoView(comboBoxPage.comboBoxButtons(activeTypeNames[i]));
             pause(200);
             click(comboBoxPage.comboBoxButtons(activeTypeNames[i]));

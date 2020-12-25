@@ -14,7 +14,7 @@ export class PanelPo extends BaseComponentPo {
     expandablePanelTextContent = 'fdp-panel-expandable-example';
 
     fixedPanelSection = '[ng-reflect-id="panelFixed"]';
-    fixedPanelDescriptionё = this.fixedPanelSection + ' + description';
+    fixedPanelDescription = this.fixedPanelSection + ' + description';
 
     compactPanelRoot = '#compact-panel-id';
     compactPanelBtn = this.compactPanelRoot + ' button';
