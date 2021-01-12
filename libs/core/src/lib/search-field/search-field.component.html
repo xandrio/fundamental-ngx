@@ -1,0 +1,86 @@
+<!-- <ng-container [ngTemplateOutlet]="control" *ngIf="mobile && !open"></ng-container> -->
+<fd-popover
+    additionalBodyClass="fd-popover-custom-list"
+    *ngIf="!mobile"
+    [isOpen]="isOpen && _displayedValues && _displayedValues.length"
+    (isOpenChange)="_handleIsOpenChange($event)"
+    [triggers]="[]"
+    [focusTrapped]="true"
+    [disabled]="disabled"
+    [fillControlMode]="fillControlMode"
+    class="fd-search-field-popover-custom"
+>
+    <fd-popover-control>
+        <form (submit)="_handleSubmit()">
+            <ng-container *ngTemplateOutlet="inputGroupControl"></ng-container>
+        </form>
+    </fd-popover-control>
+    <fd-popover-body [attr.aria-hidden]="!isOpen">
+        <ng-container *ngTemplateOutlet="suggestionsList"></ng-container>
+        <ng-content></ng-content>
+    </fd-popover-body>
+</fd-popover>
+
+<ng-template #inputGroupControl>
+    <div #inputGroup class="fd-input-group">
+        <input 
+            #inputField 
+            fd-input-group-input
+            type="search"
+            [compact]="compact"
+            [id]="inputId"
+            [disabled]="disabled"
+            [attr.aria-disabled]="disabled"
+            [attr.placeholder]="placeholder"
+            [ngModel]="searchTerm"
+            (ngModelChange)="_handleSearchTermChange($event)"
+            (keydown)="_handleKeydown($event)" 
+            (keydown.enter)="_handleSearch()" />
+        
+        <span 
+            class="fd-input-group__addon fd-input-group__addon--button"
+            [class.fd-input-group__addon--compact]="compact"
+            *ngIf="searchTerm && searchTerm.length > 0">
+            <button
+                fd-button
+                class="fd-input-group__button"
+                type="button"
+                fdType="transparent"
+                title="Clear input"
+                [class.fd-button--compact]="compact" 
+                (click)="_handleClearSearchTerm()">
+                <fd-icon glyph="decline"></fd-icon>
+            </button>
+        </span>
+
+        <span 
+            class="fd-input-group__addon fd-input-group__addon--button"
+            [class.fd-input-group__addon--compact]="compact">
+            <button
+                fd-button
+                class="fd-input-group__button"
+                type="button"
+                fdType="transparent"
+                title="Submit"
+                [attr.id]="submitId" 
+                [attr.aria-disabled]="disabled"
+                [class.fd-button--compact]="compact" 
+                (click)="_handleSearch()">
+                <fd-icon glyph="search"></fd-icon>
+            </button>
+        </span>
+    </div>
+</ng-template>
+
+
+<ng-template #suggestionsList>
+    <ul
+        fd-list
+        *ngIf="_displayedValues && _displayedValues.length"
+        [compact]="compact"
+        [style.minWidth]="'100%'">
+        <li fd-list-item *ngFor="let value of _displayedValues">
+            <span fd-list-title [innerHtml]="value"></span>
+        </li>
+    </ul>
+</ng-template>

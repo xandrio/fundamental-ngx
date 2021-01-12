@@ -77,6 +77,7 @@ import { MessageBoxModule } from './message-box/message-box.module';
 import { ThemesService } from './utils/services/themes.service';
 import { WizardModule } from './wizard/wizard.module';
 import { QuickViewModule } from './quick-view/quick-view.module';
+import { SearchFieldModule } from './search-field/search-field.module';
 
 @NgModule({
     imports: [CommonModule, FormsModule],
@@ -151,7 +152,8 @@ import { QuickViewModule } from './quick-view/quick-view.module';
         CardModule,
         MessageBoxModule,
         MessageToastModule,
-        DynamicSideContentModule
+        DynamicSideContentModule,
+        SearchFieldModule
     ],
     providers: [AlertService, DialogService, NotificationService, MessageToastService, ThemesService],
 })

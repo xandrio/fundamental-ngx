@@ -316,6 +316,11 @@ export const ROUTES: Routes = [
                     )
             },
             {
+                path: 'search-field',
+                loadChildren: () =>
+                    import('./component-docs/search-field/search-field-docs.module').then((m) => m.SearchFieldDocsModule)
+            },
+            {
                 path: 'scroll-spy',
                 loadChildren: () =>
                     import('./component-docs/scroll-spy/scroll-spy-docs.module').then((m) => m.ScrollSpyDocsModules)

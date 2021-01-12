@@ -209,6 +209,7 @@ export const API_FILES = {
         'QuickViewGroupItemLabelComponent',
         'QuickViewGroupItemContentComponent'
     ],
+    searchField: ['SearchFieldComponent'],
     scrollSpy: ['ScrollSpyDirective'],
     select: ['SelectComponent', 'OptionComponent'],
     shellbar: [
