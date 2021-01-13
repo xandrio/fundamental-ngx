@@ -1,0 +1,48 @@
+<div class="fd-shellbar__action fd-shellbar__action--show-always" *ngIf="user">
+    <button
+        fd-button
+        class="fd-shellbar__button fd-shellbar__button--user-menu"
+        [disabled]="disabled"
+        [fdPopoverTrigger]="menu"
+        (click)="_toggle()"
+    >
+        <ng-container *ngIf="user.image; else userLabel" [ngTemplateOutlet]="userImage"></ng-container>
+    </button>
+
+    <fd-popover
+        #menu
+        [(isOpen)]="isOpen"
+        [disabled]="disabled"
+        [triggers]="[]"
+        [placement]="placement"
+        [closeOnEscapeKey]="closeOnEscapeKey"
+        [noArrow]="false"
+        [focusAutoCapture]="true"
+        [additionalBodyClass]="additionalBodyClass"
+        [closeOnOutsideClick]="closeOnOutsideClick"
+        (isOpenChange)="isOpenChangeEvent($event)"
+    >
+        <fd-popover-body [style.width.px]="width">
+            <ng-container
+                *ngIf="activeSubmenu; else content"
+                [ngTemplateOutlet]="activeSubmenu._templateRef"
+            ></ng-container>
+        </fd-popover-body>
+    </fd-popover>
+</div>
+
+<ng-template #content>
+    <ng-content select="fd-user-actions-menu-header"></ng-content>
+    <div class="fd-user-actions-menu__body fd-user-actions-menu__body--padding">
+        <ng-content></ng-content>
+    </div>
+    <ng-content select="fd-user-actions-menu-footer"></ng-content>
+</ng-template>
+
+<ng-template #userLabel>
+    <fd-avatar size="xs" [colorAccent]="user.colorAccent" [circle]="true" [label]="user.fullName"> </fd-avatar>
+</ng-template>
+
+<ng-template #userImage>
+    <fd-avatar size="xs" [colorAccent]="user.colorAccent" [circle]="true" [backgroundImage]="user.image"> </fd-avatar>
+</ng-template>

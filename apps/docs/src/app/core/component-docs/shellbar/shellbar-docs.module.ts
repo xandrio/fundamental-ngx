@@ -8,14 +8,21 @@ import { ShellbarDocsComponent } from './shellbar-docs.component';
 import { ShellbarBasicExampleComponent } from './examples/shellbar-basic-example.component';
 import { ShellbarSideNavExampleComponent } from './examples/shellbar-side-nav/shellbar-side-nav-example.component';
 import { ShellbarCollapsibleExampleComponent } from './examples/shellbar-collapsible-example.component';
+import { ShellbarUserActionsMenuExample } from './examples/shellbar-user-actions-menu-example.component';
+import { ShellbarUserActionsMenuHeaderFooterExample } from './examples/shellbar-user-actions-menu-header-footer-example.component';
+import { ShellbarUserActionsMenuSubmenuExample } from './examples/shellbar-user-actions-menu-submenu-example.component';
+import { ShellbarUserActionsMenuCompactExample } from './examples/shellbar-user-actions-menu-compact-example.component';
 import {
+    AvatarModule,
     ComboboxModule,
+    DialogModule,
     LayoutPanelModule,
     ProductSwitchModule,
     SegmentedButtonModule,
     ShellbarModule,
     SideNavigationModule,
-    TileModule
+    TileModule,
+    ListModule
 } from '@fundamental-ngx/core';
 
 const routes: Routes = [
@@ -39,7 +46,11 @@ const routes: Routes = [
         ProductSwitchModule,
         TileModule,
         LayoutPanelModule,
-        SegmentedButtonModule
+        SegmentedButtonModule,
+        DialogModule,
+        RouterModule,
+        AvatarModule,
+        ListModule
     ],
     exports: [RouterModule],
     declarations: [
@@ -47,7 +58,11 @@ const routes: Routes = [
         ShellbarDocsHeaderComponent,
         ShellbarBasicExampleComponent,
         ShellbarSideNavExampleComponent,
-        ShellbarCollapsibleExampleComponent
+        ShellbarCollapsibleExampleComponent,
+        ShellbarUserActionsMenuExample,
+        ShellbarUserActionsMenuHeaderFooterExample,
+        ShellbarUserActionsMenuSubmenuExample,
+        ShellbarUserActionsMenuCompactExample
     ]
 })
 export class ShellbarDocsModule {}

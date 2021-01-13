@@ -1,0 +1,32 @@
+<div fd-popover-body-header [class.fd-user-actions-menu__header--no-border]="noBorder">
+    <div
+        *ngIf="_isSubmenu"
+        fd-bar
+        barDesign="header-with-subheader"
+        [cozy]="!_compact"
+        class="fd-user-actions-menu__header-top-header"
+    >
+        <div fd-bar-left>
+            <button
+                fd-button
+                [compact]="_compact"
+                fdType="transparent"
+                glyph="slim-arrow-left"
+                i18n-aria-label="@@coreUserActionsMenu.Header.BackButton.AriaLabel"
+                aria-label="Back button"
+                i18n-title="@@coreUserActionsMenu.Header.BackButton.Title"
+                title="Back"
+                class="fd-user-actions-menu__header-back-button"
+                (click)="_backToParentLevel()"
+            ></button>
+
+            <fd-bar-element [innerText]="title"></fd-bar-element>
+        </div>
+    </div>
+
+    <div fd-bar barDesign="subheader" [cozy]="!_compact" class="fd-user-actions-menu__header-subheader">
+        <div class="fd-user-actions-menu__header-subheader-content">
+            <ng-content></ng-content>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+.fd-user-actions-menu {
+    &__user-avatar {
+        margin-bottom: 0.5rem;
+    }
+
+    &__user-name {
+        font-size: 1rem;
+        font-size: var(--sapFontLargeSize, 1rem);
+        color: #32363a;
+        color: var(--sapTextColor, #32363a);
+    }
+
+    &__user-role {
+        font-size: 0.75rem;
+        font-size: var(--sapFontSmallSize, 0.75rem);
+        margin: 0;
+    }
+
+    &__header {
+        &-subheader-content {
+            margin-top: 1rem !important;
+            align-items: center;
+            position: relative;
+        }
+
+        .fd-user-actions-menu__header-top-header + .fd-user-actions-menu__header-subheader {
+            .fd-user-actions-menu__header-subheader-content {
+                margin-top: 0 !important;
+            }
+        }
+    }
+}
