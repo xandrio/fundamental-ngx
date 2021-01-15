@@ -1,6 +1,5 @@
 <!-- <ng-container [ngTemplateOutlet]="control" *ngIf="mobile && !open"></ng-container> -->
 <fd-popover
-    additionalBodyClass="fd-popover-custom-list"
     *ngIf="!mobile"
     [isOpen]="isOpen && _displayedValues && _displayedValues.length"
     (isOpenChange)="_handleIsOpenChange($event)"
@@ -9,11 +8,9 @@
     [disabled]="disabled"
     [fillControlMode]="fillControlMode"
     class="fd-search-field-popover-custom"
->
+    additionalBodyClass="fd-popover-custom-list">
     <fd-popover-control>
-        <form (submit)="_handleSubmit()">
-            <ng-container *ngTemplateOutlet="inputGroupControl"></ng-container>
-        </form>
+        <ng-container *ngTemplateOutlet="inputGroupControl"></ng-container>
     </fd-popover-control>
     <fd-popover-body [attr.aria-hidden]="!isOpen">
         <ng-container *ngTemplateOutlet="suggestionsList"></ng-container>
@@ -22,6 +19,74 @@
 </fd-popover>
 
 <ng-template #inputGroupControl>
+    <fd-input-group
+        [state]="state"
+        [buttonFocusable]="buttonFocusable"
+        [button]="true"
+        [compact]="compact"
+        [disabled]="disabled"
+        [isExpanded]="isOpen && !mobile && _displayedValues && _displayedValues.length"
+        [isControl]="true"
+        [glyph]="glyph"
+        (addOnButtonClicked)="_handleSearch()">
+            <input 
+                #inputField 
+                fd-input-group-input
+                type="search"
+                [compact]="compact"
+                [id]="inputId"
+                [disabled]="disabled"
+                [attr.aria-disabled]="disabled"
+                [attr.placeholder]="placeholder"
+                [ngModel]="searchTerm"
+                (ngModelChange)="_handleSearchTermChange($event)"
+                (keydown)="_handleKeydown($event)" 
+                (keydown.enter)="_handleSearch()" />
+            <span 
+                class="fd-input-group__addon fd-input-group__addon--button"
+                [class.fd-input-group__addon--compact]="compact"
+                *ngIf="searchTerm && searchTerm.length > 0">
+                <button
+                    fd-button
+                    class="fd-input-group__button"
+                    type="button"
+                    fdType="transparent"
+                    title="Clear input"
+                    [class.fd-button--compact]="compact" 
+                    (click)="_handleClearSearchTerm()">
+                    <fd-icon glyph="decline"></fd-icon>
+                </button>
+            </span>
+        </fd-input-group>
+</ng-template>
+
+
+<ng-template #suggestionsList>
+    <ul
+        fd-list
+        *ngIf="_displayedValues && _displayedValues.length"
+        [compact]="compact"
+        [style.maxHeight]="!mobile ? maxHeight : 'auto'"
+        (focusEscapeList)="handleListFocusEscape($event)"
+        [style.minWidth]="'100%'">
+        <li 
+            fd-list-item 
+            *ngFor="let value of _displayedValues" 
+            (keydown.enter)="_handleListItemSelect(value)" 
+            (click)="_handleListItemSelect(value)">
+            <span 
+                fd-list-title 
+                [innerHtml]="value | displayFnPipe: displayFn | highlight: searchTerm:highlight">
+            </span>
+        </li>
+    </ul>
+</ng-template>
+
+
+
+
+
+<ng-template #inputGroupControl2>
     <div #inputGroup class="fd-input-group">
         <input 
             #inputField 
@@ -62,7 +127,6 @@
                 type="button"
                 fdType="transparent"
                 title="Submit"
-                [attr.id]="submitId" 
                 [attr.aria-disabled]="disabled"
                 [class.fd-button--compact]="compact" 
                 (click)="_handleSearch()">
@@ -72,15 +136,3 @@
     </div>
 </ng-template>
 
-
-<ng-template #suggestionsList>
-    <ul
-        fd-list
-        *ngIf="_displayedValues && _displayedValues.length"
-        [compact]="compact"
-        [style.minWidth]="'100%'">
-        <li fd-list-item *ngFor="let value of _displayedValues">
-            <span fd-list-title [innerHtml]="value"></span>
-        </li>
-    </ul>
-</ng-template>

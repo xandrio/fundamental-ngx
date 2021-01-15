@@ -7,6 +7,7 @@ import { PopoverModule } from '../popover/popover.module';
 import { ListModule } from '../list/list.module';
 import { SearchFieldComponent } from './search-field.component';
 import { FormsModule } from '@angular/forms';
+import { PipeModule } from '../utils/pipes/pipe.module';
 
 @NgModule({
     declarations: [SearchFieldComponent],
@@ -17,7 +18,8 @@ import { FormsModule } from '@angular/forms';
         ButtonModule,
         InputGroupModule,
         PopoverModule,
-        ListModule
+        ListModule,
+        PipeModule
     ],
     exports: [SearchFieldComponent]
 })
