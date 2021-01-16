@@ -78,6 +78,7 @@ import { ThemesService } from './utils/services/themes.service';
 import { WizardModule } from './wizard/wizard.module';
 import { QuickViewModule } from './quick-view/quick-view.module';
 import { SearchFieldModule } from './search-field/search-field.module';
+import { SearchFieldMobileModule } from './search-field/search-field-mobile/search-field-mobile.module';
 
 @NgModule({
     imports: [CommonModule, FormsModule],
@@ -153,7 +154,8 @@ import { SearchFieldModule } from './search-field/search-field.module';
         MessageBoxModule,
         MessageToastModule,
         DynamicSideContentModule,
-        SearchFieldModule
+        SearchFieldModule,
+        SearchFieldMobileModule
     ],
     providers: [AlertService, DialogService, NotificationService, MessageToastService, ThemesService],
 })

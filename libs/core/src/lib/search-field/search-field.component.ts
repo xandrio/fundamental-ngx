@@ -1,10 +1,13 @@
 import {
+    AfterViewInit,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     Directive,
     ElementRef,
     EventEmitter,
+    forwardRef,
+    Injector,
     Input,
     OnDestroy,
     OnInit,
@@ -20,6 +23,8 @@ import {
 } from '@angular/core';
 
 
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { MenuKeyboardService } from '../menu/menu-keyboard.service';
 import { ListComponent } from '../list/list.component';
 import { PopoverComponent } from '@fundamental-ngx/core';
 import { PopoverFillMode } from '../popover/popover-position/popover-position';
@@ -32,16 +37,30 @@ import { KeyUtil } from '../utils/functions';
 import { FormStates } from '../form/form-control/form-states';
 import { BACKSPACE, DELETE, DOWN_ARROW, TAB } from '@angular/cdk/keycodes';
 import { applyCssClass, CssClassBuilder, DynamicComponentService, FocusEscapeDirection } from '../utils/public_api';
+import { SearchFieldMobileComponent } from './search-field-mobile/search-field-mobile.component';
+import { MobileModeConfig } from '../utils/interfaces/mobile-mode-config';
+import { SEARCH_FIELD_COMPONENT, SearchFieldInterface } from './search-field.interface';
 
 let searchFieldIdCount = 0;
 @Component({
     selector: 'fd-search-field',
     templateUrl: './search-field.component.html',
     styleUrls: ['./search-field.component.scss'],
+    host: {
+        '(blur)': 'onTouched()'
+    },
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SearchFieldComponent),
+            multi: true
+        },
+        MenuKeyboardService
+    ],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SearchFieldComponent implements OnInit, OnDestroy {
+export class SearchFieldComponent implements OnInit, OnDestroy, AfterViewInit {
     /** Whether the suggestions menu is opened. */
     @Input()
     isOpen = false;
@@ -94,9 +113,17 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
     @Input()
     mobile = false;
 
+    /** Search Field Mobile Configuration, applied only, when mobile is enabled */
+    @Input()
+    mobileConfig: MobileModeConfig = { hasCloseButton: true, approveButtonText: 'Select' };
+
     /** Values to be displayed in the unfiltered dropdown. */
     @Input()
     dropdownValues: any[] = ['Apple', 'Banana', 'Kiwi', 'Peach', 'Orange', 'Grape', 'Lemon', 'Strawberry', 'Blueberry', 'Pineapple', 'Raspberry'];
+
+    /** Selected dropdown items. */
+    @Input()
+    selected: any;
 
     /** 
      * Max height of the popover body. Default set to 300px.
@@ -129,6 +156,10 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
     @Input()
     displayFn: Function = this._defaultDisplay;
 
+    /** Event emitted when the selected item change. */
+    @Output()
+    readonly selectedChange: EventEmitter<any> = new EventEmitter<any>();
+
     /** Event emitted when the popover body of the search field is opened or closed */
     @Output()
     readonly openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -150,6 +181,14 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
     listComponent: ListComponent;
 
     /** @hidden */
+    @ViewChild('suggestionsList', { read: TemplateRef })
+    listTemplate: TemplateRef<any>;
+
+    /** @hidden */
+    @ViewChild('inputGroupControl', { read: TemplateRef })
+    controlTemplate: TemplateRef<any>;
+
+    /** @hidden */
     @ViewChild('inputField', { read: ElementRef })
     inputField: ElementRef;
 
@@ -157,21 +196,63 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
     _displayedValues: any[] = [];
 
     /** @hidden */
+    onChange: Function = () => {
+    };
+
+    /** @hidden */
+    onTouched: Function = () => {
+    };
+
+    /** @hidden */
     constructor(
-        protected _cdRef: ChangeDetectorRef
+        protected _cdRef: ChangeDetectorRef,
+        private _elementRef: ElementRef,
+        private _dynamicComponentService: DynamicComponentService
     ) {}
 
     ngOnInit(): void {
-        const baseId = 'fd-search-field';
-        this.inputId = `${baseId}-input-${searchFieldIdCount++}`;
+        this.buildComponentCssClass();
+        this.inputId = `fd-search-field-input-${searchFieldIdCount++}`;
 
         if (this.dropdownValues) {
             this._displayedValues = this.dropdownValues;
         }
     }
 
+    /** @hidden */
+    ngAfterViewInit(): void {
+        if (this.mobile) {
+            this._setUpMobileMode();
+        }
+    }
+
     ngOnDestroy(): void {
        
+    }
+
+    @applyCssClass
+    /** CssClassBuilder interface implementation
+     * function must return single string
+     * function is responsible for order which css classes are applied
+     */
+    buildComponentCssClass(): string[] {
+        return [
+            this.class
+        ];
+    }
+
+    elementRef(): ElementRef<any> {
+        return this._elementRef;
+    }
+
+    /** @hidden */
+    registerOnChange(fn: any): void {
+        this.onChange = fn;
+    }
+
+    /** @hidden */
+    registerOnTouched(fn: any): void {
+        this.onTouched = fn;
     }
 
     /** @hidden */
@@ -264,7 +345,7 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
         this.isOpen = open;
 
         if (!this.mobile) {
-            // this._popoverOpenHandle(open);
+            this._popoverOpenHandle(open);
         }
         this._cdRef.detectChanges();
     }
@@ -282,5 +363,66 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
             this.inputField.nativeElement.focus();
         }
     }
+
+    /**
+     * @hidden
+     */
+    private _popoverOpenHandle(open: boolean): void {
+        this.isOpen = open;
+        this.onTouched();
+    }
+
+    /** @hidden */
+    // private _propagateChange(emitInMobile?: boolean): void {
+    //     if (!this.mobile || emitInMobile) {
+    //         this.onChange(this.selected);
+    //         this.selectedChange.emit(this.selected);
+    //     }
+    // }
+
+    /** @hidden */
+    private _setUpMobileMode(): void {
+        this._dynamicComponentService.createDynamicComponent(
+            { listTemplate: this.listTemplate, controlTemplate: this.controlTemplate },
+            SearchFieldMobileComponent,
+            { container: this._elementRef.nativeElement },
+            { injector: Injector.create({ providers: [{ provide: SEARCH_FIELD_COMPONENT, useValue: this }] }) }
+        );
+    }
+
+
+
+    /**
+     * Handle dialog dismissing, closes popover and sets backup data.
+     */
+    dialogDismiss(selectedBackup: any): void {
+        this.searchTerm = selectedBackup;
+        this._handleIsOpenChange(false);
+        this._resetSearchTerm();
+    }
+
+    /**
+     * Handle dialog approval, closes popover and propagates data changes.
+     */
+    dialogApprove(): void {
+        this._propagateChange(true);
+        this._handleIsOpenChange(false);
+        this._resetSearchTerm();
+    }
+
+    /** @hidden */
+    private _resetSearchTerm(): void {
+        this.searchTerm = '';
+        this._cdRef.detectChanges();
+    }
+
+    /** @hidden */
+    private _propagateChange(emitInMobile?: boolean): void {
+        if (!this.mobile || emitInMobile) {
+            this.onChange(this.selected);
+            this.selectedChange.emit(this.selected);
+        }
+    }
+
 }
 

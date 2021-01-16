@@ -5,7 +5,7 @@ import { API_FILES } from '../../api-files';
 import { SearchFieldHeaderComponent } from './ search-field-header/search-field-header.component';
 import { SearchFieldDocsComponent } from './search-field-docs.component';
 import { SearchFieldExampleComponent } from './examples/search-field-example.component';
-import { SearchFieldModule } from '@fundamental-ngx/core';
+import { SearchFieldModule, SearchFieldMobileModule } from '@fundamental-ngx/core';
 import { SharedDocumentationPageModule } from '../../../documentation/shared-documentation-page.module';
 
 const routes: Routes = [
@@ -20,7 +20,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes), SharedDocumentationPageModule, SearchFieldModule],
+    imports: [RouterModule.forChild(routes), SharedDocumentationPageModule, SearchFieldModule, SearchFieldMobileModule],
     exports: [RouterModule],
     declarations: [SearchFieldDocsComponent, SearchFieldHeaderComponent, SearchFieldExampleComponent]
 })

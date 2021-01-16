@@ -1,4 +1,4 @@
-<!-- <ng-container [ngTemplateOutlet]="control" *ngIf="mobile && !open"></ng-container> -->
+<ng-container [ngTemplateOutlet]="inputGroupControl" *ngIf="mobile && !isOpen"></ng-container>
 <fd-popover
     *ngIf="!mobile"
     [isOpen]="isOpen && _displayedValues && _displayedValues.length"

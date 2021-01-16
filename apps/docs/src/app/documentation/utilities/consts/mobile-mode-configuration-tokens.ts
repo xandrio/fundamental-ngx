@@ -20,3 +20,8 @@ export const MENU_MOBILE_CONFIG: MobileModeConfigToken = {
     target: MobileModeControl.MENU,
     config: {dialogConfig: MOBILE_DIALOG_PORTRAIT}
 };
+
+export const SEARCH_FIELD_MOBILE_CONFIG: MobileModeConfigToken = {
+    target: MobileModeControl.SEARCH_FIELD,
+    config: {dialogConfig: MOBILE_DIALOG_PORTRAIT}
+};
