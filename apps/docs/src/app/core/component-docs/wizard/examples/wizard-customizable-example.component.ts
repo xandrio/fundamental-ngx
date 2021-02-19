@@ -33,7 +33,6 @@ export class WizardCustomizableExampleComponent {
      * opens the example in full screen
      */
     enterFullscreenExample(): void {
-        this.wizardComponent.goToStep(1);
         this.fullscreen = true;
         this.overlay.nativeElement.style.width = '100%';
     }

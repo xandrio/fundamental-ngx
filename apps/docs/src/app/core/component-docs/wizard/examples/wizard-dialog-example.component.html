@@ -5,12 +5,7 @@
             <fd-wizard [appendToWizard]="false" #wizard>
                 <fd-wizard-navigation>
                     <ul fd-wizard-progress-bar>
-                        <li
-                            fd-wizard-step
-                            [status]="step1status"
-                            (statusChange)="statusChanged(1, $event)"
-                            label="Product Type"
-                        >
+                        <li fd-wizard-step label="Product Type">
                             <fd-wizard-step-indicator>1</fd-wizard-step-indicator>
                             <fd-wizard-content>
                                 <h3 fd-title>1. Product Type</h3>
@@ -31,12 +26,7 @@
                                 </div>
                             </fd-wizard-content>
                         </li>
-                        <li
-                            fd-wizard-step
-                            [status]="step2status"
-                            (statusChange)="statusChanged(2, $event)"
-                            label="Customer Information"
-                        >
+                        <li fd-wizard-step label="Customer Information">
                             <fd-wizard-step-indicator>2</fd-wizard-step-indicator>
                             <fd-wizard-content>
                                 <h3 fd-title>2. Customer Information</h3>
@@ -96,13 +86,7 @@
                                 </div>
                             </fd-wizard-content>
                         </li>
-                        <li
-                            fd-wizard-step
-                            [status]="step3status"
-                            (statusChange)="statusChanged(3, $event)"
-                            label="Additional Information"
-                            optionalText="(Optional)"
-                        >
+                        <li fd-wizard-step label="Additional Information" optionalText="(Optional)">
                             <fd-wizard-step-indicator>3</fd-wizard-step-indicator>
                             <fd-wizard-content>
                                 <h3 fd-title>3. Additional Information</h3>
@@ -120,29 +104,24 @@
                                 </div>
                             </fd-wizard-content>
                         </li>
-                        <li
-                            fd-wizard-step
-                            [status]="step4status"
-                            (statusChange)="statusChanged(4, $event)"
-                            label="Pricing and Payment"
-                        >
+                        <li fd-wizard-step label="Pricing and Payment">
                             <fd-wizard-step-indicator>4</fd-wizard-step-indicator>
                             <fd-wizard-content>
-                                    <h3 fd-title>4. Payment</h3>
-                                    <div>
-                                        Sed fermentum, mi et tristique ullamcorper, sapien sapien faucibus sem, quis pretium
-                                        nibh lorem malesuada diam. Nulla quis arcu aliquet, feugiat massa semper, volutpat
-                                        diam. Nam vitae ante posuere, molestie neque sit amet, dapibus velit. Maecenas
-                                        eleifend tempor lorem. Mauris vitae elementum mi, sed eleifend ligula. Nulla tempor
-                                        vulputate dolor, nec dignissim quam convallis ut. Praesent vitae commodo felis, ut
-                                        iaculis felis. Fusce quis eleifend sapien, eget facilisis nibh. Suspendisse est
-                                        velit, scelerisque ut commodo eget, dignissim quis metus. Cras faucibus consequat
-                                        gravida. Curabitur vitae quam felis. Phasellus ac leo eleifend, commodo tortor et,
-                                        varius quam. Aliquam erat volutpat
-                                    </div>
+                                <h3 fd-title>4. Payment</h3>
+                                <div>
+                                    Sed fermentum, mi et tristique ullamcorper, sapien sapien faucibus sem, quis pretium
+                                    nibh lorem malesuada diam. Nulla quis arcu aliquet, feugiat massa semper, volutpat
+                                    diam. Nam vitae ante posuere, molestie neque sit amet, dapibus velit. Maecenas
+                                    eleifend tempor lorem. Mauris vitae elementum mi, sed eleifend ligula. Nulla tempor
+                                    vulputate dolor, nec dignissim quam convallis ut. Praesent vitae commodo felis, ut
+                                    iaculis felis. Fusce quis eleifend sapien, eget facilisis nibh. Suspendisse est
+                                    velit, scelerisque ut commodo eget, dignissim quis metus. Cras faucibus consequat
+                                    gravida. Curabitur vitae quam felis. Phasellus ac leo eleifend, commodo tortor et,
+                                    varius quam. Aliquam erat volutpat
+                                </div>
                             </fd-wizard-content>
                         </li>
-                        <li fd-wizard-step [status]="summaryStatus" [isSummary]="true" (statusChange)="statusChanged(5, $event)">
+                        <li fd-wizard-step [isSummary]="true">
                             <fd-wizard-content>
                                 <h4 class="fd-title fd-title--h4">1. Product Type</h4>
                                 <fd-layout-grid style="margin-bottom: 2rem">
@@ -218,9 +197,23 @@
             </fd-wizard>
             <div fd-bar barDesign="floating-footer">
                 <div fd-bar-right>
-                    <fd-button-bar *ngIf="step1status !== 'current'" label="Previous Step" (click)="wizardComponent.goToStep(currentStep - 1)"></fd-button-bar>
-                    <fd-button-bar *ngIf="summaryStatus !== 'current'" [label]="step4status === 'current' ? 'Review' : 'Next Step'" [disabled]="step2status === 'current' && (fullName === '' || addressLine1 === '')" (click)="wizardComponent.goToStep(currentStep + 1)"></fd-button-bar>
-                    <fd-button-bar *ngIf="summaryStatus === 'current'" label="Finish" [disabled]="step2status === 'current' && (fullName === '' || addressLine1 === '')" (click)="dialog.close('Continue')"></fd-button-bar>
+                    <fd-button-bar
+                        *ngIf="getStepStatus(1) && getStepStatus(1) !== 'current'"
+                        label="Previous Step"
+                        (click)="wizardComponent.goToPreviousStep()"
+                    ></fd-button-bar>
+                    <fd-button-bar
+                        *ngIf="getStepStatus(5) && getStepStatus(5) !== 'current'"
+                        [label]="getStepStatus(4) === 'current' ? 'Review' : 'Next Step'"
+                        [disabled]="getStepStatus(2) === 'current' && (fullName === '' || addressLine1 === '')"
+                        (click)="wizardComponent.goToNextStep()"
+                    ></fd-button-bar>
+                    <fd-button-bar
+                        *ngIf="getStepStatus(5) === 'current'"
+                        label="Finish"
+                        [disabled]="getStepStatus(2) === 'current' && (fullName === '' || addressLine1 === '')"
+                        (click)="dialog.close('Continue')"
+                    ></fd-button-bar>
                     <fd-button-bar label="Cancel" (click)="dialog.dismiss('Cancel')"></fd-button-bar>
                 </div>
             </div>

@@ -13,8 +13,6 @@
                     <ul fd-wizard-progress-bar>
                         <li
                             fd-wizard-step
-                            [status]="step1status"
-                            (statusChange)="statusChanged(1, $event)"
                             label="Step 1: One Line"
                         >
                             <fd-wizard-step-indicator glyph="accept"></fd-wizard-step-indicator>
@@ -41,8 +39,6 @@
                         <li
                             fd-wizard-step
                             branching="true"
-                            [status]="step2status"
-                            (statusChange)="statusChanged(2, $event)"
                             label="Step 2: Payment Selection"
                         >
                             <fd-wizard-step-indicator>2</fd-wizard-step-indicator>
@@ -79,10 +75,8 @@
                             </fd-wizard-content>
                         </li>
                         <li
-                            *ngIf="step2status === 'completed'"
+                            *ngIf="getStepStatus(2) === 'completed'"
                             fd-wizard-step
-                            [status]="step3status"
-                            (statusChange)="statusChanged(3, $event)"
                             [label]="
                                 paymentSelection === 'bank' ? 'Step 3: Bank Details' : 'Step 3: Credit Card Details'
                             "

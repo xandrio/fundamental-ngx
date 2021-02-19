@@ -59,12 +59,17 @@ export class WizardBranchingExampleComponent implements OnInit {
         }
     }
 
+    getStepStatus(step: number): WizardStepStatus {
+        if (this.wizardComponent && this.wizardComponent.steps) {
+            return this.wizardComponent.getStepStatus(step);
+        }
+    }
+
     /**
      * documentation related function
      * opens the example in full screen
      */
     enterFullscreenExample(): void {
-        this.wizardComponent.goToStep(1);
         this.fullscreen = true;
         this.overlay.nativeElement.style.width = '100%';
     }

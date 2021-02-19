@@ -14,7 +14,7 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { WizardStepComponent } from './wizard-step/wizard-step.component';
+import { WizardStepComponent, WizardStepStatus } from './wizard-step/wizard-step.component';
 import { Subscription } from 'rxjs';
 import { WizardProgressBarDirective } from './wizard-progress-bar/wizard-progress-bar.directive';
 import { scrollTop } from '../utils/functions/scroll';
@@ -171,6 +171,19 @@ export class WizardComponent implements AfterViewInit, OnDestroy {
     }
 
     /**
+     * This function returns the status of the step passed as a parameter.
+     * @param step The step to check the status of. Can be a number or a WizardStepComponent
+     */
+    getStepStatus(step: WizardStepComponent | number): WizardStepStatus {
+        if (typeof step !== 'number') {
+            const stepNumber = this.steps.toArray().indexOf(step) + 1;
+            this.getStepStatus(stepNumber);
+        } else {
+            return this.steps.toArray()[step - 1].status;
+        }
+    }
+
+    /**
      * This function changes the wizard's current step to the next one, if available.
      */
     goToNextStep(): void {
@@ -178,7 +191,7 @@ export class WizardComponent implements AfterViewInit, OnDestroy {
         if (currentStep) {
             const stepsArray = this.steps.toArray();
             if (stepsArray.indexOf(currentStep) < stepsArray.length - 1) {
-                this.goToStep(stepsArray.indexOf(currentStep) + 1);
+                this.goToStep(stepsArray.indexOf(currentStep) + 2);
             }
         }
     }
@@ -191,7 +204,7 @@ export class WizardComponent implements AfterViewInit, OnDestroy {
         if (currentStep) {
             const stepsArray = this.steps.toArray();
             if (stepsArray.indexOf(currentStep) > 0) {
-                this.goToStep(stepsArray.indexOf(currentStep) - 1);
+                this.goToStep(stepsArray.indexOf(currentStep));
             }
         }
     }

@@ -13,12 +13,16 @@ export class WizardDialogExampleComponent {
     addressLine1 = '';
     addressLine2 = '';
 
-    currentStep = 1;
-
     @ViewChild('wizard')
-    wizard: WizardComponent;
+    wizardComponent: WizardComponent;
 
     constructor(private _dialogService: DialogService) {}
+
+    getStepStatus(step: number): WizardStepStatus {
+        if (this.wizardComponent && this.wizardComponent.steps) {
+            return this.wizardComponent.getStepStatus(step);
+        }
+    }
 
     openDialog(dialog: TemplateRef<any>): void {
         this._dialogService.open(dialog, {
