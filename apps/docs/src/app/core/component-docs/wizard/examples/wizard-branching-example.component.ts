@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
-import { DialogService, WizardStepStatus } from '@fundamental-ngx/core';
+import { DialogService, WizardComponent, WizardStepStatus } from '@fundamental-ngx/core';
 
 @Component({
     selector: 'fd-wizard-branching-example',
@@ -11,6 +11,16 @@ import { DialogService, WizardStepStatus } from '@fundamental-ngx/core';
     }
 })
 export class WizardBranchingExampleComponent implements OnInit {
+
+    @ViewChild('wizard')
+    wizardComponent: WizardComponent;
+
+    paymentSelection = '';
+
+    oldPayment = '';
+
+    init = true;
+
     /**
      * documentation related property
      * provides access to the HTML element with "overlay" reference
@@ -24,26 +34,10 @@ export class WizardBranchingExampleComponent implements OnInit {
      */
     fullscreen = false;
 
-    step1status: WizardStepStatus = 'current';
-    step2status: WizardStepStatus = 'upcoming';
-    step3status: WizardStepStatus = 'upcoming';
-
-    paymentSelection = '';
-
-    oldPayment = '';
-
-    init = true;
-
     constructor(private _dialogService: DialogService) {}
 
     ngOnInit(): void {
         this.oldPayment = this.paymentSelection;
-    }
-
-    statusChanged(stepNumber: number, event: WizardStepStatus): void {
-        if (event === 'current') {
-            this.goToStep(stepNumber);
-        }
     }
 
     paymentSelectionChanged(dialog: TemplateRef<any>): void {
@@ -65,29 +59,12 @@ export class WizardBranchingExampleComponent implements OnInit {
         }
     }
 
-    goToStep(step: number): void {
-        switch (step) {
-            case 2: {
-                this.step1status = 'completed';
-                this.step2status = 'current';
-                this.step3status = 'upcoming';
-                break;
-            }
-            case 3: {
-                this.step1status = 'completed';
-                this.step2status = 'completed';
-                this.step3status = 'current';
-                break;
-            }
-        }
-    }
-
     /**
      * documentation related function
      * opens the example in full screen
      */
     enterFullscreenExample(): void {
-        this.goToStep(1);
+        this.wizardComponent.goToStep(1);
         this.fullscreen = true;
         this.overlay.nativeElement.style.width = '100%';
     }

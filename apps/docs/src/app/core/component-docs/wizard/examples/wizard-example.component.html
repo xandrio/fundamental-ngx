@@ -8,13 +8,11 @@
             </div>
 
             <!-- The Wizard -->
-            <fd-wizard>
+            <fd-wizard #wizard>
                 <fd-wizard-navigation>
                     <ul fd-wizard-progress-bar>
                         <li
                             fd-wizard-step
-                            [status]="step1status"
-                            (statusChange)="statusChanged(1, $event)"
                             label="Product Type"
                         >
                             <fd-wizard-step-indicator glyph="product"></fd-wizard-step-indicator>
@@ -36,7 +34,7 @@
                                     varius quam. Aliquam erat volutpat
                                 </div>
                                 <fd-wizard-next-step>
-                                    <button fd-button [compact]="true" fdType="emphasized" (click)="goToStep(2)">
+                                    <button fd-button [compact]="true" fdType="emphasized" (click)="wizardComponent.wizardComponent.goToStep(2)">
                                         Go to Step 2
                                     </button>
                                 </fd-wizard-next-step>
@@ -44,8 +42,6 @@
                         </li>
                         <li
                             fd-wizard-step
-                            [status]="step2status"
-                            (statusChange)="statusChanged(2, $event)"
                             label="Customer Information"
                         >
                             <fd-wizard-step-indicator glyph="user-edit"></fd-wizard-step-indicator>
@@ -111,7 +107,7 @@
                                         [disabled]="fullName === '' || addressLine1 === ''"
                                         [compact]="true"
                                         fdType="emphasized"
-                                        (click)="goToStep(3)"
+                                        (click)="wizardComponent.wizardComponent.goToStep(3)"
                                     >
                                         Go to Step 3
                                     </button>
@@ -120,8 +116,6 @@
                         </li>
                         <li
                             fd-wizard-step
-                            [status]="step3status"
-                            (statusChange)="statusChanged(3, $event)"
                             label="Additional Information"
                             optionalText="(Optional)"
                         >
@@ -141,7 +135,7 @@
                                     arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
                                 </div>
                                 <fd-wizard-next-step>
-                                    <button fd-button [compact]="true" fdType="emphasized" (click)="goToStep(4)">
+                                    <button fd-button [compact]="true" fdType="emphasized" (click)="wizardComponent.wizardComponent.goToStep(4)">
                                         Go to Step 4
                                     </button>
                                 </fd-wizard-next-step>
@@ -149,8 +143,6 @@
                         </li>
                         <li
                             fd-wizard-step
-                            [status]="step4status"
-                            (statusChange)="statusChanged(4, $event)"
                             label="Pricing and Payment"
                         >
                             <fd-wizard-step-indicator glyph="paid-leave"></fd-wizard-step-indicator>
@@ -168,14 +160,13 @@
                                     varius quam. Aliquam erat volutpat
                                 </div>
                                 <fd-wizard-next-step>
-                                    <button fd-button [compact]="true" fdType="emphasized" (click)="goToStep(5)">
+                                    <button fd-button [compact]="true" fdType="emphasized" (click)="wizardComponent.wizardComponent.goToStep(5)">
                                         Submit
                                     </button>
                                 </fd-wizard-next-step>
                             </fd-wizard-content>
                         </li>
-                        <li fd-wizard-step [status]="summaryStatus" [isSummary]="true"
-                            (statusChange)="statusChanged(5, $event)">
+                        <li fd-wizard-step [isSummary]="true">
                             <fd-wizard-content>
                                 <h4 class="fd-title fd-title--h4">1. Product Type</h4>
                                 <fd-layout-grid style="margin-bottom: 2rem">
@@ -186,7 +177,7 @@
                                         <label fd-form-label style="color: black">Mobile</label>
                                     </div>
                                     <div fdLayoutGridCol="1" colMd="5" colLg="5" colXl="5">
-                                        <a [routerLink]="['./']" fd-link (click)="goToStep(1)">Edit</a>
+                                        <a [routerLink]="['./']" fd-link (click)="wizardComponent.wizardComponent.goToStep(1)">Edit</a>
                                     </div>
                                 </fd-layout-grid>
                                 <h4 class="fd-title fd-title--h4">2. Customer Information</h4>
@@ -208,7 +199,7 @@
                                         <br />
                                         <br />
                                         <br />
-                                        <a [routerLink]="['./']" fd-link (click)="goToStep(2)">Edit</a>
+                                        <a [routerLink]="['./']" fd-link (click)="wizardComponent.wizardComponent.goToStep(2)">Edit</a>
                                     </div>
                                 </fd-layout-grid>
                                 <h4 class="fd-title fd-title--h4">3. Additional Information</h4>
@@ -229,7 +220,7 @@
                                         <br />
                                         <br />
                                         <br />
-                                        <a [routerLink]="['./']" fd-link (click)="goToStep(3)">Edit</a>
+                                        <a [routerLink]="['./']" fd-link (click)="wizardComponent.wizardComponent.goToStep(3)">Edit</a>
                                     </div>
                                 </fd-layout-grid>
                                 <h4 class="fd-title fd-title--h4">4. Payment Information</h4>
@@ -241,7 +232,7 @@
                                         <label fd-form-label style="color: black"></label><br />
                                     </div>
                                     <div fdLayoutGridCol="1" colMd="5" colLg="5" colXl="5">
-                                        <a [routerLink]="['./']" fd-link (click)="goToStep(4)">Edit</a>
+                                        <a [routerLink]="['./']" fd-link (click)="wizardComponent.wizardComponent.goToStep(4)">Edit</a>
                                     </div>
                                 </fd-layout-grid>
                             </fd-wizard-content>

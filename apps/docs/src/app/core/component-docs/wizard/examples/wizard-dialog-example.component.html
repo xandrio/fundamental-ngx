@@ -2,7 +2,7 @@
     <fd-dialog [dialogConfig]="dialogConfig" [dialogRef]="dialog" class="fd-wizard-example">
         <fd-dialog-body>
             <h2 fd-title>Checkout</h2>
-            <fd-wizard [appendToWizard]="false">
+            <fd-wizard [appendToWizard]="false" #wizard>
                 <fd-wizard-navigation>
                     <ul fd-wizard-progress-bar>
                         <li
@@ -153,7 +153,7 @@
                                         <label fd-form-label style="color: black">Mobile</label>
                                     </div>
                                     <div fdLayoutGridCol="1" colMd="5" colLg="5" colXl="5">
-                                        <a [routerLink]="['./']" fd-link (click)="goToStep(1)">Edit</a>
+                                        <a [routerLink]="['./']" fd-link (click)="wizardComponent.goToStep(1)">Edit</a>
                                     </div>
                                 </fd-layout-grid>
                                 <h4 class="fd-title fd-title--h4">2. Customer Information</h4>
@@ -175,7 +175,7 @@
                                         <br />
                                         <br />
                                         <br />
-                                        <a [routerLink]="['./']" fd-link (click)="goToStep(2)">Edit</a>
+                                        <a [routerLink]="['./']" fd-link (click)="wizardComponent.goToStep(2)">Edit</a>
                                     </div>
                                 </fd-layout-grid>
                                 <h4 class="fd-title fd-title--h4">3. Additional Information</h4>
@@ -196,7 +196,7 @@
                                         <br />
                                         <br />
                                         <br />
-                                        <a [routerLink]="['./']" fd-link (click)="goToStep(3)">Edit</a>
+                                        <a [routerLink]="['./']" fd-link (click)="wizardComponent.goToStep(3)">Edit</a>
                                     </div>
                                 </fd-layout-grid>
                                 <h4 class="fd-title fd-title--h4">4. Payment Information</h4>
@@ -208,7 +208,7 @@
                                         <label fd-form-label style="color: black"></label><br />
                                     </div>
                                     <div fdLayoutGridCol="1" colMd="5" colLg="5" colXl="5">
-                                        <a [routerLink]="['./']" fd-link (click)="goToStep(4)">Edit</a>
+                                        <a [routerLink]="['./']" fd-link (click)="wizardComponent.goToStep(4)">Edit</a>
                                     </div>
                                 </fd-layout-grid>
                             </fd-wizard-content>
@@ -218,8 +218,8 @@
             </fd-wizard>
             <div fd-bar barDesign="floating-footer">
                 <div fd-bar-right>
-                    <fd-button-bar *ngIf="step1status !== 'current'" label="Previous Step" (click)="goToStep(currentStep - 1)"></fd-button-bar>
-                    <fd-button-bar *ngIf="summaryStatus !== 'current'" [label]="step4status === 'current' ? 'Review' : 'Next Step'" [disabled]="step2status === 'current' && (fullName === '' || addressLine1 === '')" (click)="goToStep(currentStep + 1)"></fd-button-bar>
+                    <fd-button-bar *ngIf="step1status !== 'current'" label="Previous Step" (click)="wizardComponent.goToStep(currentStep - 1)"></fd-button-bar>
+                    <fd-button-bar *ngIf="summaryStatus !== 'current'" [label]="step4status === 'current' ? 'Review' : 'Next Step'" [disabled]="step2status === 'current' && (fullName === '' || addressLine1 === '')" (click)="wizardComponent.goToStep(currentStep + 1)"></fd-button-bar>
                     <fd-button-bar *ngIf="summaryStatus === 'current'" label="Finish" [disabled]="step2status === 'current' && (fullName === '' || addressLine1 === '')" (click)="dialog.close('Continue')"></fd-button-bar>
                     <fd-button-bar label="Cancel" (click)="dialog.dismiss('Cancel')"></fd-button-bar>
                 </div>

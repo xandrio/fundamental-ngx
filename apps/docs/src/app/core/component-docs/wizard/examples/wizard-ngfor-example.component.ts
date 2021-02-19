@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
-import { WizardStepStatus } from '@fundamental-ngx/core';
+import { WizardComponent, WizardStepStatus } from '@fundamental-ngx/core';
 
 @Component({
     selector: 'fd-wizard-ngfor-example',
@@ -11,6 +11,10 @@ import { WizardStepStatus } from '@fundamental-ngx/core';
     }
 })
 export class WizardNgForExampleComponent {
+
+    @ViewChild('wizard')
+    wizardComponent: WizardComponent;
+
     /**
      * documentation related property
      * provides access to the HTML element with "overlay" reference
@@ -56,41 +60,12 @@ export class WizardNgForExampleComponent {
         }
     ];
 
-    statusChanged(stepNumber: number, event: WizardStepStatus): void {
-        if (event === 'current') {
-            this.goToStep(stepNumber);
-        }
-    }
-
-    goToStep(step: number): void {
-        switch (step) {
-            case 1: {
-                this.steps[0].status = 'current';
-                this.steps[1].status = 'upcoming';
-                this.steps[2].status = 'upcoming';
-                break;
-            }
-            case 2: {
-                this.steps[0].status = 'completed';
-                this.steps[1].status = 'current';
-                this.steps[2].status = 'upcoming';
-                break;
-            }
-            case 3: {
-                this.steps[0].status = 'completed';
-                this.steps[1].status = 'completed';
-                this.steps[2].status = 'current';
-                break;
-            }
-        }
-    }
-
     /**
      * documentation related function
      * opens the example in full screen
      */
     enterFullscreenExample(): void {
-        this.goToStep(1);
+        this.wizardComponent.goToStep(1);
         this.fullscreen = true;
         this.overlay.nativeElement.style.width = '100%';
     }

@@ -1,5 +1,5 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import { WizardStepStatus } from '@fundamental-ngx/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { WizardComponent, WizardStepStatus } from '@fundamental-ngx/core';
 
 @Component({
     selector: 'fd-wizard-mobile-example',
@@ -18,55 +18,11 @@ import { WizardStepStatus } from '@fundamental-ngx/core';
     }
 })
 export class WizardMobileExampleComponent {
-    example1step1status: WizardStepStatus = 'current';
-    example1step2status: WizardStepStatus = 'upcoming';
-    example1step3status: WizardStepStatus = 'upcoming';
 
-    example2step1status: WizardStepStatus = 'current';
-    example2step2status: WizardStepStatus = 'upcoming';
-    example2step3status: WizardStepStatus = 'upcoming';
+    @ViewChild('wizard')
+    wizardComponent: WizardComponent;
 
-    statusChanged(exampleNumber: number, stepNumber: number, event: WizardStepStatus): void {
-        if (event === 'current') {
-            if (exampleNumber === 1) {
-                this.example1goToStep(stepNumber);
-            } else if (exampleNumber === 2) {
-                this.example2goToStep(stepNumber);
-            }
-        }
-    }
+    @ViewChild('wizard2')
+    wizardComponent2: WizardComponent;
 
-    example1goToStep(step: number): void {
-        switch (step) {
-            case 2: {
-                this.example1step1status = 'completed';
-                this.example1step2status = 'current';
-                this.example1step3status = 'upcoming';
-                break;
-            }
-            case 3: {
-                this.example1step1status = 'completed';
-                this.example1step2status = 'completed';
-                this.example1step3status = 'current';
-                break;
-            }
-        }
-    }
-
-    example2goToStep(step: number): void {
-        switch (step) {
-            case 2: {
-                this.example2step1status = 'completed';
-                this.example2step2status = 'current';
-                this.example2step3status = 'upcoming';
-                break;
-            }
-            case 3: {
-                this.example2step1status = 'completed';
-                this.example2step2status = 'completed';
-                this.example2step3status = 'current';
-                break;
-            }
-        }
-    }
 }

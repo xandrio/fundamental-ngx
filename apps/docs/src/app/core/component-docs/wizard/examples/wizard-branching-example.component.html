@@ -8,7 +8,7 @@
             </div>
 
             <!-- The Wizard -->
-            <fd-wizard>
+            <fd-wizard #wizard>
                 <fd-wizard-navigation>
                     <ul fd-wizard-progress-bar>
                         <li
@@ -32,7 +32,7 @@
                                     <input fd-form-control type="text" id="address-3" />
                                 </div>
                                 <fd-wizard-next-step>
-                                    <button fd-button [compact]="true" fdType="emphasized" (click)="goToStep(2)">
+                                    <button fd-button [compact]="true" fdType="emphasized" (click)="wizardComponent.goToStep(2)">
                                         Go to the payment selection page
                                     </button>
                                 </fd-wizard-next-step>
@@ -71,7 +71,7 @@
                                         fd-button
                                         [compact]="true"
                                         fdType="emphasized"
-                                        (click)="goToStep(3)"
+                                        (click)="wizardComponent.goToStep(3)"
                                     >
                                         Go to Payment Details Page
                                     </button>

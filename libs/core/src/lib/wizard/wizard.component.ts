@@ -122,6 +122,7 @@ export class WizardComponent implements AfterViewInit, OnDestroy {
     ngAfterViewInit(): void {
         setTimeout(() => {
             // fixes ExpressionChangedAfterItHasBeenCheckedError
+            this.goToStep(1);
             this._setContentTemplates();
             this._subscriptions.add(
                 this.steps.changes.subscribe(() => {
@@ -141,6 +142,58 @@ export class WizardComponent implements AfterViewInit, OnDestroy {
     ngOnDestroy(): void {
         this._subscriptions.unsubscribe();
         this.wrapperContainer.nativeElement.removeEventListener('scroll', handleTimeoutReference);
+    }
+
+    /**
+     * This function changes the currently selected step.
+     * @param step The step to switch to. Can be a number or a WizardStepComponent
+     */
+    goToStep(step: WizardStepComponent | number): void {
+        if (typeof step !== 'number') {
+            const stepNumber = this.steps.toArray().indexOf(step) + 1;
+            this.goToStep(stepNumber);
+        } else {
+            this.steps.forEach((stepToCheck, index) => {
+                if (step - 1 === index) {
+                    stepToCheck.status = CURRENT_STEP_STATUS;
+                } else if (step - 1 < index) {
+                    if (!stepToCheck.status || stepToCheck.status !== COMPLETED_STEP_STATUS) {
+                        stepToCheck.status = UPCOMING_STEP_STATUS;
+                    }
+                } else {
+                    stepToCheck.completed = true;
+                    stepToCheck.status = COMPLETED_STEP_STATUS;
+                }
+            });
+        }
+
+        this._handleStepOrStatusChanges();
+    }
+
+    /**
+     * This function changes the wizard's current step to the next one, if available.
+     */
+    goToNextStep(): void {
+        const currentStep = this.steps.filter(step => step.status === CURRENT_STEP_STATUS)[0];
+        if (currentStep) {
+            const stepsArray = this.steps.toArray();
+            if (stepsArray.indexOf(currentStep) < stepsArray.length - 1) {
+                this.goToStep(stepsArray.indexOf(currentStep) + 1);
+            }
+        }
+    }
+
+    /**
+     * This function changes the wizard's current step to the previous one, if available.
+     */
+    goToPreviousStep(): void {
+        const currentStep = this.steps.filter(step => step.status === CURRENT_STEP_STATUS)[0];
+        if (currentStep) {
+            const stepsArray = this.steps.toArray();
+            if (stepsArray.indexOf(currentStep) > 0) {
+                this.goToStep(stepsArray.indexOf(currentStep) - 1);
+            }
+        }
     }
 
     /**
@@ -321,7 +374,6 @@ export class WizardComponent implements AfterViewInit, OnDestroy {
         if (lastVisibleTemplate && lastVisibleTemplate.content) {
             lastVisibleTemplate.content.tallContent = true;
         }
-        this.steps.last.finalStep = true;
     }
 
     /** @hidden */

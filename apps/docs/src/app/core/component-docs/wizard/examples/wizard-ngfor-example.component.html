@@ -8,7 +8,7 @@
             </div>
 
             <!-- The Wizard -->
-            <fd-wizard>
+            <fd-wizard #wizard>
                 <fd-wizard-navigation>
                     <ul fd-wizard-progress-bar>
                         <li
@@ -28,7 +28,7 @@
                                     {{ step.contentText }}
                                 </p>
                                 <fd-wizard-next-step *ngIf="i !== steps.length - 1">
-                                    <button fd-button [compact]="true" fdType="emphasized" (click)="goToStep(i + 2)">
+                                    <button fd-button [compact]="true" fdType="emphasized" (click)="wizardComponent.goToStep(i + 2)">
                                         Go to Step {{ i + 2 }}
                                     </button>
                                 </fd-wizard-next-step>

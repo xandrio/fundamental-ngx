@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
-import { WizardStepStatus } from '@fundamental-ngx/core';
+import { WizardComponent, WizardStepStatus } from '@fundamental-ngx/core';
 
 @Component({
     selector: 'fd-wizard-customizable-example',
@@ -11,6 +11,10 @@ import { WizardStepStatus } from '@fundamental-ngx/core';
     }
 })
 export class WizardCustomizableExampleComponent {
+
+    @ViewChild('wizard')
+    wizardComponent: WizardComponent;
+
     /**
      * documentation related property
      * provides access to the HTML element with "overlay" reference
@@ -24,45 +28,12 @@ export class WizardCustomizableExampleComponent {
      */
     fullscreen = false;
 
-    step1status: WizardStepStatus = 'current';
-    step2status: WizardStepStatus = 'upcoming';
-    step3status: WizardStepStatus = 'upcoming';
-
-    statusChanged(stepNumber: number, event: WizardStepStatus): void {
-        if (event === 'current') {
-            this.goToStep(stepNumber);
-        }
-    }
-
-    goToStep(step: number): void {
-        switch (step) {
-            case 1: {
-                this.step1status = 'current';
-                this.step2status = 'upcoming';
-                this.step3status = 'upcoming';
-                break;
-            }
-            case 2: {
-                this.step1status = 'completed';
-                this.step2status = 'current';
-                this.step3status = 'upcoming';
-                break;
-            }
-            case 3: {
-                this.step1status = 'completed';
-                this.step2status = 'completed';
-                this.step3status = 'current';
-                break;
-            }
-        }
-    }
-
     /**
      * documentation related function
      * opens the example in full screen
      */
     enterFullscreenExample(): void {
-        this.goToStep(1);
+        this.wizardComponent.goToStep(1);
         this.fullscreen = true;
         this.overlay.nativeElement.style.width = '100%';
     }
