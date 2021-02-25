@@ -272,6 +272,12 @@
                         ></ng-container>
 
                         <ng-container
+                            *ngSwitchCase="'tree'"
+                            [ngTemplateOutlet]="treeRowTemplate"
+                            [ngTemplateOutletContext]="{row: row, rows: _tableRowsVisible}"
+                        ></ng-container>
+
+                        <ng-container
                             *ngSwitchCase="'item'"
                             [ngTemplateOutlet]="itemRowTemplate"
                             [ngTemplateOutletContext]="{row: row, rows: _tableRowsVisible}"
@@ -347,6 +353,58 @@
                     *ngTemplateOutlet="tableHeaderCellContentTemplate; context: {column: _keyToColumnMap.get(row.value?.field)}"
                 ></ng-container>: {{ row.value?.value }}
             </ng-container>
+        </td>
+    </tr>
+</ng-template>
+
+<!-- Tree row Template -->
+<ng-template
+    #treeRowTemplate
+    let-row="row"
+>
+    <tr
+        fd-table-row
+        scope="row"
+        class="fdp-table__row--group fdp-table__row--tree"
+    >
+        <td
+            *ngIf="_isShownSelectionColumn"
+            fd-table-cell
+            class="fd-table__cell--fixed fdp-table__cell--selection"
+            [class.fd-table__cell--checkbox]="selectionMode === SELECTION_MODE.MULTIPLE"
+        >
+            <fd-checkbox
+                *ngIf="selectionMode === SELECTION_MODE.MULTIPLE"
+                [compact]="contentDensity !== CONTENT_DENSITY.COZY"
+                [(ngModel)]="row.checked"
+                (ngModelChange)="_toggleAllChildrenRows(row)"
+            ></fd-checkbox>
+        </td>
+        <td
+            fd-table-cell
+            class="fd-table__cell--fixed fd-table__cell--focusable fdp-table__cell--group"
+            tabindex="0"
+            role="cell"
+            [attr.col-span]="_tableColumnsLength"
+            [attr.aria-expanded]="row.expanded"
+            [attr.data-nesting-level]="row.level"
+            (click)="_toggleGroupRow(row)"
+            (keyup.enter)="_toggleGroupRow(row)"
+        >
+            <fd-icon
+                [glyph]="row.expanded ? 'navigation-down-arrow' : _rtl ? 'navigation-left-arrow' : 'navigation-right-arrow'"
+            ></fd-icon>
+
+            <!-- Group row template when no nested groups -->
+            <ng-container>
+                {{ row.value?.name }}
+            </ng-container>
+<!--            &lt;!&ndash; Group row template when there are nested groups &ndash;&gt;-->
+<!--            <ng-container *ngIf="_groupRulesMap.size != 1">-->
+<!--                <ng-container-->
+<!--                    *ngTemplateOutlet="tableHeaderCellContentTemplate; context: {column: _keyToColumnMap.get(row.value?.field)}"-->
+<!--                ></ng-container>: {{ row.value?.value }}-->
+<!--            </ng-container>-->
         </td>
     </tr>
 </ng-template>

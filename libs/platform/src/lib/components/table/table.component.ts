@@ -129,6 +129,7 @@ export class TableComponent<T = any> extends Table implements AfterViewInit, OnD
             this._initializeDS(value);
         }
     }
+
     get dataSource(): FdpTableDataSource<T> {
         return this._ds;
     }
@@ -140,6 +141,7 @@ export class TableComponent<T = any> extends Table implements AfterViewInit, OnD
     set state(value: TableState) {
         this.setTableState(value || DEFAULT_TABLE_STATE);
     }
+
     get state(): TableState {
         return this.getTableState();
     }
@@ -212,11 +214,17 @@ export class TableComponent<T = any> extends Table implements AfterViewInit, OnD
     @Input()
     initialGroupBy: CollectionGroup[];
 
+    /** Whether tree mode is enabled. */
+    @Input()
+    isTreeTable: boolean;
+
+    /** Accessor to a children nodes of tree. */
+    @Input()
+    relationKey: string;
+
     /** Event fired when table selection has changed. */
     @Output()
-    readonly rowSelectionChange: EventEmitter<TableRowSelectionChangeEvent<T>> = new EventEmitter<
-        TableRowSelectionChangeEvent<T>
-    >();
+    readonly rowSelectionChange: EventEmitter<TableRowSelectionChangeEvent<T>> = new EventEmitter<TableRowSelectionChangeEvent<T>>();
 
     /** Event fired when table sort order has changed. */
     @Output()
@@ -302,6 +310,7 @@ export class TableComponent<T = any> extends Table implements AfterViewInit, OnD
      * Group Rules Map. Where key is column key and value is associated group rule
      */
     _groupRulesMapSubject: BehaviorSubject<Map<string, CollectionGroup>> = new BehaviorSubject(new Map());
+
     /** @hidden */
     get _groupRulesMap(): Map<string, CollectionGroup> {
         return this._groupRulesMapSubject.getValue();
@@ -640,6 +649,27 @@ export class TableComponent<T = any> extends Table implements AfterViewInit, OnD
 
     /**
      * @hidden
+     * Select / Unselect all children rows
+     */
+    _toggleAllChildrenRows(treeRow: TableRow): void {
+        const removed = [];
+        const added = [];
+
+        this._findRowChildren(treeRow).forEach((row) => {
+            if (row.checked === treeRow.checked) {
+                return;
+            }
+            row.checked = treeRow.checked;
+            treeRow.checked ? added.push(row) : removed.push(row);
+        });
+
+        this._emitRowSelectionChangeEvent(added, removed);
+
+        this._calculateCheckedAll();
+    }
+
+    /**
+     * @hidden
      * Create table row selection event
      */
     _emitRowSelectionChangeEvent(added: TableRow[], removed: TableRow[]): void {
@@ -750,9 +780,10 @@ export class TableComponent<T = any> extends Table implements AfterViewInit, OnD
                     switchMap((source: T[]) => of(this._createTableRowsByDataSourceItems(source))),
                     // Insert items to show groups
                     switchMap((rows: TableRow[]) =>
-                        this._groupRulesMapSubject.pipe(
-                            map((groupRules) => this._groupTableRows(rows, groupRules.values()))
-                        )
+                        this.isTreeTable ? of(rows) :
+                            this._groupRulesMapSubject.pipe(
+                                map((groupRules) => this._groupTableRows(rows, groupRules.values()))
+                            )
                     )
                 )
                 .subscribe((rows) => {
@@ -831,7 +862,36 @@ export class TableComponent<T = any> extends Table implements AfterViewInit, OnD
 
     /** @hidden */
     private _createTableRowsByDataSourceItems(source: T[]): TableRow<T>[] {
+        if (this.isTreeTable) {
+            return this._createTreeTableRowsByDataSourceItems(source);
+        }
+
         return source.map((item: T, index: number) => new TableRow('item', false, index, item));
+
+    }
+
+    /** @hidden */
+    private _createTreeTableRowsByDataSourceItems(source: T[]): TableRow<T>[] {
+        const rows: TableRow<T>[] = [];
+        source.forEach((item: T, index: number) => {
+            const hasChildren = item.hasOwnProperty(this.relationKey) && Array.isArray(item[this.relationKey]);
+            const row = new TableRow(hasChildren ? 'tree' : 'item', false, index, item);
+            row.expanded = false;
+            rows.push(row);
+            if (hasChildren) {
+                const children = this._createTreeTableRowsByDataSourceItems(item[this.relationKey]);
+                children.forEach(c => {
+                    c.parent = c.parent || row;
+                    c.level = c.parent.level + 1;
+                    c.hidden = true;
+                });
+                rows.push(...children);
+            }
+        });
+
+        return rows;
+
+
     }
 
     /** @hidden */
@@ -1123,6 +1183,7 @@ export class TableComponent<T = any> extends Table implements AfterViewInit, OnD
             // if parent is collapsed we want to hide all nested items
             if (!expanded) {
                 row.hidden = true;
+                row.expanded = false;
             }
             // if parent is expanded we want show only items which direct parents are expanded as well
             if (expanded) {

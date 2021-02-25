@@ -198,7 +198,10 @@
             background-color: var(--sapList_HeaderBackground, #f2f2f2);
             padding-left: 0;
             padding-right: 0;
-            border-right: none;
+
+            &:not(.fdp-table__cell--selection) {
+                border-right: none;
+            }
 
             fd-icon {
                 display: inline-flex;
@@ -208,6 +211,22 @@
                 color: #0854a0;
                 color: var(--sapButton_TextColor, #0854a0);
                 width: 32px;
+            }
+        }
+
+        &.fdp-table__row--tree {
+            & > .fdp-table__cell--selection {
+                width: 2rem;
+                min-width: 2rem;
+                z-index: 2;
+
+                & + .fdp-table__cell--group {
+                    margin-left: 2rem;
+                }
+            }
+            .fd-table__cell {
+                background-color: #fff;
+                background-color: var(--sapBaseColor, #fff);
             }
         }
     }
