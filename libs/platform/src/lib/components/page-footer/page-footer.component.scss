@@ -1,0 +1,267 @@
+$fd-copy-right-font-color: var(--sapField_PlaceholderTextColor);
+$fd-link-font-color: var(--sapLinkColor);
+$fd-footer-font-size: var(--sapFontSize, 0.875rem);
+$fd-footer-padding-top: 0.75rem !default;
+$fd-footer-padding-top-inline: 0.25rem !default;
+$fd-footer-font-family: var(--sapFontFamily, '72', '72full', Arial, Helvetica, sans-serif);
+
+@mixin fd-reset {
+    font-size: var(--sapFontSize);
+    line-height: var(--sapContent_LineHeight);
+    color: var(--sapTextColor);
+    font-family: $fd-footer-font-family;
+    font-weight: normal;
+    box-sizing: border-box;
+    border: 0;
+
+    &::before,
+    &::after {
+        box-sizing: inherit;
+        font-size: inherit;
+    }
+}
+@mixin fd-rtl {
+    @at-root {
+        [dir='rtl'] &,
+        &[dir='rtl'] {
+            @content;
+        }
+    }
+}
+@media (min-width: 1025px) {
+    .fdp-footer {
+        @include fd-reset();
+        &__container {
+            width: 100%;
+            padding-top: $fd-footer-padding-top;
+            display: flex;
+            position: relative;
+        }
+
+        width: 100%;
+        background-color: var(--sapField_Background);
+        display: inline-block;
+        padding: 1.5rem 3rem 2rem 3rem;
+
+        &__logo {
+            width: 3rem;
+            height: 1.5rem;
+            overflow: hidden;
+        }
+        &__main {
+            color: $fd-link-font-color;
+            font-family: $fd-footer-font-family;
+            font-size: 0.875rem;
+
+            width: 70%;
+            > div > * {
+                margin-right: 1.5rem;
+                @include fd-rtl() {
+                    margin-left: 1.5rem;
+                    margin-right: 0rem;
+                }
+            }
+            > * {
+                margin-right: 1.5rem;
+                padding-top: 0.25rem;
+                @include fd-rtl() {
+                    margin-left: 1.5rem;
+                    margin-right: 0rem;
+                }
+            }
+        }
+        &__copy-right {
+            color: $fd-copy-right-font-color;
+            font-family: $fd-footer-font-family;
+            font-size: $fd-footer-font-size;
+            text-align: right;
+            display: -webkit-box;
+            width: 32%;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            overflow: hidden;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            @include fd-rtl() {
+                text-align: left;
+                left: 0;
+                right: auto;
+            }
+        }
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .fdp-footer {
+        @include fd-reset();
+
+        &__container {
+            display: flex;
+            width: 100%;
+            padding-top: $fd-footer-padding-top;
+            position: relative;
+        }
+
+        width: 100%;
+        background-color: var(--sapField_Background);
+        display: inline-block;
+        padding: 1.5rem 2rem 2rem 2rem;
+
+        &__logo {
+            width: 3rem;
+            height: 1.5rem;
+            overflow: hidden;
+        }
+        &__main {
+            color: $fd-link-font-color;
+            font-family: $fd-footer-font-family;
+            font-size: 0.875rem;
+            display: inline;
+            width: 70%;
+            > div > * {
+                margin-right: 1.5rem;
+                @include fd-rtl() {
+                    margin-left: 1.5rem;
+                    margin-right: 0rem;
+                }
+            }
+            > * {
+                margin-right: 1.5rem;
+                padding-top: 0.25rem;
+                @include fd-rtl() {
+                    margin-left: 1.5rem;
+                    margin-right: 0rem;
+                }
+            }
+        }
+        &__copy-right {
+            color: $fd-copy-right-font-color;
+            font-family: $fd-footer-font-family;
+            font-size: 0.875rem;
+            text-align: right;
+            display: -webkit-box;
+            width: 30%;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            overflow: hidden;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            @include fd-rtl() {
+                text-align: left;
+                left: 0;
+                right: auto;
+            }
+        }
+    }
+}
+
+@media (min-width: 361px) and (max-width: 768px) {
+    .fdp-footer {
+        @include fd-reset();
+
+        &__container {
+            width: 100%;
+        }
+
+        width: 100%;
+        background-color: var(--sapField_Background);
+        display: inline-block;
+        padding: 1.5rem 1rem 2rem 1rem;
+
+        &__logo {
+            width: 3rem;
+            height: 1.5rem;
+            overflow: hidden;
+        }
+        &__main {
+            color: $fd-link-font-color;
+            font-family: $fd-footer-font-family;
+            font-size: 0.875rem;
+            display: inline-block;
+            padding-top: $fd-footer-padding-top;
+            padding-bottom: $fd-footer-padding-top;
+            > div > * {
+                margin-right: 1.5rem;
+                @include fd-rtl() {
+                    margin-left: 1.5rem;
+                    margin-right: 0rem;
+                }
+            }
+            > * {
+                margin-right: 1.5rem;
+                padding-top: 0.25rem;
+                @include fd-rtl() {
+                    margin-left: 1.5rem;
+                    margin-right: 0rem;
+                }
+            }
+        }
+        &__copy-right {
+            color: $fd-copy-right-font-color;
+            font-family: $fd-footer-font-family;
+            font-size: 0.875rem;
+            display: -webkit-box;
+            overflow: hidden;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            @include fd-rtl() {
+                text-align: left;
+            }
+        }
+    }
+}
+@media (max-width: 360px) {
+    .fdp-footer {
+        @include fd-reset();
+
+        &__container {
+            width: 100%;
+            padding-top: $fd-footer-padding-top;
+        }
+
+        width: 100%;
+        background-color: var(--sapField_Background);
+        line-height: 1.25rem;
+        padding: 1.5rem 0.5rem 2rem 0.5rem;
+
+        &__logo {
+            width: 3rem;
+            height: 1.5rem;
+            overflow: hidden;
+        }
+        &__main {
+            color: $fd-link-font-color;
+            font-family: $fd-footer-font-family;
+            font-size: 0.875rem;
+            display: inline-grid;
+            > * {
+                padding-top: 0.25rem;
+                display: inline-grid;
+                @include fd-rtl() {
+                    padding-top: 0.25rem;
+                }
+            }
+            > div > * {
+                padding-top: 0.25rem;
+                @include fd-rtl() {
+                    padding-top: 0.25rem;
+                }
+            }
+        }
+        &__copy-right {
+            color: $fd-copy-right-font-color;
+            font-family: $fd-footer-font-family;
+            font-size: 0.875rem;
+            padding-top: $fd-footer-padding-top;
+            display: -webkit-box;
+            overflow: hidden;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            @include fd-rtl() {
+                text-align: left;
+            }
+        }
+    }
+}
