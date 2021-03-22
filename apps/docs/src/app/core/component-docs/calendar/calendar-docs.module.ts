@@ -25,6 +25,7 @@ import { CalendarGridExampleComponent } from './examples/calendar-grid-example/c
 import { CalendarSpecialDayExampleComponent } from './examples/calendar-special-day-example/calendar-special-day-example.component';
 import { CalendarMarkHoverComponent } from './examples/calendar-mark-hover/calendar-mark-hover.component';
 import { SharedDocumentationPageModule } from '../../../documentation/shared-documentation-page.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
     {
@@ -46,7 +47,8 @@ const routes: Routes = [
         CalendarModule,
         SegmentedButtonModule,
         SharedDocumentationPageModule,
-        RouterModule.forChild(routes)
+        RouterModule.forChild(routes),
+        TranslateModule
     ],
     exports: [RouterModule],
     declarations: [

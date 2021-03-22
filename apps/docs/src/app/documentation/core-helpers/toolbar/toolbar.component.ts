@@ -7,6 +7,7 @@ import { SafeResourceUrl } from '@angular/platform-browser';
 import { DocsThemeService } from '../../services/docs-theme.service';
 import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, startWith, takeUntil } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -61,6 +62,7 @@ export class ToolbarDocsComponent implements OnInit, OnDestroy {
         private _themesService: ThemesService,
         private _docsThemeService: DocsThemeService,
         @Inject('CURRENT_LIB') private _currentLib: Libraries,
+        private _translateService: TranslateService
     ) {
         this.library = _routerService.routerState.snapshot.url.includes('core') ? 'Core' : 'Platform';
 
@@ -116,6 +118,10 @@ export class ToolbarDocsComponent implements OnInit, OnDestroy {
 
     selectVersion(version: any): void {
         window.open(version.url, '_blank');
+    }
+
+    selectLang(lang: string): void {
+        this._translateService.use(lang);
     }
 
     private _getShellbarSize(): ShellbarSizes {

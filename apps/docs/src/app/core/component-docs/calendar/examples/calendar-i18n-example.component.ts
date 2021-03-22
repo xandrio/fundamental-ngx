@@ -1,4 +1,4 @@
-import { Component, Injectable, LOCALE_ID } from '@angular/core';
+import { Component, Injectable, LOCALE_ID, OnInit } from '@angular/core';
 import { DatetimeAdapter, FdDatetimeAdapter, CalendarI18nLabels, FdDate } from '@fundamental-ngx/core';
 
 // i18n aria labels service provider
@@ -39,6 +39,10 @@ export class CalendarI18nChineseLabels extends CalendarI18nLabels {
         }
     ]
 })
-export class CalendarI18nExampleComponent {
+export class CalendarI18nExampleComponent implements OnInit {
     date: FdDate = new FdDate(2020, 10, 25);
+
+    ngOnInit(): void {
+
+    }
 }

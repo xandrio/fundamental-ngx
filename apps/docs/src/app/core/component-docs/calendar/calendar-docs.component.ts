@@ -77,24 +77,24 @@ myDisableFunction = function(d: FdDate): boolean {
 
 // Mark weekends with special day number 10
 specialDay: SpecialDayRule[] = [
-    { 
+    {
         specialDayNumber: 10,
-        rule: fdDate => fdDate.getDay() === 7 || fdDate.getDay() === 1 
+        rule: fdDate => fdDate.getDay() === 7 || fdDate.getDay() === 1
     }
 ]
 
 
 // Mark Monday with special day number 5
 specialDay: SpecialDayRule[] = [
-    { 
+    {
         specialDayNumber: 5,
-        rule: fdDate => fdDate.getDay() === 2 
+        rule: fdDate => fdDate.getDay() === 2
     }
 ]
 
 // Mark Days inside a range with number 3 and all tuesdays with number 6
 specialDay: SpecialDayRule[] = [
-    { 
+    {
         specialDayNumber: 3,
         rule: fdDate => {
             let firstDay = new FdDate(2018, 7, 5);
@@ -102,9 +102,9 @@ specialDay: SpecialDayRule[] = [
             return d.getTimeStamp() > firstDay.getTimeStamp() && d.getTimeStamp() < lastDay.getTimeStamp()
         },
     },
-    { 
+    {
         specialDayNumber: 6,
-        rule: fdDate => fdDate.getDay() === 3 
+        rule: fdDate => fdDate.getDay() === 3
     }
 ]`;
 

@@ -5,6 +5,13 @@ import { MarkdownModule } from 'ngx-markdown';
 
 import { AppComponent } from './app.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+    return new TranslateHttpLoader(http);
+}
 
 const routes: Routes = [
     {
@@ -25,7 +32,15 @@ const routes: Routes = [
         BrowserAnimationsModule,
         HttpClientModule,
         RouterModule.forRoot(routes, { useHash: true, relativeLinkResolution: 'legacy' }),
-        MarkdownModule.forRoot({ loader: HttpClient })
+        MarkdownModule.forRoot({ loader: HttpClient }),
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            },
+            defaultLanguage: 'en'
+        })
     ],
     bootstrap: [AppComponent]
 })
