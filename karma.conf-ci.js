@@ -95,7 +95,11 @@ module.exports = function (config) {
             reports: ['html', 'lcovonly'],
             fixWebpackSourcePaths: true
         },
-        reporters: ['spec', 'dots', 'saucelabs', 'kjhtml'],
+        reporters: ['spec', 'dots', 'saucelabs', 'kjhtml', 'allure'],
+        allureReport: {
+            reportDir: 'reports', // By default files will be save in the base dir
+            useBrowserName: true // add browser name to report and classes names
+        },
         port: 9876,
         colors: true,
         sauceLabs: {
