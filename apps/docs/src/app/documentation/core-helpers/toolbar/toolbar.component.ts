@@ -114,6 +114,10 @@ export class ToolbarDocsComponent implements OnInit, OnDestroy {
         this.customCssUrl = this._themesService.setCustomTheme(selectedTheme);
     }
 
+    selectLang(lang: string): void {
+
+    }
+
     selectVersion(version: any): void {
         window.open(version.url, '_blank');
     }

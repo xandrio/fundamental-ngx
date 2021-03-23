@@ -7,6 +7,12 @@
       "root": "apps/docs/",
       "sourceRoot": "apps/docs/src",
       "projectType": "application",
+      "i18n": {
+        "locales": {
+          "en": "messages.xlf",
+          "es": "apps/docs/src/locale/messages.es.xlf"
+        }
+      },
       "prefix": "fundamental-ngx",
       "schematics": {
         "@nrwl/schematics:component": {
@@ -78,6 +84,10 @@
                   "maximumError": "5mb"
                 }
               ]
+            },
+            "es": {
+              "localize": ["es"],
+              "baseHref": "/es/"
             },
             "production-unoptimized": {
               "tsConfig": "apps/docs/tsconfig.netlify.json",
@@ -155,6 +165,9 @@
             },
             "ar": {
               "browserTarget": "docs:build:ar"
+            },
+            "es": {
+              "browserTarget": "docs:build:es"
             }
           }
         },
@@ -237,7 +250,8 @@
           "builder": "@nrwl/angular:package",
           "options": {
             "tsConfig": "libs/core/tsconfig.lib.json",
-            "project": "libs/core/ng-package.json"
+            "project": "libs/core/ng-package.json",
+            "localize": true
           },
           "configurations": {
             "production": {
@@ -285,7 +299,8 @@
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
             "tsConfig": "libs/platform/tsconfig.lib.json",
-            "project": "libs/platform/ng-package.json"
+            "project": "libs/platform/ng-package.json",
+            "localize": true
           },
           "configurations": {
             "production": {
