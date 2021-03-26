@@ -27,4 +27,4 @@ export const CLASS_NAME = {
 
 export const TOOLBAR_ACTIONS_SQUASH_BREAKPOINT_PX = 1280;
 
-export const MOBILE_BREAKPOINT_PX = 320;
+export const MOBILE_BREAKPOINT_PX = 599;

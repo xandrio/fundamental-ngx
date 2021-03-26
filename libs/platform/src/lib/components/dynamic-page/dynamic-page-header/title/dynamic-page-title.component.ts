@@ -18,7 +18,6 @@ import {
 } from '@angular/core';
 import { BreadcrumbComponent, DynamicPageResponsiveSize, FacetComponent } from '@fundamental-ngx/core';
 import { Subscription } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 import { CLASS_NAME, TOOLBAR_ACTIONS_SQUASH_BREAKPOINT_PX } from '../../constants';
 import { DynamicPageService } from '../../dynamic-page.service';
@@ -61,13 +60,6 @@ export class DynamicPageTitleComponent implements OnInit, AfterViewInit, OnDestr
     /** @hidden */
     @ContentChild(DynamicPageKeyInfoComponent)
     _contentToolbar: DynamicPageKeyInfoComponent;
-
-    /**
-     * @hidden
-     * the reference to the title element
-     */
-    @ViewChild('titleRef')
-    titleRef: ElementRef<any>;
 
     /** @hidden */
     _actionsSquashed = false;
@@ -180,7 +172,7 @@ export class DynamicPageTitleComponent implements OnInit, AfterViewInit, OnDestr
     _squashActions(): void {
         const widthPx = this._ruler?.getViewportSize().width;
         const actionsSquashed: boolean =
-            widthPx < TOOLBAR_ACTIONS_SQUASH_BREAKPOINT_PX || this.size === 'small' || this.size === 'medium';
+            this.size === 'small' || this.size === 'medium' || widthPx < TOOLBAR_ACTIONS_SQUASH_BREAKPOINT_PX ;
         if (actionsSquashed !== this._actionsSquashed) {
             this._actionsSquashed = actionsSquashed;
             this._cd.detectChanges();

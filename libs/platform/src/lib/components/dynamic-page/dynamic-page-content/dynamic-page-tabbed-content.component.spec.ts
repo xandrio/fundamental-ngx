@@ -15,8 +15,6 @@ import {
     </fdp-dynamic-page-tabbed-content>`
 })
 class TestTabbedContentComponent {
-    size = 'medium';
-    background = '';
     @ViewChild(DynamicPageTabbedContentComponent) dynamicPageTabbedContentComponent: DynamicPageTabbedContentComponent;
 }
 

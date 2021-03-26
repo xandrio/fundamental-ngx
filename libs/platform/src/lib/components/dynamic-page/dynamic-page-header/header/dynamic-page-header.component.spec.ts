@@ -6,6 +6,7 @@ import { By } from '@angular/platform-browser';
 import { PlatformDynamicPageModule } from '../../dynamic-page.module';
 import { DynamicPageHeaderComponent } from './dynamic-page-header.component';
 import { ViewportRuler } from '@angular/cdk/scrolling';
+import { AvatarModule, FacetModule } from '@fundamental-ngx/core';
 
 @Component({
     template: `<fdp-dynamic-page-header
@@ -16,9 +17,13 @@ import { ViewportRuler } from '@angular/cdk/scrolling';
         [collapseLabel]="collapseLabel"
         [pinAriaLabel]="pinAriaLabel"
         [unpinAriaLabel]="unpinAriaLabel"
-        [size]="size"
-        [background]="background"
-    ></fdp-dynamic-page-header>`
+    >
+        <fd-facet-group>
+            <fd-facet type="image">
+                <fd-avatar image="http://picsum.photos/id/1018/400" size="l"></fd-avatar>
+            </fd-facet>
+        </fd-facet-group>
+    </fdp-dynamic-page-header>`
 })
 class TestComponent {
     collapsible = true;
@@ -28,8 +33,6 @@ class TestComponent {
     collapseLabel = 'Expand';
     pinAriaLabel = 'Pinned';
     unpinAriaLabel = 'Unpinned';
-    size = 'medium';
-    background = '';
 
     @ViewChild(DynamicPageHeaderComponent) dynamicPageTitleComponent: DynamicPageHeaderComponent;
     constructor(public dynamicPageService: DynamicPageService, public ruler: ViewportRuler) {}
@@ -43,7 +46,7 @@ describe('DynamicPageHeaderComponent', () => {
     beforeEach(
         waitForAsync(() => {
             TestBed.configureTestingModule({
-                imports: [CommonModule, PlatformDynamicPageModule],
+                imports: [CommonModule, PlatformDynamicPageModule, FacetModule, AvatarModule],
                 declarations: [TestComponent],
                 providers: [DynamicPageService]
             }).compileComponents();

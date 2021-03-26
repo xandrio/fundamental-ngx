@@ -288,7 +288,8 @@ export class DynamicPageComponent extends BaseComponent implements AfterContentI
         if (!this.autoResponsive) {
             return;
         }
-        const widthPx = this._ruler?.getViewportSize().width;
+        // use getBoundingClientRect() here because viewport ruler cannot detect container resize changes, only browser resize changes.
+        const widthPx = this._elementRef.nativeElement.getBoundingClientRect().width;
         const size = dynamicPageWidthToSize(widthPx);
 
         if (size !== this.size) {

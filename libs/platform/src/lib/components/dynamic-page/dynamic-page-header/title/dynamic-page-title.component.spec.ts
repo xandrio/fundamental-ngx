@@ -20,7 +20,7 @@ import { DynamicPageKeyInfoComponent } from '../key-info/dynamic-page-key-info.c
 import { DynamicPageTitleComponent } from './dynamic-page-title.component';
 
 @Component({
-    template: ` <fdp-dynamic-page-title [title]="title" [subtitle]="subtitle" [size]="size" [background]="background">
+    template: ` <fdp-dynamic-page-title [title]="title" [subtitle]="subtitle" [size]="size">
         <fd-breadcrumb>
             <fd-breadcrumb-item>
                 <a fd-breadcrumb-link [attr.href]="'#'">Men</a>
@@ -50,7 +50,6 @@ class TestComponent {
     title = 'Some title ';
     subtitle: string;
     size = 'medium';
-    background = '';
     @ViewChild(DynamicPageTitleComponent) dynamicPageTitleComponent: DynamicPageTitleComponent;
     @ViewChild(DynamicPageKeyInfoComponent) dynamicPageKeyInfoComponent: DynamicPageKeyInfoComponent;
     @ViewChild(DynamicPageGlobalActionsComponent) dynamicPageGlobalActionsComponent: DynamicPageGlobalActionsComponent;
@@ -137,9 +136,10 @@ describe('DynamicPageTitleComponent', () => {
             expect(titleElement?.innerText).toBe('Some subtitle');
         });
     });
-      it('should add correct classes to toolbar', async () => {
-        fixture.detectChanges();
+
+    it('should add correct classes to toolbar', async () => {
         component.dynamicPageGlobalActionsComponent.ngAfterContentInit();
+        fixture.detectChanges();
         const globalActionsContainer = fixture.debugElement.query(By.css('.' + CLASS_NAME.dynamicPageGlobalActions));
         expect(globalActionsContainer).toBeTruthy();
 

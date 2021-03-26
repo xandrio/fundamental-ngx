@@ -16,10 +16,11 @@ export class DynamicPageLayoutPo extends BaseComponentPo {
     dynamicPageContentEnd = 'fdp-dynamic-page-content .footer-spacer';
     dynamicPageTitle = '.fd-dynamic-page__title-container';
     dynamicPageToolBar = '.fd-dynamic-page__toolbar';
+    dynamicPageToolBarContainer = '.fd-dynamic-page__toolbar-container';
     dynamicPageTabs = '.fd-dynamic-page__tabs--overflow .fd-tabs__item';
     dynamicPageTabsContent = 'fdp-dynamic-page-tabbed-content';
-    dynamicPageToolBarAccept = this.dynamicPageToolBar + ' .fd-button--positive';
-    dynamicPageToolBarReject = this.dynamicPageToolBar + ' .fd-button--negative';
+    dynamicPageToolBarAccept = this.dynamicPageToolBarContainer + ' .fd-button--positive';
+    dynamicPageToolBarReject = this.dynamicPageToolBarContainer + ' .fd-button--negative';
     dynamicPageCollapsibleHeader = this.dynamicPage + ' .fd-dynamic-page__collapsible-header-container [role="region"]';
 
     columnSection = 'section';
