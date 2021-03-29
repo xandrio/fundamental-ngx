@@ -31,7 +31,7 @@
                 </div>
                 <div class="fd-dynamic-page__title-container">
                     <ng-container *ngIf="_isHeaderCollapsed">
-                        <ng-content select="fd-facet"></ng-content>
+                        <ng-container *ngTemplateOutlet="facetTemplate"></ng-container>
                         <div class="fd-dynamic-page__title-subtitle-container">
                             <div class="fd-dynamic-page__title-container">
                                 <ng-container *ngTemplateOutlet="titleContentTemplate"></ng-container>
@@ -56,7 +56,7 @@
                 </div>
                 <div class="fd-dynamic-page__title-container">
                     <ng-container *ngIf="_isHeaderCollapsed">
-                        <ng-content select="fd-facet"></ng-content>
+                        <ng-container *ngTemplateOutlet="facetTemplate"></ng-container>
                         <div class="fd-dynamic-page__title-subtitle-container">
                             <div class="fd-dynamic-page__title-container">
                                 <ng-container *ngTemplateOutlet="titleContentTemplate"></ng-container>
@@ -123,4 +123,7 @@
         <ng-container *ngTemplateOutlet="dynamicPageGlobalActionsRef"></ng-container>
         <ng-container *ngTemplateOutlet="dynamicPageLayoutActionsRef"></ng-container>
     </div>
+</ng-template>
+<ng-template #facetTemplate>
+  <ng-content select="fd-facet"></ng-content>
 </ng-template>
