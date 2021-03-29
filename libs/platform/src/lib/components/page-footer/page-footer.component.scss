@@ -77,7 +77,7 @@ $fd-footer-font-family: var(--sapFontFamily, '72', '72full', Arial, Helvetica, s
             text-align: right;
             display: -webkit-box;
             width: 32%;
-            position: absolute;
+            align-self: flex-end;
             bottom: 0;
             right: 0;
             overflow: hidden;
@@ -142,7 +142,7 @@ $fd-footer-font-family: var(--sapFontFamily, '72', '72full', Arial, Helvetica, s
             text-align: right;
             display: -webkit-box;
             width: 30%;
-            position: absolute;
+            align-self: flex-end;
             bottom: 0;
             right: 0;
             overflow: hidden;
