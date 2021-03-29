@@ -14,7 +14,7 @@ export class DynamicPageLayoutPo extends BaseComponentPo {
     dynamicPageCollapseIcon = '.fd-dynamic-page__collapse-button';
     dynamicPageContentStart = 'fdp-dynamic-page-content br';
     dynamicPageContentEnd = 'fdp-dynamic-page-content .footer-spacer';
-    dynamicPageTitle = '.fd-dynamic-page__title-container';
+    dynamicPageTitle = '.fd-dynamic-page__title';
     dynamicPageToolBar = '.fd-dynamic-page__toolbar';
     dynamicPageToolBarContainer = '.fd-dynamic-page__toolbar-container';
     dynamicPageTabs = '.fd-dynamic-page__tabs--overflow .fd-tabs__item';

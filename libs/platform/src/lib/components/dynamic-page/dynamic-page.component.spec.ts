@@ -17,29 +17,7 @@ import { DynamicPageTitleComponent } from './dynamic-page-header/title/dynamic-p
 
 @Component({
     template: `<fdp-dynamic-page [size]="size" [background]="background">
-        <fdp-dynamic-page-title>
-            <fdp-dynamic-page-global-actions>
-                <fd-toolbar fdType="transparent" [clearBorder]="true">
-                    <button
-                        fd-toolbar-item
-                        fd-button
-                        [compact]="true"
-                        fdType="positive"
-                        (click)="$event.stopPropagation()"
-                    >
-                        Accept
-                    </button>
-                </fd-toolbar>
-            </fdp-dynamic-page-global-actions>
-            <fdp-dynamic-page-layout-actions>
-                <!-- layout actions -->
-                <fd-toolbar fdType="transparent" [clearBorder]="true">
-                    <button fd-button fdType="transparent" aria-label="Resize" (click)="closePage($event)">
-                        <i class="sap-icon--resize"></i>
-                    </button>
-                </fd-toolbar>
-            </fdp-dynamic-page-layout-actions>
-        </fdp-dynamic-page-title>
+        <fdp-dynamic-page-title> </fdp-dynamic-page-title>
         <fdp-dynamic-page-header></fdp-dynamic-page-header>
         <fdp-dynamic-page-content>DynamicPage Content Text</fdp-dynamic-page-content>
     </fdp-dynamic-page>`
