@@ -35,7 +35,6 @@ export class PlatformDocumentationComponent extends DocumentationBaseComponent {
             { url: 'platform/object-marker', name: 'Object Marker' },
             { url: 'platform/object-status', name: 'Object Status' },
             { url: 'platform/object-attribute', name: 'Object Attribute' },
-            { url: 'platform/page-footer', name: 'Page Footer' },
             { url: 'platform/radio-group', name: 'Radio Button Group' },
             { url: 'platform/search-field', name: 'Search Field' },
             { url: 'platform/split-menu-button', name: 'Split Menu Button' },
@@ -65,7 +64,8 @@ export class PlatformDocumentationComponent extends DocumentationBaseComponent {
 
         this.layouts = [
             { url: 'platform/dynamic-page', name: 'Dynamic Page' },
-            { url: 'platform/form-container', name: 'Form Container' }
+            { url: 'platform/form-container', name: 'Form Container' },
+            { url: 'platform/page-footer', name: 'Page Footer' }
         ];
 
         this.utilities = [];

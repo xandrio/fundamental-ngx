@@ -13,8 +13,7 @@ import { ApiComponent } from '../../../documentation/core-helpers/api/api.compon
 import { API_FILES } from '../../api-files';
 import { SharedDocumentationPageModule } from '../../../documentation/shared-documentation-page.module';
 import { PlatformPageFooterHeaderComponent } from './platform-page-footer-header/platform-page-footer-header.component';
-
-
+import { LinkModule } from '@fundamental-ngx/core';
 
 const routes: Routes = [
     {
@@ -36,6 +35,12 @@ const routes: Routes = [
         PlatformPageFooterMultipleLineExampleComponent
     ],
     exports: [RouterModule],
-    imports: [RouterModule.forChild(routes), SharedDocumentationPageModule, PlatformPageFooterModule, PlatformLinkModule]
+    imports: [
+        RouterModule.forChild(routes),
+        SharedDocumentationPageModule,
+        PlatformPageFooterModule,
+        PlatformLinkModule,
+        LinkModule
+    ]
 })
 export class PlatformDocPageFooterModule {}
