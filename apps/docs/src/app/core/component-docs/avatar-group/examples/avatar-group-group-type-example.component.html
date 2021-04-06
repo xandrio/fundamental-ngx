@@ -7,7 +7,7 @@
                 (isOpenChange)="isOpenChanged($event)"
                 placement="bottom"
                 additionalBodyClass="fd-avatar-group--group-type__overflow-popover-body--custom-class">
-        <fd-popover-control class="fd-avatar-group--group-type__popover-control--custom-class" tabindex="0" (keyup.enter)="toggleOverflow()">
+        <fd-popover-control tabindex="0" (keyup.enter)="toggleOverflow()">
             <div *ngFor="let person of people" fd-avatar-group-item>
                 <fd-avatar *ngIf="!person.imageUrl && !person.glyph"
                            [label]="person.firstName + ' ' + person.lastName"
@@ -15,14 +15,14 @@
                            [border]="true"
                            [size]="size"></fd-avatar>
 
-                <fd-avatar *ngIf="person.imageUrl" 
+                <fd-avatar *ngIf="person.imageUrl"
                            [ariaLabel]="person.firstName + ' ' + person.lastName"
                            [circle]="true"
                            [border]="true"
                            [size]="size"
                            [image]="person.imageUrl"></fd-avatar>
 
-                <fd-avatar *ngIf="person.glyph" 
+                <fd-avatar *ngIf="person.glyph"
                            [ariaLabel]="person.firstName + ' ' + person.lastName"
                            [circle]="true"
                            [border]="true"
