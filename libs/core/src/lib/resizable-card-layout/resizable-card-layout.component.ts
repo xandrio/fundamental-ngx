@@ -199,6 +199,13 @@ export class ResizableCardLayoutComponent implements OnInit, AfterViewInit, Afte
         this.resizing.emit(event);
         console.log('card resizing: ', event);
 
+        // when increasing width hit the offset, show extended border and start pushing down border cards
+        // when width is decreasing , show extended border till it reaches to offset. then don't. and push border cards up
+
+        // distance from offset
+        const cardColumnSpan = Math.floor(event.cardWidth / horizontalResizeStep) * horizontalResizeStep;
+        const offsetDistance = event.cardWidth - Math.floor(event.cardWidth / horizontalResizeStep);
+
         if (
             event.cardWidth > event.prevCardWidth &&
             event.cardWidth - event.prevCardWidth >= horizontalResizeOffset &&
