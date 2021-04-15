@@ -24,6 +24,7 @@ export const verticalResizeStep = 16;
 export const gap = 16;
 export const horizontalResizeOffset = 160;
 export const verticalResizeOffset = 10;
+export type CardState = 1 | 0 | -1;
 
 let cardRank = 1;
 let cardUniqueId = 0;
@@ -179,6 +180,11 @@ export class ResizableCardItemComponent implements OnInit, OnDestroy, FocusableO
 
     resizeIndicationBorderWidth = 0;
 
+    /** Denotes if card is currently expanding or contracting horizontally */
+    // +1 denotes increasing, -1 denotes decreasing and 0 denotes card-state has not changed horizontally
+
+    cardState: CardState = 0;
+
     /** @hidden Helps in emitting resizing event at a given interval */
     private _resizeDebounce$: Subject<PositionChange> = new Subject<PositionChange>();
 
@@ -199,7 +205,6 @@ export class ResizableCardItemComponent implements OnInit, OnDestroy, FocusableO
     private _resizeDirection: ResizeDirection;
     private _maxColumn: number;
     private _rank: number;
-    private _expandBorderMinWidth = 1; // width when border not expanded
     constructor(private readonly _cd: ChangeDetectorRef, private readonly _elementRef: ElementRef) {}
 
     /** @hidden */
@@ -271,21 +276,38 @@ export class ResizableCardItemComponent implements OnInit, OnDestroy, FocusableO
                 this._verticalResizing(clientY);
         }
 
-        // increasing width
-        if (clientX > this._prevX) {
-            const cardColumnNumbers = Math.floor(this.cardWidth / horizontalResizeStep);
-            const cardWidthColumn = cardColumnNumbers * horizontalResizeStep + (cardColumnNumbers - 1) * gap;
+        const cardColumnNumbers = Math.floor(this.cardWidth / horizontalResizeStep);
+        const cardWidthColumn = cardColumnNumbers * horizontalResizeStep + (cardColumnNumbers - 1) * gap;
 
-            const horizontalResizeThresholdReached = this.cardWidth - cardWidthColumn >= horizontalResizeOffset;
+        const horizontalResizeThresholdReached = this.cardWidth - cardWidthColumn > horizontalResizeOffset;
+
+        if (clientX > this._prevX) {
+            // increasing width
+            this.cardState = 1;
+
             if (horizontalResizeThresholdReached) {
                 const cardSpan = Math.floor(this.cardWidth / horizontalResizeStep);
                 const futureCardWidth = (cardSpan + 1) * horizontalResizeStep + cardSpan * gap;
                 this.resizeIndicationBorderWidth = futureCardWidth - this.cardWidth;
             } else {
-                this.resizeIndicationBorderWidth = this._expandBorderMinWidth;
+                this.resizeIndicationBorderWidth = 0;
             }
-        } else {
+        } else if (clientX < this._prevX) {
             // decreasing width
+            this.cardState = -1;
+            console.log('ResizableCardItemComponent width decreasing');
+            console.log('ResizableCardItemComponent width decreasing this.cardWidth: ', this.cardWidth);
+            console.log('ResizableCardItemComponent width decreasing cardWidthColumn: ', cardWidthColumn);
+            if (horizontalResizeThresholdReached) {
+                console.log('ResizableCardItemComponent width decreasing threshold reached');
+                const cardSpan = Math.floor(this.cardWidth / horizontalResizeStep);
+                const futureCardWidth = (cardSpan + 1) * horizontalResizeStep + cardSpan * gap;
+                this.resizeIndicationBorderWidth = futureCardWidth - this.cardWidth;
+                console.log('AAAA ResizableCardItemComponent border width: ', this.resizeIndicationBorderWidth);
+            } else {
+                console.log('BBBB ResizableCardItemComponent border width: ', this.resizeIndicationBorderWidth);
+                this.resizeIndicationBorderWidth = 0;
+            }
         }
 
         // Emit resizing event on some interval. improves performance.
@@ -537,7 +559,9 @@ export class ResizableCardItemComponent implements OnInit, OnDestroy, FocusableO
     /** @hidden reset involved variables while resizing */
     private _stopResizing(): void {
         if (this._resize) {
+            this.cardState = 0;
             this.resizeIndicationBorderWidth = 0;
+            this.cardState = 0;
             this._resize = false;
             this.zIndex = 0;
             this.showBorder = false;
